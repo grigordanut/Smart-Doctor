@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backgrandier"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="0dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="30dp">
+
+        <TextView
+        android:id="@+id/textViewHospReg"
+        android:layout_width="350dp"
+        android:layout_height="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:text="Enter the Hospital Register details."
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="22sp"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/HospUniqueCodeWrapperReg"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:textColorHint="#000000"
+            android:layout_below="@id/textViewHospReg"
+            android:layout_marginTop="15dp">
+
+            <EditText
+                android:id="@+id/etHospUniqueCodeReg"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bgrinput"
+                android:textSize="20sp"
+                android:ems="10"
+                android:paddingLeft="5dp"
+                android:hint="Unique Code"
+                android:inputType="textPersonName"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/HospNameWrapperReg"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:textColorHint="#000000"
+            android:layout_below="@id/HospUniqueCodeWrapperReg"
+            android:layout_marginTop="5dp">
+
+            <EditText
+                android:id="@+id/etHospNameReg"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bgrinput"
+                android:textSize="20sp"
+                android:ems="10"
+                android:paddingLeft="5dp"
+                android:hint="Hospital Name"
+                android:inputType="textPersonName"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/HospEmailWrapper"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:textColorHint="#000000"
+            android:layout_below="@id/HospNameWrapperReg"
+            android:layout_marginTop="5dp">
+
+            <EditText
+                android:id="@+id/etHospEmailReg"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bgrinput"
+                android:textSize="20sp"
+                android:ems="10"
+                android:paddingLeft="5dp"
+                android:hint="Email Address"
+                android:inputType="textEmailAddress"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/HospPasswordWrapperReg"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:textColorHint="#000000"
+            android:layout_below="@id/HospEmailWrapper"
+            android:layout_marginTop="5dp">
+
+            <EditText
+                android:id="@+id/etHospPassReg"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bgrinput"
+                android:ems="10"
+                android:paddingLeft="5dp"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:textSize="20sp" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/HospConfPassWrapperReg"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:textColorHint="#000000"
+            android:layout_below="@id/HospPasswordWrapperReg"
+            android:layout_marginTop="5dp">
+
+            <EditText
+                android:id="@+id/etHospConfPassReg"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bgrinput"
+                android:ems="10"
+                android:paddingLeft="5dp"
+                android:hint="Confirm Password"
+                android:inputType="textPassword"
+                android:textSize="20sp"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnHospReg"
+            android:layout_width="140dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/HospConfPassWrapperReg"
+            android:layout_alignLeft="@id/HospConfPassWrapperReg"
+            android:layout_marginTop="15dp"
+            android:text="Register"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="#FFFF"
+            android:textSize="22sp"
+            android:background="@drawable/bgdbutton"/>
+
+        <Button
+            android:id="@+id/btnHospCancelReg"
+            android:layout_width="140dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/HospConfPassWrapperReg"
+            android:layout_alignRight="@id/HospConfPassWrapperReg"
+            android:layout_marginTop="15dp"
+            android:text="Cancel"
+            android:textSize="22sp"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="#FFFF"
+            android:background="@drawable/bgdbutton"/>
+
+    </RelativeLayout>
+</ScrollView>

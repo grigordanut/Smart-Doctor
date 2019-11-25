@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1073149017889",
+    "firebase_url": "https://smart-doctor-396cf.firebaseio.com",
+    "project_id": "smart-doctor-396cf",
+    "storage_bucket": "smart-doctor-396cf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1073149017889:android:a05a32032d54d8d4",
+        "android_client_info": {
+          "package_name": "com.example.danut.smartdoctor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1073149017889-bavvgcdli710oj30gtt2m280htnh91lm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBheYIGuB-lq5CWretbh1ESgtuGIxiwSng"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

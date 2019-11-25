@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backgrandier"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="0dp"
+    tools:context="com.example.danut.smartdoctor.MainActivity"
+    tools:showIn="@layout/activity_main">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="35dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="323dp"
+            android:layout_height="332dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="70dp"
+            android:background="@drawable/smartdoctor"/>
+
+        <Button
+            android:id="@+id/btnNfc"
+            android:layout_width="180dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/btnLogInMain"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-135dp"
+            android:background="@drawable/bgdbutton"
+            android:text="NFC"
+            android:textColor="#FFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnLogInMain"
+            android:layout_width="180dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/imageView"
+            android:background="@drawable/btnfading"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="#FFFF"
+            android:text="Log In"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnRegisterMain"
+            android:layout_width="180dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/btnLogInMain"
+            android:background="@drawable/btninversefading"
+            android:text="Register"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="#FFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+    </RelativeLayout>
+</ScrollView>

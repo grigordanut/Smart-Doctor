@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backgrandier"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="0dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="30dp">
+
+        <TextView
+            android:id="@+id/tvPatNFCFirstName"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:paddingTop="5dp"
+            android:background="@drawable/bgrinput"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:textSize="22sp"
+            android:ems="10"
+            android:text="First Name:"
+            android:textColor="#000000"
+            android:paddingLeft="5dp"/>
+
+        <TextView
+            android:id="@+id/tvPatNFCLastName"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:paddingTop="5dp"
+            android:background="@drawable/bgrinput"
+            android:layout_below="@id/tvPatNFCFirstName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:textSize="22sp"
+            android:ems="10"
+            android:text="Last Name:"
+            android:textColor="#000000"
+            android:paddingLeft="5dp"/>
+
+        <TextView
+            android:id="@+id/tvPatNFCDocName"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bgrinput"
+            android:layout_below="@id/tvPatNFCLastName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:textSize="22sp"
+            android:ems="10"
+            android:text="Doctor Name"
+            android:textColor="#000000"
+            android:paddingLeft="5dp"/>
+
+        <TextView
+            android:id="@+id/tvPatNFCHospName"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:paddingTop="5dp"
+            android:background="@drawable/bgrinput"
+            android:layout_below="@id/tvPatNFCDocName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:textSize="22sp"
+            android:ems="10"
+            android:text="Hospital Name"
+            android:textColor="#000000"
+            android:paddingLeft="5dp"/>
+
+
+    </RelativeLayout>
+
+</ScrollView>
