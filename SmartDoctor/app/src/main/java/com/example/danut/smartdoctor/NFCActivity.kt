@@ -213,7 +213,7 @@ class NFCActivity : Activity() {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
             override fun onDataChange(p0: DataSnapshot) {
-                if(p0!!.exists()){
+                if(p0.exists()){
                     for(h in p0.children){
 
                         val saveCode = etCheckTest.text.toString()
