@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.danut.smartdoctor">
-
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.NFC" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
-
-    <uses-feature android:name="android.hardware.nfc" />
-    <uses-feature android:name="android.hardware.bluetooth" />
+    package="com.example.smartdoctor">
 
     <application
         android:allowBackup="true"
@@ -20,42 +10,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".Login"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterCustomer"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:exported="true">
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LogIn" />
-        <activity android:name=".LoginBy" />
-        <activity android:name=".DoctorPage" />
-        <activity android:name=".ResetPassword" />
-        <activity android:name=".AddPatient" />
-        <activity android:name=".PatientsList" />
-        <activity android:name=".ContactUsForm" />
-        <activity android:name=".CheckUniqueCode" />
-        <activity android:name=".HospitalPage" />
-        <activity android:name=".FingerPrintScan" />
-        <activity android:name=".HospitalRegister" />
-        <activity android:name=".DoctorRegister" />
-        <activity android:name=".DoctorsList" />
-        <activity android:name=".HospitalsList" />
-        <activity android:name=".HospitalListAddDoctor" />
-        <activity android:name=".NFCActivity" />
-        <activity android:name=".PatientPage" />
-        <activity android:name=".MedicalRecordList" />
-        <activity android:name=".PatientsListHospital" />
-        <activity android:name=".AddMedicalRecord" />
-        <activity android:name=".PatientListAddMedRecord" />
-        <activity android:name=".PatientListShowMedRecord" />
-        <activity android:name=".DoctorEditProfile" />
-        <activity android:name=".MedicalRecordPatient" />
-        <activity android:name=".PatientChangePassword" />
-        <activity android:name=".PatientNFC"></activity>
     </application>
 
 </manifest>
