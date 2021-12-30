@@ -1,4 +1,58 @@
 <resources>
     <string name="app_name">Smart Doctor</string>
     <string name="action_settings">Settings</string>
+
+    <!--    Layout Activities-->
+
+    <!--    Activity Check Unique Code-->
+    <string name="tv_checkUniqueCode">Please check your Unique Code</string>
+    <string name="tv_hospitalUniqueCode">Enter H.. or h.. for Hospital</string>
+    <string name="tv_doctorUniqueCode">Enter D.. or d.. for Doctor</string>
+    <string name="et_checkUniqueCode">Enter your Unique Code</string>
+    <string name="btn_checkUniqueCode">Check Code</string>
+
+    <!--    Activity Contact Us Form-->
+
+    <!--    Activity Hospital Page-->
+    <string name="tv_doctorPage">Doctor Page</string>
+    <string name="tv_welcomeDoctorPage">Welcome</string>
+    <string name="tv_doctorPersonalDetails">Doctor Personal Details</string>
+    <string name="tv_doctorAccountDetails">Doctor Personal Account:</string>
+    <string name="tv_doctorPatients">Patients Available</string>
+    <string name="tv_doctorPatientsAv">0</string>
+    <string name="open_doctorPage">Open</string>
+    <string name="close_doctorPage">Close</string>
+
+
+
+
+    <!--    Activity Doctor Registration-->
+    <string name="tv_doctorRegistrationPage">Enter the Doctor Register details.</string>
+    <string name="et_doctorUniqueCode">Unique Code</string>
+    <string name="et_doctorFirstName">First Name</string>
+    <string name="et_doctorLastName">Last Name</string>
+    <string name="et_doctorPhoneNumber">Phone Number</string>
+    <string name="et_doctorEmailAddress">Email Address</string>
+    <string name="et_doctorPassword">Password</string>
+    <string name="et_doctorConfirmPassword">Confirm Password</string>
+
+
+    <!--    Activity Hospital Page-->
+    <string name="tv_hospitalPage">Hospital Page</string>
+    <string name="tv_welcomeHospitalPage">Welcome</string>
+    <string name="tv_hospitalPersonalDetails">Hospital Personal Details</string>
+    <string name="tv_hospitalAccountDetails">Hospital Personal Account:</string>
+    <string name="tv_hospitalDoctors">Doctors Available</string>
+    <string name="tv_hospitalDoctorsAv">0</string>
+    <string name="tv_hospitalPatients">Patients Available</string>
+    <string name="tv_hospitalPatientsAv">0</string>
+    <string name="open_hospPage">Open</string>
+    <string name="close_hospPage">Close</string>
+
+
+    <!--    Menu Drawer Customer Rent Bikes-->
+    <string name="mDHosp_addDoctors">Add Doctors</string>
+    <string name="mDHosp_showDoctorsList">Doctors List</string>
+    <string name="mDHosp_showPatients">Patients List</string>
+
 </resources>

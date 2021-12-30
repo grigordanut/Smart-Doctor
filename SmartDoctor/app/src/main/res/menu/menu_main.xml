@@ -7,4 +7,10 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/contactUs"
+        android:orderInCategory="200"
+        app:showAsAction="ifRoom"
+        android:title="Contact Us"/>
 </menu>

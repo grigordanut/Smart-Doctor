@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backgrandier"
+    tools:context=".DoctorRegistration"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvHospNameDoctorReg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:text="Bike Details"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/tvHospKeyDoctorReg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:text="Bike Store Key: "
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="22sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/DocUniqueCodeWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="20dp"
+            android:textColorHint="#000000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etDocUniqueCode"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/bgrinput"
+                android:ems="10"
+                android:hint="@string/et_doctorUniqueCode"
+                android:inputType="textPersonName"
+                android:paddingStart="10dp"
+                android:textSize="22sp"
+                tools:ignore="RtlSymmetry" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/DoctorFirstNameWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="5dp"
+            android:textColorHint="#000000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etDocFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/bgrinput"
+                android:ems="10"
+                android:hint="@string/et_doctorFirstName"
+                android:inputType="textPersonName"
+                android:paddingStart="10dp"
+                android:textSize="22sp"
+                tools:ignore="RtlSymmetry" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/DocLastNameWrapper"
+            android:layout_width="match_parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="5dp"
+            android:textColorHint="#000000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etDocLastName"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/bgrinput"
+                android:ems="10"
+                android:hint="@string/et_doctorLastName"
+                android:inputType="textPersonName"
+                android:paddingStart="10dp"
+                android:textSize="22sp"
+                tools:ignore="RtlSymmetry" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/DocPhoneNumbWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="5dp"
+            android:textColorHint="#000000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etDocPhoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/bgrinput"
+                android:ems="10"
+                android:hint="@string/et_doctorPhoneNumber"
+                android:inputType="phone"
+                android:paddingStart="10dp"
+                android:textSize="22sp"
+                tools:ignore="RtlSymmetry" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/DocEmailWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="5dp"
+            android:textColorHint="#000000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etDocEmailReg"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/bgrinput"
+                android:ems="10"
+                android:hint="@string/et_doctorEmailAddress"
+                android:inputType="textEmailAddress"
+                android:paddingStart="10dp"
+                android:textSize="22sp"
+                tools:ignore="RtlSymmetry" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/DocPassWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="5dp"
+            android:textColorHint="#000000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etDocPassReg"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/bgrinput"
+                android:ems="10"
+                android:hint="@string/et_doctorPassword"
+                android:inputType="textPassword"
+                android:paddingStart="10dp"
+                android:textSize="22sp"
+                tools:ignore="RtlSymmetry" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/DocConfPassWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="5dp"
+            android:textColorHint="#000000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etDocConfPassReg"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/bgrinput"
+                android:ems="10"
+                android:hint="@string/et_doctorConfirmPassword"
+                android:inputType="textPassword"
+                android:paddingStart="5dp"
+                android:textSize="22sp"
+                tools:ignore="RtlSymmetry" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnDoctorReg"
+                android:layout_width="match_parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/bgdbutton"
+                android:text="Register"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="#FFFF"
+                android:layout_weight="1"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="20dp"/>
+
+            <Button
+                android:id="@+id/btnLoginDoctorReg"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/bgdbutton"
+                android:text="Log In"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="#FFFF"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="20dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

@@ -10,13 +10,50 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".HospitalImageAddDoctor"
+            android:exported="false" />
+        <activity
+            android:name=".DoctorPage"
+            android:exported="false" />
+        <activity
+            android:name=".DoctorRegistration"
+            android:exported="false" />
+        <activity
+            android:name=".DoctorsList"
+            android:exported="false" />
+        <activity
+            android:name=".PatientsListHospital"
+            android:exported="false" />
+        <activity
+            android:name=".ResetPassword"
+            android:exported="false" />
+        <activity
+            android:name=".HospitalPage"
+            android:exported="false" />
+        <activity
+            android:name=".FingerPrintScan"
+            android:exported="false" />
+        <activity
+            android:name=".HospitalRegistration"
+            android:exported="false" />
+        <activity
+            android:name=".NFCActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginBy"
+            android:exported="false" />
+        <activity
+            android:name=".CheckUniqueCode"
+            android:exported="false" />
+        <activity
+            android:name=".ContactUsForm"
+            android:exported="false" />
+        <activity
             android:name=".Login"
             android:exported="false" />
         <activity
-            android:name=".RegisterCustomer"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
+            android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
