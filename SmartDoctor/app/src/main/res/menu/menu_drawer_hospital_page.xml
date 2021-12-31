@@ -8,7 +8,7 @@
             android:title="@string/mDHosp_addDoctors" />
 
         <item
-            android:id="@+id/userShow_doctorsList"
+            android:id="@+id/hospitalShow_doctorsList"
             android:icon="@drawable/ic_launcher_foreground"
             android:title="@string/mDHosp_showDoctorsList" />
 

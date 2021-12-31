@@ -36,6 +36,7 @@ public class HospitalImageAddDoctor extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

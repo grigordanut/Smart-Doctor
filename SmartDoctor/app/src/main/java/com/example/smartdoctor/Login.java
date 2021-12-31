@@ -177,7 +177,7 @@ public class Login extends AppCompatActivity {
                     Hospital hos = users.getValue(Hospital.class);
                     assert hos != null;
                     if(email_LogUser.equals(hos.getHospEmail_Address())){
-                        hos.setHosp_Key(users.getKey());
+                        //hos.setHosp_Key(users.getKey());
                         Toast.makeText(Login.this, "Log In successful Hospital", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Login.this, HospitalPage.class));
                         progressDialog.dismiss();

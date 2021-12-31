@@ -24,8 +24,6 @@
     <string name="close_doctorPage">Close</string>
 
 
-
-
     <!--    Activity Doctor Registration-->
     <string name="tv_doctorRegistrationPage">Enter the Doctor Register details.</string>
     <string name="et_doctorUniqueCode">Unique Code</string>
@@ -49,10 +47,28 @@
     <string name="open_hospPage">Open</string>
     <string name="close_hospPage">Close</string>
 
+    <!--    Menu-->
 
-    <!--    Menu Drawer Customer Rent Bikes-->
+    <!--    Menu Doctor Page-->
+    <string name="menuDoctor_MainLogOut">Log Out</string>
+    <string name="menuDoctor_MainEditProfile">Edit Profile</string>
+    <string name="menuDoctor_MainChangePassword">Change Password</string>
+
+    <!--    Menu Drawer Doctor Page-->
+    <string name="mDDoctor_addPatient">Add Patients</string>
+    <string name="mDDoctor_showPatientList">Patients List</string>
+    <string name="mDDoctor_addMedicalRecords">Add MedicalRecord</string>
+    <string name="mDDoctor_showMedicalRecords">Medical Record List</string>
+
+    <!--    Menu Drawer Hospital Page-->
     <string name="mDHosp_addDoctors">Add Doctors</string>
     <string name="mDHosp_showDoctorsList">Doctors List</string>
     <string name="mDHosp_showPatients">Patients List</string>
+
+    <!--    Menu Hospital Page-->
+    <string name="menuHosp_MainLogOut">Log Out</string>
+    <string name="menuHosp_MainEditProfile">Edit Profile</string>
+    <string name="menuHosp_MainChangePassword">Change Password</string>
+
 
 </resources>

@@ -22,7 +22,7 @@
             android:layout_height="330dp"
             android:layout_gravity="center"
             android:layout_marginTop="80dp"
-            android:background="@drawable/smart_doctor" />
+            android:background="@drawable/smart_doctormain" />
 
         <Button
             android:id="@+id/btnNfc"

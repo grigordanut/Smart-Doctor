@@ -10,6 +10,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".DoctorChangePassword"
+            android:exported="false" />
+        <activity
+            android:name=".DoctorEditProfile"
+            android:exported="false" />
+        <activity
+            android:name=".HospitalChangePassword"
+            android:exported="false" />
+        <activity
+            android:name=".HospitalEditProfile"
+            android:exported="false" />
+        <activity
+            android:name=".PatientRegistration"
+            android:exported="false" />
+        <activity
             android:name=".HospitalImageAddDoctor"
             android:exported="false" />
         <activity

@@ -10,7 +10,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:background="@drawable/smart_doctor"
+        android:background="@drawable/smart_hospital"
         tools:ignore="ContentDescription"/>
 
 </LinearLayout>

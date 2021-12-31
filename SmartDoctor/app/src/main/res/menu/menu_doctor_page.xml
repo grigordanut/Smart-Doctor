@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/doctorLogOut"
+        android:orderInCategory="100"
+        android:title="@string/menuDoctor_MainLogOut"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/doctorEditProfile"
+        android:orderInCategory="100"
+        android:title="@string/menuDoctor_MainEditProfile"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/doctorChangePassword"
+        android:orderInCategory="200"
+        android:title="@string/menuDoctor_MainChangePassword"
+        app:showAsAction="never"/>
+</menu>
+
+

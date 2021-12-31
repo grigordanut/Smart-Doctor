@@ -15,8 +15,8 @@ import java.util.List;
 
 public class HospitalAdapterAddDoctor extends RecyclerView.Adapter<HospitalAdapterAddDoctor.ImageViewHolder> {
 
-    private Context hospitalContext;
-    private List<Hospital> hospitalUploads;
+    private final Context hospitalContext;
+    private final List<Hospital> hospitalUploads;
 
     public HospitalAdapterAddDoctor(Context hospital_context, List<Hospital> hospital_uploads){
         hospitalContext = hospital_context;
@@ -54,7 +54,7 @@ public class HospitalAdapterAddDoctor extends RecyclerView.Adapter<HospitalAdapt
         return hospitalUploads.size();
     }
 
-    public class ImageViewHolder extends RecyclerView.ViewHolder {
+    public static class ImageViewHolder extends RecyclerView.ViewHolder {
         public TextView tVShowHospName;
 
         public ImageViewHolder(View itemView) {

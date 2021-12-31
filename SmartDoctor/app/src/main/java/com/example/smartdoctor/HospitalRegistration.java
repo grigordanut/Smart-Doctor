@@ -34,8 +34,6 @@ public class HospitalRegistration extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
 
-    private String hospital_Key;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -162,8 +160,7 @@ public class HospitalRegistration extends AppCompatActivity {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         assert user != null;
         String hosp_Id = user.getUid();
-        hospital_Key = hosp_Id;
-        Hospital hosp = new Hospital(hosp_UniqueCodeReg, hosp_NameReg, hosp_EmailReg, hospital_Key);
+        Hospital hosp = new Hospital(hosp_UniqueCodeReg, hosp_NameReg, hosp_EmailReg);
         databaseReference.child(hosp_Id).setValue(hosp);
     }
 }

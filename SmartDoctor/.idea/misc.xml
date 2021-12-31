@@ -24,6 +24,7 @@
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/activity_doctor_page.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/activity_doctor_registration.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/activity_doctors_list.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/activity_hospital_edit_profile.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/activity_hospital_image_add_doc.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/activity_hospital_image_add_doctor.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/activity_hospital_list_add_doctor.xml" value="0.24615384615384617" />
@@ -37,12 +38,17 @@
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/activity_register_customer.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/content_main.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/customer_header_rent_bikes.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/dialog_signin.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/doctor_page_header.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/hospital_page_header.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/image_doctor.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/image_hospital.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/menu/menu_customer_rent_bikes.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/menu/menu_doctor_page.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/menu/menu_drawer_customer_rent_bikes.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/menu/menu_drawer_doctor_page.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/menu/menu_drawer_hospital_page.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/menu/menu_hospital_page.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/menu/menu_main.xml" value="0.25" />
       </map>
     </option>

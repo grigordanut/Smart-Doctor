@@ -1,5 +1,7 @@
 package com.example.smartdoctor;
 
+import com.google.firebase.database.Exclude;
+
 public class Hospital {
 
     public String hospUnique_Code;
@@ -11,11 +13,10 @@ public class Hospital {
 
     }
 
-    public Hospital(String hospUnique_Code, String hosp_Name, String hospEmail_Address, String hosp_Key) {
+    public Hospital(String hospUnique_Code, String hosp_Name, String hospEmail_Address) {
         this.hospUnique_Code = hospUnique_Code;
         this.hosp_Name = hosp_Name;
         this.hospEmail_Address = hospEmail_Address;
-        this.hosp_Key = hosp_Key;
     }
 
     public String getHospUnique_Code() {
@@ -42,10 +43,12 @@ public class Hospital {
         this.hospEmail_Address = hospEmail_Address;
     }
 
+    @Exclude
     public String getHosp_Key() {
         return hosp_Key;
     }
 
+    @Exclude
     public void setHosp_Key(String hosp_Key) {
         this.hosp_Key = hosp_Key;
     }

@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -44,12 +46,14 @@ public class HospitalPage extends AppCompatActivity {
 
     private int numberDoctorsAv;
 
+    private String hospital_Key;
+
 
     private TextView tVWelcomeHospital, tVShowHospitalDetails, tVShowDoctorsAv;
 
     //Declaring some objects
-    private DrawerLayout drawerLayoutUserRent;
-    private ActionBarDrawerToggle drawerToggleUserRent;
+    private DrawerLayout drawerLayoutHospital;
+    private ActionBarDrawerToggle drawerToggleHospital;
     private NavigationView navigationViewUserRent;
 
     @Override
@@ -66,13 +70,13 @@ public class HospitalPage extends AppCompatActivity {
         tVShowHospitalDetails = findViewById(R.id.tvShowHospitalDetails);
         tVShowDoctorsAv = findViewById(R.id.tvShowDoctorsAv);
 
-        drawerLayoutUserRent = findViewById(R.id.activity_customer_page_rent_bikes);
+        drawerLayoutHospital = findViewById(R.id.activity_hospital_page);
         navigationViewUserRent = findViewById(R.id.navViewHospPage);
 
-        drawerToggleUserRent = new ActionBarDrawerToggle(this, drawerLayoutUserRent, R.string.open_hospPage, R.string.close_hospPage);
+        drawerToggleHospital = new ActionBarDrawerToggle(this, drawerLayoutHospital, R.string.open_doctorPage, R.string.close_doctorPage);
 
-        drawerLayoutUserRent.addDrawerListener(drawerToggleUserRent);
-        drawerToggleUserRent.syncState();
+        drawerLayoutHospital.addDrawerListener(drawerToggleHospital);
+        drawerToggleHospital.syncState();
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
@@ -85,14 +89,17 @@ public class HospitalPage extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 //retrieve data from database
-                for (DataSnapshot ds_User : dataSnapshot.getChildren()) {
-                    final FirebaseUser hosp_Db = firebaseAuth.getCurrentUser();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
-                    final Hospital hosp_Data = ds_User.getValue(Hospital.class);
+                    final FirebaseUser hosp_Db = firebaseAuth.getCurrentUser();
+                    final Hospital hosp_Data = postSnapshot.getValue(Hospital.class);
 
                     assert hosp_Db != null;
                     assert hosp_Data != null;
-                    if (hosp_Db.getUid().equalsIgnoreCase(ds_User.getKey())) {
+
+                    hospital_Key = hosp_Db.getUid();
+
+                    if (hosp_Db.getUid().equalsIgnoreCase(postSnapshot.getKey())) {
                         tVWelcomeHospital.setText("Welcome: " + hosp_Data.getHosp_Name());
                         tVShowHospitalDetails.setText("Hospital Name: \n" + hosp_Data.getHosp_Name()+"\n\nEmail: \n"+hosp_Data.hospEmail_Address);
 
@@ -112,10 +119,10 @@ public class HospitalPage extends AppCompatActivity {
                                         break;
 
                                     //Show Doctors List
-                                    case R.id.userShow_doctorsList:
+                                    case R.id.hospitalShow_doctorsList:
                                         Intent doc_List = new Intent(HospitalPage.this, DoctorsList.class);
                                         doc_List.putExtra("HOSPName", hosp_Data.getHosp_Name());
-                                        doc_List.putExtra("HOSPId", hosp_Db.getUid());
+                                        doc_List.putExtra("HOSPKey", hosp_Db.getUid());
                                         startActivity(doc_List);
                                         break;
 
@@ -144,18 +151,47 @@ public class HospitalPage extends AppCompatActivity {
         });
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_hospital_page, menu);
-//        return true;
-//    }
+    public void hospitalLogOut(){
+        firebaseAuth.signOut();
+        finish();
+        startActivity(new Intent(HospitalPage.this, MainActivity.class));
+    }
+
+    public void hospitalEditProfile(){
+        finish();
+        startActivity(new Intent(HospitalPage.this, HospitalEditProfile.class));
+    }
+
+    public void hospitalChangePassword(){
+        finish();
+        startActivity(new Intent(HospitalPage.this, HospitalChangePassword.class));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_hospital_page, menu);
+        return true;
+    }
+
 
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        if (drawerToggleUserRent.onOptionsItemSelected(item)) {
+        if (drawerToggleHospital.onOptionsItemSelected(item)) {
             return true;
+        }
+
+        if (item.getItemId() == R.id.hospitalLogOut){
+            alertDialogHospLogout();
+        }
+
+        if (item.getItemId() == R.id.hospitalEditProfile){
+            hospitalEditProfile();
+        }
+
+        if (item.getItemId() == R.id.hospitalChangePassword){
+            hospitalChangePassword();
         }
 
         return super.onOptionsItemSelected(item);
@@ -180,10 +216,12 @@ public class HospitalPage extends AppCompatActivity {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Doctor doctor_Data = postSnapshot.getValue(Doctor.class);
                     assert doctor_Data != null;
-                    //doctor_Data.docHosp_Key(postSnapshot.getKey());
-                    doctorsList.add(doctor_Data);
-                    numberDoctorsAv = doctorsList.size();
-                    tVShowDoctorsAv.setText(String.valueOf(numberDoctorsAv));
+                    if(doctor_Data.getDocHosp_Key().equals(hospital_Key)){
+                        doctor_Data.setDoc_Key(postSnapshot.getKey());
+                        doctorsList.add(doctor_Data);
+                        numberDoctorsAv = doctorsList.size();
+                        tVShowDoctorsAv.setText(String.valueOf(numberDoctorsAv));
+                    }
                 }
             }
 
@@ -219,4 +257,28 @@ public class HospitalPage extends AppCompatActivity {
 //            }
 //        });
 //    }
+
+    private void alertDialogHospLogout(){
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(HospitalPage.this);
+        alertDialogBuilder
+                .setMessage("Are sure to Log Out?")
+                .setCancelable(false)
+                .setPositiveButton("Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                hospitalLogOut();
+                            }
+                        })
+
+                .setNegativeButton("No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        AlertDialog alert1 = alertDialogBuilder.create();
+        alert1.show();
+    }
 }
