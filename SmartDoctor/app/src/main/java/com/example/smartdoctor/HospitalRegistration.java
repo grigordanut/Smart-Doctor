@@ -3,7 +3,9 @@ package com.example.smartdoctor;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,8 +20,11 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
@@ -32,7 +37,8 @@ public class HospitalRegistration extends AppCompatActivity {
     private ProgressDialog progressDialog;
 
     private FirebaseAuth firebaseAuth;
-    private DatabaseReference databaseReference;
+    private DatabaseReference dbRefHospUpload;
+    private DatabaseReference dbRefHospCheck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +54,14 @@ public class HospitalRegistration extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Hospitals");
 
-        Button buttonHospLogReg = (Button) findViewById(R.id.btnHospLogReg);
+        //Upload data to Hospital table
+        dbRefHospUpload = FirebaseDatabase.getInstance().getReference("Hospitals");
+
+        //Retrieve data from Hospital table
+        dbRefHospCheck = FirebaseDatabase.getInstance().getReference("Hospitals");
+
+        Button buttonHospLogReg = findViewById(R.id.btnHospLogReg);
         buttonHospLogReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,27 +75,45 @@ public class HospitalRegistration extends AppCompatActivity {
             public void onClick(View view) {
                 if (validateHospRegData()) {
 
-                    progressDialog.setMessage("Registering Hospital Details");
-                    progressDialog.show();
+                    final String hosp_NameCheck = Objects.requireNonNull(hospNameReg.getText()).toString().trim();
 
-                    firebaseAuth.createUserWithEmailAndPassword(hosp_EmailReg, hosp_PassReg)
-                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    dbRefHospCheck.orderByChild("hosp_Name").equalTo(hosp_NameCheck)
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        sendEmailVerification();
-
-                                        //clear input text fields
-                                        hospUniqueCode.setText("");
-                                        hospNameReg.setText("");
-                                        hospEmailReg.setText("");
-                                        hospPassReg.setText("");
-                                        hospConfPassReg.setText("");
-
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists()) {
+                                        alertHospitalExists();
                                     } else {
-                                        progressDialog.dismiss();
-                                        Toast.makeText(HospitalRegistration.this, "Registration Failed, this email address was already used to other account",Toast.LENGTH_SHORT).show();
+
+                                        progressDialog.setMessage("Registering Hospital Details");
+                                        progressDialog.show();
+
+                                        firebaseAuth.createUserWithEmailAndPassword(hosp_EmailReg, hosp_PassReg)
+                                                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                                        if (task.isSuccessful()) {
+                                                            sendEmailVerification();
+
+                                                            //clear input text fields
+                                                            hospUniqueCode.setText("");
+                                                            hospNameReg.setText("");
+                                                            hospEmailReg.setText("");
+                                                            hospPassReg.setText("");
+                                                            hospConfPassReg.setText("");
+
+                                                        } else {
+                                                            progressDialog.dismiss();
+                                                            Toast.makeText(HospitalRegistration.this, "Registration Failed, this email address was already used to other account", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                });
                                     }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    Toast.makeText(HospitalRegistration.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             });
                 }
@@ -141,7 +170,7 @@ public class HospitalRegistration extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
-                        sendHospRegData();
+                        uploadHospRegData();
                         progressDialog.dismiss();
                         Toast.makeText(HospitalRegistration.this, "Successful Registered, Email verification has been sent", Toast.LENGTH_SHORT).show();
                         firebaseAuth.signOut();
@@ -156,11 +185,30 @@ public class HospitalRegistration extends AppCompatActivity {
         }
     }
 
-    private void sendHospRegData() {
+    //Upload Hospital data
+    private void uploadHospRegData() {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         assert user != null;
         String hosp_Id = user.getUid();
         Hospital hosp = new Hospital(hosp_UniqueCodeReg, hosp_NameReg, hosp_EmailReg);
-        databaseReference.child(hosp_Id).setValue(hosp);
+        dbRefHospUpload.child(hosp_Id).setValue(hosp);
+    }
+
+    //Notify if the Hospital name already exist in database
+    public void alertHospitalExists() {
+        final String hosp_NameCheckAlert = Objects.requireNonNull(hospNameReg.getText()).toString().trim();
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+        alertDialogBuilder.setMessage("The Hospital: " + hosp_NameCheckAlert + " already exists!");
+        alertDialogBuilder.setCancelable(false);
+        alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert1 = alertDialogBuilder.create();
+        alert1.show();
     }
 }

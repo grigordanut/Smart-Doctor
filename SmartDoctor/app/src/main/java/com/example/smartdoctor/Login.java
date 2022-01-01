@@ -177,8 +177,8 @@ public class Login extends AppCompatActivity {
                     Hospital hos = users.getValue(Hospital.class);
                     assert hos != null;
                     if(email_LogUser.equals(hos.getHospEmail_Address())){
-                        //hos.setHosp_Key(users.getKey());
-                        Toast.makeText(Login.this, "Log In successful Hospital", Toast.LENGTH_SHORT).show();
+                        hos.setHosp_Key(users.getKey());
+                        Toast.makeText(Login.this, "Log in successful Hospital", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Login.this, HospitalPage.class));
                         progressDialog.dismiss();
                         finish();
@@ -201,8 +201,8 @@ public class Login extends AppCompatActivity {
                     Doctor doc = users.getValue(Doctor.class);
                     assert doc != null;
                     if(email_LogUser.equals(doc.getDocEmail_Address())){
-                        //doc.;
-                        Toast.makeText(Login.this, "Log In successful Doctor", Toast.LENGTH_SHORT).show();
+                        doc.setDoc_Key(users.getKey());
+                        Toast.makeText(Login.this, "Log in successful Doctor", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Login.this, DoctorPage.class));
                         progressDialog.dismiss();
                         finish();

@@ -15,6 +15,12 @@
         app:showAsAction="never"/>
 
     <item
+        android:id="@+id/hospitalChangeEmail"
+        android:orderInCategory="200"
+        android:title="@string/menuHosp_MainChangeEmail"
+        app:showAsAction="never"/>
+
+    <item
         android:id="@+id/hospitalChangePassword"
         android:orderInCategory="200"
         android:title="@string/menuHosp_MainChangePassword"

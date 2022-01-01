@@ -162,6 +162,11 @@ public class HospitalPage extends AppCompatActivity {
         startActivity(new Intent(HospitalPage.this, HospitalEditProfile.class));
     }
 
+    public void hospitalChangeEmail(){
+        finish();
+        startActivity(new Intent(HospitalPage.this, HospitalChangeEmail.class));
+    }
+
     public void hospitalChangePassword(){
         finish();
         startActivity(new Intent(HospitalPage.this, HospitalChangePassword.class));
@@ -188,6 +193,10 @@ public class HospitalPage extends AppCompatActivity {
 
         if (item.getItemId() == R.id.hospitalEditProfile){
             hospitalEditProfile();
+        }
+
+        if (item.getItemId() == R.id.hospitalChangeEmail){
+            hospitalChangeEmail();
         }
 
         if (item.getItemId() == R.id.hospitalChangePassword){

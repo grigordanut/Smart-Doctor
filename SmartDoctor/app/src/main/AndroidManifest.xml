@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".HospitalChangeEmail"
+            android:exported="false" />
+        <activity
             android:name=".DoctorChangePassword"
             android:exported="false" />
         <activity

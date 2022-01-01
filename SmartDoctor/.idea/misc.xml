@@ -12,6 +12,7 @@
         <entry key="..\:/Users/danut/AndroidStudioProjects/Cubicare/app/src/main/res/layout/content_main.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Cubicare/app/src/main/res/menu/menu_main.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/drawable-v24/bgrinput.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/drawable-v24/edit_text_round_corners.xml" value="0.26205128205128203" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/drawable-v24/tv_square_corners.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/drawable/backgrandier.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/drawable/bgdbutton.xml" value="0.26614583333333336" />
@@ -24,6 +25,7 @@
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/activity_doctor_page.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/activity_doctor_registration.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/activity_doctors_list.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/activity_hospital_change_email.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/activity_hospital_edit_profile.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/activity_hospital_image_add_doc.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/activity_hospital_image_add_doctor.xml" value="0.25" />
@@ -48,6 +50,7 @@
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/menu/menu_drawer_customer_rent_bikes.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/menu/menu_drawer_doctor_page.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/menu/menu_drawer_hospital_page.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/menu/menu_hospital_edit_profile.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/menu/menu_hospital_page.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/menu/menu_main.xml" value="0.25" />
       </map>

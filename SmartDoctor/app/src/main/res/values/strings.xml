@@ -65,9 +65,13 @@
     <string name="mDHosp_showDoctorsList">Doctors List</string>
     <string name="mDHosp_showPatients">Patients List</string>
 
+    <!--    Menu Hospital Edit Profile-->
+    <string name="menuHosp_EditProfileGoBack">Go Back</string>
+
     <!--    Menu Hospital Page-->
     <string name="menuHosp_MainLogOut">Log Out</string>
     <string name="menuHosp_MainEditProfile">Edit Profile</string>
+    <string name="menuHosp_MainChangeEmail">Change Email</string>
     <string name="menuHosp_MainChangePassword">Change Password</string>
 
 

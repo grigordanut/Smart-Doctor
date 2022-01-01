@@ -1,21 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HospitalEditProfile">
+    android:background="@android:color/holo_blue_bright"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="0dp">
 
-    <TextView
-        android:layout_width="300dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="edit Profile"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.115"
-        tools:ignore="HardcodedText" />
+        android:orientation="vertical"
+        android:padding="16dp"
+        tools:context=".EditCustomerProfile">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tvHospitalEditProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="Edit Hospital Profile"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/tvHospUniqueCodeUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="Unique Code"
+            android:textAlignment="textStart"
+            android:textColor="#000000"
+            android:textSize="22sp"
+            tools:ignore="RtlCompat,RtlSymmetry" />
+
+        <EditText
+            android:id="@+id/etHospUniqueCodeUp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/edit_text_round_corners"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:paddingStart="10dp"
+            android:text="Unique Code"
+            android:textSize="24sp"
+            tools:ignore="Autofill,LabelFor,RtlSymmetry" />
+
+        <TextView
+            android:id="@+id/tvHospNameUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="Hospital Name"
+            android:textAlignment="textStart"
+            android:textColor="#000000"
+            android:textSize="22sp"
+            tools:ignore="RtlCompat,RtlSymmetry" />
+
+        <EditText
+            android:id="@+id/etHospNameUp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/edit_text_round_corners"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:paddingStart="10dp"
+            android:text="Hospital Name"
+            android:textSize="24sp"
+            tools:ignore="Autofill,LabelFor,RtlSymmetry" />
+
+        <TextView
+            android:id="@+id/tvHospEmailUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="Email Address"
+            android:textAlignment="textStart"
+            android:textColor="#000000"
+            android:textSize="22sp"
+            tools:ignore="RtlCompat,RtlSymmetry" />
+
+        <EditText
+            android:id="@+id/etHospEmailUp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/edit_text_round_corners"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            android:paddingStart="10dp"
+            android:text="Email Address"
+            android:textSize="24sp"
+            tools:ignore="Autofill,LabelFor,RtlSymmetry" />
+
+        <Button
+            android:id="@+id/btnHospSaveUp"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/bgdbutton"
+            android:text="Save Changes"
+            android:textColor="#ffffff"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</ScrollView>
