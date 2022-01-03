@@ -1,17 +1,54 @@
 <resources>
     <string name="app_name">Smart Doctor</string>
-    <string name="action_settings">Settings</string>
 
     <!--    Layout Activities-->
 
     <!--    Activity Check Unique Code-->
-    <string name="tv_checkUniqueCode">Please check your Unique Code</string>
+    <string name="tv_checkUniqueCode">Check your Unique Code</string>
     <string name="tv_hospitalUniqueCode">Enter H.. or h.. for Hospital</string>
     <string name="tv_doctorUniqueCode">Enter D.. or d.. for Doctor</string>
     <string name="et_checkUniqueCode">Enter your Unique Code</string>
     <string name="btn_checkUniqueCode">Check Code</string>
 
     <!--    Activity Contact Us Form-->
+
+    <!--    Activity Hospital Image Add Doctor-->
+
+
+    <!--    Activity Hospital Registration-->
+    <string name="tv_hospitalPageReg">Hospital Registration Page</string>
+    <string name="et_hospitalUniqueCodeReg">Hospital Unique Code</string>
+    <string name="et_hospitalNameReg">Hospital Name</string>
+    <string name="et_hospitalEmailAddressReg">Email Address</string>
+    <string name="et_hospitalPasswordReg">Password</string>
+    <string name="et_hospitalConfPasswordReg">Confirm Password</string>
+    <string name="btn_hospitalPageReg">Register</string>
+    <string name="btn_hospitalPageLog">Log In</string>
+
+    <!--    Activity Login-->
+    <string name="tv_userPageLog">Users Log in Page</string>
+    <string name="et_userEmailLog">Email Address</string>
+    <string name="et_userPasswordLog">Password</string>
+    <string name="btn_userPageSignUp">Sign Up</string>
+    <string name="btn_userPageSignIn">Sign In</string>
+    <string name="tv_userForgottenPass">Forgotten Password</string>
+
+
+    <!--    Activity Login By-->
+    <string name="tv_loginByPage">Log in by:</string>
+    <string name="cb_loginByPersonalDetails">Entering Personal Details</string>
+    <string name="btn_loginByPersonalDetails">Disabled</string>
+    <string name="cb_loginByFingerPrint">Fingerprint - DOCTOR ONLY</string>
+    <string name="btn_loginByFingerPrint">Disabled</string>
+
+    <!--    Activity Main-->
+    <string name="tv_mainPage">Welcome to Smart Doctor</string>
+    <string name="btn_nfcMainPage">NFC</string>
+    <string name="btn_registerMainPage">Register</string>
+    <string name="btn_loginMainPage">Log In</string>
+
+
+    <!--    Activity NFCActivity-->
 
     <!--    Activity Hospital Page-->
     <string name="tv_doctorPage">Doctor Page</string>
@@ -25,8 +62,8 @@
 
 
     <!--    Activity Doctor Registration-->
-    <string name="tv_doctorRegistrationPage">Enter the Doctor Register details.</string>
-    <string name="et_doctorUniqueCode">Unique Code</string>
+    <string name="tv_doctorRegPage">Enter the Doctor Register details.</string>
+    <string name="et_doctorUniqueCode">Doctor Unique Code</string>
     <string name="et_doctorFirstName">First Name</string>
     <string name="et_doctorLastName">Last Name</string>
     <string name="et_doctorPhoneNumber">Phone Number</string>
@@ -73,6 +110,4 @@
     <string name="menuHosp_MainEditProfile">Edit Profile</string>
     <string name="menuHosp_MainChangeEmail">Change Email</string>
     <string name="menuHosp_MainChangePassword">Change Password</string>
-
-
 </resources>

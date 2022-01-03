@@ -39,9 +39,9 @@
             android:textSize="22sp" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/DocUniqueCodeWrapper"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="20dp"
@@ -50,8 +50,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etDocUniqueCode"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/bgrinput"
+                android:layout_height="match_parent"
                 android:ems="10"
                 android:hint="@string/et_doctorUniqueCode"
                 android:inputType="textPersonName"
@@ -61,19 +60,18 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/DoctorFirstNameWrapper"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
             android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etDocFirstName"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/bgrinput"
+                android:layout_height="match_parent"
                 android:ems="10"
                 android:hint="@string/et_doctorFirstName"
                 android:inputType="textPersonName"
@@ -83,19 +81,18 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/DocLastNameWrapper"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_height="60dp"
             android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etDocLastName"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/bgrinput"
+                android:layout_height="match_parent"
                 android:ems="10"
                 android:hint="@string/et_doctorLastName"
                 android:inputType="textPersonName"
@@ -105,19 +102,18 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/DocPhoneNumbWrapper"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
             android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etDocPhoneNumber"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/bgrinput"
+                android:layout_height="match_parent"
                 android:ems="10"
                 android:hint="@string/et_doctorPhoneNumber"
                 android:inputType="phone"
@@ -127,19 +123,18 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/DocEmailWrapper"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
             android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etDocEmailReg"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/bgrinput"
+                android:layout_height="match_parent"
                 android:ems="10"
                 android:hint="@string/et_doctorEmailAddress"
                 android:inputType="textEmailAddress"
@@ -149,19 +144,18 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/DocPassWrapper"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
             android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etDocPassReg"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/bgrinput"
+                android:layout_height="match_parent"
                 android:ems="10"
                 android:hint="@string/et_doctorPassword"
                 android:inputType="textPassword"
@@ -171,19 +165,18 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/DocConfPassWrapper"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
             android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etDocConfPassReg"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/bgrinput"
+                android:layout_height="match_parent"
                 android:ems="10"
                 android:hint="@string/et_doctorConfirmPassword"
                 android:inputType="textPassword"
@@ -200,34 +193,34 @@
             <Button
                 android:id="@+id/btnDoctorReg"
                 android:layout_width="match_parent"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="10dp"
                 android:layout_height="50dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="15dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="1"
                 android:background="@drawable/bgdbutton"
                 android:text="Register"
                 android:textAppearance="?android:textAppearanceMedium"
                 android:textColor="#FFFF"
-                android:layout_weight="1"
                 android:textSize="22sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="20dp"/>
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btnLoginDoctorReg"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="20dp"
                 android:layout_marginTop="15dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
                 android:layout_weight="1"
                 android:background="@drawable/bgdbutton"
                 android:text="Log In"
                 android:textAppearance="?android:textAppearanceMedium"
                 android:textColor="#FFFF"
                 android:textSize="22sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="20dp"/>
+                android:textStyle="bold" />
         </LinearLayout>
 
     </LinearLayout>

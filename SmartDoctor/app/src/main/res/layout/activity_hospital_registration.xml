@@ -15,42 +15,42 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textViewHospitalReg"
+            android:id="@+id/tvHospitalPageReg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
-            android:text="Enter the Hospital Register details."
+            android:text="@string/tv_hospitalPageReg"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="22sp" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/uniqueCodeHospRegWrapper"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
-            android:layout_marginEnd="22dp"
+            android:layout_marginEnd="20dp"
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etHospUniqueCodeReg"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@drawable/bgrinput"
-                android:hint="Unique Code"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:hint="@string/et_hospitalUniqueCodeReg"
                 android:inputType="text"
                 android:paddingStart="10dp"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 tools:ignore="RtlSymmetry" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/hospNameRegWrapper"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
@@ -59,9 +59,9 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etHospNameReg"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@drawable/bgrinput"
-                android:hint="Hospital Name"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:hint="@string/et_hospitalNameReg"
                 android:inputType="textPersonName|textCapWords"
                 android:paddingStart="10dp"
                 android:textSize="22sp"
@@ -69,9 +69,9 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/emailHospRegWrapper"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
@@ -80,9 +80,9 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etHospEmailReg"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@drawable/bgrinput"
-                android:hint="Hospital Email"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:hint="@string/et_hospitalEmailAddressReg"
                 android:inputType="textEmailAddress"
                 android:paddingStart="10dp"
                 android:textSize="22sp"
@@ -90,9 +90,9 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/passHospRegWrapper"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
@@ -102,9 +102,9 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etHospPassReg"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@drawable/bgrinput"
-                android:hint="Password"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:hint="@string/et_hospitalPasswordReg"
                 android:inputType="textPassword"
                 android:paddingStart="10dp"
                 android:textSize="22sp"
@@ -112,9 +112,9 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/confPassHospRegWrapper"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
@@ -124,9 +124,9 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etHospConfPassReg"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@drawable/bgrinput"
-                android:hint="Confirm Password"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:hint="@string/et_hospitalConfPasswordReg"
                 android:inputType="textPassword"
                 android:paddingStart="10dp"
                 android:textSize="22sp"
@@ -142,12 +142,12 @@
                 android:id="@+id/btnHospReg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="35dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/btn_fading_left"
-                android:text="Register"
+                android:text="@string/btn_hospitalPageReg"
                 android:textColor="#ffffff"
                 android:textSize="22sp"
                 tools:ignore="ButtonStyle" />
@@ -156,13 +156,13 @@
                 android:id="@+id/btnHospLogReg"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="35dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/btn_fading_right"
-                android:text="Log In"
+                android:text="@string/btn_hospitalPageLog"
                 android:textColor="#ffffff"
                 android:textSize="22sp"
                 tools:ignore="ButtonStyle" />

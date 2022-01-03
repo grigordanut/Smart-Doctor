@@ -48,6 +48,9 @@ public class HospitalImageAddDoctor extends AppCompatActivity {
 
         hospitalList = new ArrayList<>();
 
+        hospitalAdapterAddDoctor = new HospitalAdapterAddDoctor(HospitalImageAddDoctor.this, hospitalList);
+        hospitalRecyclerView.setAdapter(hospitalAdapterAddDoctor);
+
         tVHospListAddDoctor = findViewById(R.id.tvHospListAddDoctor);
         tVHospListAddDoctor.setText("No Hospitals; Click to add Hospital");
         tVHospListAddDoctor.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +75,7 @@ public class HospitalImageAddDoctor extends AppCompatActivity {
         hospitalDatabaseReference = FirebaseDatabase.getInstance().getReference("Hospitals");
 
         hospitalEventListener = hospitalDatabaseReference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("SetTextI18n")
+            @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 hospitalList.clear();
@@ -84,8 +87,7 @@ public class HospitalImageAddDoctor extends AppCompatActivity {
                     tVHospListAddDoctor.setText("Select your Hospital");
                     tVHospListAddDoctor.setEnabled(false);
                 }
-                hospitalAdapterAddDoctor = new HospitalAdapterAddDoctor(HospitalImageAddDoctor.this, hospitalList);
-                hospitalRecyclerView.setAdapter(hospitalAdapterAddDoctor);
+                hospitalAdapterAddDoctor.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 

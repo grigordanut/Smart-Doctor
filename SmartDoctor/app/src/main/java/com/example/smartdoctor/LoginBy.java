@@ -8,13 +8,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.TextView;
 
 public class LoginBy extends AppCompatActivity {
-
     private Button buttonPersonalDetails, buttonFingerPrint;
 
-    private CheckBox checkBoxPersonalDetails, checkBoxFingerPrint;
+    private CheckBox cBPersonalDetails, cBFingerPrint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,13 +22,13 @@ public class LoginBy extends AppCompatActivity {
         buttonPersonalDetails = findViewById(R.id.btnPersonalDetails);
         buttonFingerPrint = findViewById(R.id.btnFingerPrint);
 
-        checkBoxPersonalDetails = findViewById(R.id.cBoxPersonalDetails);
-        checkBoxPersonalDetails.setOnClickListener(new View.OnClickListener() {
+        cBPersonalDetails = findViewById(R.id.cbPersonalDetails);
+        cBPersonalDetails.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
-                if (checkBoxPersonalDetails.isChecked()) {
-                    checkBoxFingerPrint.setChecked(false);
+                if (cBPersonalDetails.isChecked()) {
+                    cBFingerPrint.setChecked(false);
                     buttonPersonalDetails.setEnabled(true);
                     buttonPersonalDetails.setText("Enter");
                     buttonFingerPrint.setText("Disabled");
@@ -48,13 +46,13 @@ public class LoginBy extends AppCompatActivity {
             }
         });
 
-        checkBoxFingerPrint = findViewById(R.id.cBoxFingerPrint);
-        checkBoxFingerPrint.setOnClickListener(new View.OnClickListener() {
+        cBFingerPrint = findViewById(R.id.cbFingerPrint);
+        cBFingerPrint.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
-                if (checkBoxFingerPrint.isChecked()) {
-                    checkBoxPersonalDetails.setChecked(false);
+                if (cBFingerPrint.isChecked()) {
+                    cBPersonalDetails.setChecked(false);
                     buttonFingerPrint.setEnabled(true);
                     buttonFingerPrint.setText("Enter");
                     buttonPersonalDetails.setText("Disabled");
@@ -79,8 +77,8 @@ public class LoginBy extends AppCompatActivity {
     public void onStart() {
         super.onStart();
 
-        checkBoxPersonalDetails.setChecked(false);
-        checkBoxFingerPrint.setChecked(false);
+        cBPersonalDetails.setChecked(false);
+        cBFingerPrint.setChecked(false);
 
         buttonPersonalDetails.setEnabled(false);
         buttonPersonalDetails.setText("Disabled");

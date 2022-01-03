@@ -45,7 +45,6 @@ public class DoctorPage extends AppCompatActivity {
 
     private int numberPatientsAv;
 
-
     private TextView tVWelcomeDoctor, tVShowDoctorDetails, tVShowPatientsAv;
 
     //Declaring some objects
@@ -169,8 +168,6 @@ public class DoctorPage extends AppCompatActivity {
         finish();
         startActivity(new Intent(DoctorPage.this, DoctorChangePassword.class));
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -3,7 +3,6 @@ package com.example.smartdoctor;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -11,7 +10,6 @@ import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,7 +40,6 @@ public class Login extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +55,6 @@ public class Login extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
-
 
         //Action button log in user
         Button buttonRegNewUser = (Button) findViewById(R.id.btnRegNewUser);
@@ -96,9 +92,7 @@ public class Login extends AppCompatActivity {
                             if (task.isSuccessful()) {
 
                                 checkEmailVerification();
-                                //clear data
-                                etEmailLogUser.setText("");
-                                etPasswordLogUser.setText("");
+
                             } else {
                                 Toast.makeText(Login.this, "Log In failed, this email is not Registered", Toast.LENGTH_SHORT).show();
                                 counter--;
@@ -155,14 +149,19 @@ public class Login extends AppCompatActivity {
         boolean emailFlag = firebaseUser.isEmailVerified();
 
         if(emailFlag){
+
             //progressDialog.dismiss();
             checkUserAccount();
+
+            //clear data
+            etEmailLogUser.setText("");
+            etPasswordLogUser.setText("");
         }
 
         else{
             progressDialog.dismiss();
             Toast.makeText(this, "Please verify your Email first", Toast.LENGTH_SHORT).show();
-            firebaseAuth.signOut();
+            //firebaseAuth.signOut();
         }
     }
 

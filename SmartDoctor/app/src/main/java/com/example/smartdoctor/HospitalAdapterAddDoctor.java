@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-
 public class HospitalAdapterAddDoctor extends RecyclerView.Adapter<HospitalAdapterAddDoctor.ImageViewHolder> {
 
     private final Context hospitalContext;

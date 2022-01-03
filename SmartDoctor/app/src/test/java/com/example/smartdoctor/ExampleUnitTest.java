@@ -1,4 +1,4 @@
-package com.example.danut.smartdoctor;
+package com.example.smartdoctor;
 
 import org.junit.Test;
 

@@ -14,27 +14,27 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textLog"
+            android:id="@+id/tvLoginBy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="50dp"
-            android:text="Log in by:"
+            android:text="@string/tv_loginByPage"
             android:textAlignment="center"
             android:textColor="?attr/colorPrimary"
             android:textSize="28sp"
             android:textStyle="bold" />
 
         <CheckBox
-            android:id="@+id/cBoxPersonalDetails"
+            android:id="@+id/cbPersonalDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="40dp"
             android:layout_marginEnd="20dp"
-            android:text="Entering Personal Details"
-            android:textSize="26sp" />
+            android:text="@string/cb_loginByPersonalDetails"
+            android:textSize="22sp" />
 
         <Button
             android:id="@+id/btnPersonalDetails"
@@ -44,19 +44,19 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="50dp"
             android:background="@drawable/btn_fading"
-            android:text="Disabled"
+            android:text="@string/btn_loginByPersonalDetails"
             android:textColor="#ffffff"
             android:textSize="22sp" />
 
         <CheckBox
-            android:id="@+id/cBoxFingerPrint"
+            android:id="@+id/cbFingerPrint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="20dp"
-            android:text="Figerprint - DOCTOR ONLY"
-            android:textSize="26sp" />
+            android:text="@string/cb_loginByFingerPrint"
+            android:textSize="22sp" />
 
         <Button
             android:id="@+id/btnFingerPrint"
@@ -66,7 +66,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="50dp"
             android:background="@drawable/btn_fading"
-            android:text="Disabled"
+            android:text="@string/btn_loginByFingerPrint"
             android:textColor="#ffffff"
             android:textSize="22sp" />
 

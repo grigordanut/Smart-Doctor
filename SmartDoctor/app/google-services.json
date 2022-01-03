@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "576402477609",
-    "project_id": "smartdoctor-54617",
-    "storage_bucket": "smartdoctor-54617.appspot.com"
+    "project_number": "1029040325617",
+    "project_id": "smart-doctor-1514f",
+    "storage_bucket": "smart-doctor-1514f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:576402477609:android:325aeb59d01168d99f4238",
+        "mobilesdk_app_id": "1:1029040325617:android:64cb71ada70e8958cfba50",
         "android_client_info": {
-          "package_name": "com.example.danut.smartdoctor"
+          "package_name": "com.example.smartdoctor"
         }
       },
       "oauth_client": [
         {
-          "client_id": "576402477609-oa9ug18qvkd3c091o33au39tuqtsh917.apps.googleusercontent.com",
+          "client_id": "1029040325617-pr4dghtgg9rifojjtbu1p2bvosmp7u5v.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDDQ0Nd0mT8BlmQsgiHINGTzB0CGL-27Z4"
+          "current_key": "AIzaSyBcUzEKrfR19MQRQ7o7HNOsv7vEC24ypx0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "576402477609-oa9ug18qvkd3c091o33au39tuqtsh917.apps.googleusercontent.com",
+              "client_id": "1029040325617-pr4dghtgg9rifojjtbu1p2bvosmp7u5v.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

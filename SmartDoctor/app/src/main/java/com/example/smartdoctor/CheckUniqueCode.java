@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -14,42 +13,39 @@ import java.util.Objects;
 
 public class CheckUniqueCode extends AppCompatActivity {
 
-    private TextInputEditText editTextCheckCode;
+    private TextInputEditText eTCheckUniqueCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_unique_code);
 
-        editTextCheckCode = findViewById(R.id.etCheckUniqueCode);
+        eTCheckUniqueCode = findViewById(R.id.etCheckUniqueCode);
 
-        Button buttonCheckCode = (Button)findViewById(R.id.btnCheckCode);
+        Button buttonCheckCode = findViewById(R.id.btnCheckCode);
 
-        buttonCheckCode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String editText_CheckCode = Objects.requireNonNull(editTextCheckCode.getText()).toString();
-                if (editText_CheckCode.isEmpty()) {
-                    editTextCheckCode.setError("Please enter your Unique code");
-                    editTextCheckCode.requestFocus();
+        buttonCheckCode.setOnClickListener(view -> {
+            String editText_CheckCode = Objects.requireNonNull(eTCheckUniqueCode.getText()).toString();
+            if (editText_CheckCode.isEmpty()) {
+                eTCheckUniqueCode.setError("Please enter your Unique code");
+                eTCheckUniqueCode.requestFocus();
+            }
+
+            else{
+                if(editText_CheckCode.charAt(0) =='h'||editText_CheckCode.charAt(0)=='H'){
+                    Toast.makeText(CheckUniqueCode.this, "This is a correct code for Hospital",Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(CheckUniqueCode.this, HospitalRegistration.class));
+                }
+
+                else if(editText_CheckCode.charAt(0) =='d'||editText_CheckCode.charAt(0)=='D'){
+                    Toast.makeText(CheckUniqueCode.this, "This is a correct code for Doctor",Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(CheckUniqueCode.this, HospitalImageAddDoctor.class));
                 }
 
                 else{
-                    if(editText_CheckCode.charAt(0) =='h'||editText_CheckCode.charAt(0)=='H'){
-                        Toast.makeText(CheckUniqueCode.this, "This is a correct code for Hospital",Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(CheckUniqueCode.this, HospitalRegistration.class));
-                    }
-
-                    else if(editText_CheckCode.charAt(0) =='d'||editText_CheckCode.charAt(0)=='D'){
-                        Toast.makeText(CheckUniqueCode.this, "This is a correct code for Doctor",Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(CheckUniqueCode.this, HospitalImageAddDoctor.class));
-                    }
-
-                    else{
-                        Toast.makeText(CheckUniqueCode.this, "Please enter a correct Unique Code",Toast.LENGTH_SHORT).show();
-                        editTextCheckCode.setError("Enter a correct Unique Code");
-                        editTextCheckCode.requestFocus();
-                    }
+                    Toast.makeText(CheckUniqueCode.this, "Please enter a correct Unique Code",Toast.LENGTH_SHORT).show();
+                    eTCheckUniqueCode.setError("Enter a correct Unique Code");
+                    eTCheckUniqueCode.requestFocus();
                 }
             }
         });
