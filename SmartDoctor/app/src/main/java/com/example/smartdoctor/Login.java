@@ -144,24 +144,27 @@ public class Login extends AppCompatActivity {
 
     //check if the email has been verified
     private void checkEmailVerification(){
+
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        assert firebaseUser != null;
-        boolean emailFlag = firebaseUser.isEmailVerified();
+        if (firebaseUser != null) {
 
-        if(emailFlag){
+            boolean emailFlag = firebaseUser.isEmailVerified();
 
-            //progressDialog.dismiss();
-            checkUserAccount();
+            if(emailFlag){
 
-            //clear data
-            etEmailLogUser.setText("");
-            etPasswordLogUser.setText("");
-        }
+                //progressDialog.dismiss();
+                checkUserAccount();
 
-        else{
-            progressDialog.dismiss();
-            Toast.makeText(this, "Please verify your Email first", Toast.LENGTH_SHORT).show();
-            //firebaseAuth.signOut();
+                //clear data
+                etEmailLogUser.setText("");
+                etPasswordLogUser.setText("");
+            }
+
+            else{
+                progressDialog.dismiss();
+                Toast.makeText(this, "Please verify your Email first", Toast.LENGTH_SHORT).show();
+                firebaseAuth.signOut();
+            }
         }
     }
 
@@ -174,13 +177,16 @@ public class Login extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot users: dataSnapshot.getChildren()){
                     Hospital hos = users.getValue(Hospital.class);
-                    assert hos != null;
-                    if(email_LogUser.equals(hos.getHospEmail_Address())){
-                        hos.setHosp_Key(users.getKey());
-                        Toast.makeText(Login.this, "Log in successful Hospital", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Login.this, HospitalPage.class));
-                        progressDialog.dismiss();
-                        finish();
+
+                    progressDialog.dismiss();
+
+                    if (hos != null){
+                        if(email_LogUser.equals(hos.getHospEmail_Address())){
+                            hos.setHosp_Key(users.getKey());
+                            finish();
+                            Toast.makeText(Login.this, "Log in successful Hospital", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(Login.this, HospitalPage.class));
+                        }
                     }
                 }
             }
@@ -198,13 +204,16 @@ public class Login extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot users: dataSnapshot.getChildren()){
                     Doctor doc = users.getValue(Doctor.class);
-                    assert doc != null;
-                    if(email_LogUser.equals(doc.getDocEmail_Address())){
-                        doc.setDoc_Key(users.getKey());
-                        Toast.makeText(Login.this, "Log in successful Doctor", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Login.this, DoctorPage.class));
-                        progressDialog.dismiss();
-                        finish();
+
+                    progressDialog.dismiss();
+
+                    if (doc != null) {
+                        if(email_LogUser.equals(doc.getDocEmail_Address())){
+                            doc.setDoc_Key(users.getKey());
+                            finish();
+                            Toast.makeText(Login.this, "Log in successful Doctor", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(Login.this, DoctorPage.class));
+                        }
                     }
                 }
             }
@@ -214,28 +223,32 @@ public class Login extends AppCompatActivity {
                 Toast.makeText(Login.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
             }
         });
-//
-//        //check if the user patient try to log in
-//        databaseReference = FirebaseDatabase.getInstance().getReference("Patients");
-//        databaseReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                for (DataSnapshot users: dataSnapshot.getChildren()){
-//                    Patient pat = users.getValue(Patient.class);
-//                    if(emailLog_User.equals(pat.getPatEmail_Address())){
-//                        pat.setPatientKey(users.getKey());
-//                        Toast.makeText(LogIn.this, "Log In successful Patient", Toast.LENGTH_SHORT).show();
-//                        startActivity(new Intent(LogIn.this, PatientPage.class));
-//                        progressDialog.dismiss();
-//                        finish();
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                Toast.makeText(LogIn.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
+
+        //check if the user Patient try to log in
+        databaseReference = FirebaseDatabase.getInstance().getReference("Patients");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot users: dataSnapshot.getChildren()){
+                    Patient pat = users.getValue(Patient.class);
+
+                    progressDialog.dismiss();
+
+                    if (pat != null) {
+                        if(email_LogUser.equals(pat.getPatEmail_Address())){
+                            pat.setPatient_Key(users.getKey());
+                            finish();
+                            Toast.makeText(Login.this, "Log In successful Patient", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(Login.this, PatientPage.class));
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(Login.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

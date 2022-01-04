@@ -4,10 +4,10 @@ import com.google.firebase.database.Exclude;
 
 public class Hospital {
 
-    public String hospUnique_Code;
-    public String hosp_Name;
-    public String hospEmail_Address;
-    public String hosp_Key;
+    private String hospUnique_Code;
+    private String hosp_Name;
+    private String hospEmail_Address;
+    private String hosp_Key;
 
     public Hospital(){
 

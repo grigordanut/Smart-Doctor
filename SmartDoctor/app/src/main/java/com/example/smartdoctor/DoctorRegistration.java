@@ -26,20 +26,19 @@ import java.util.Objects;
 
 public class DoctorRegistration extends AppCompatActivity {
 
-
     //Declare variables
     private TextInputEditText docUniqueCode, docFirstName, docLastName, docPhone, docEmailReg, docPassReg, docConfPassReg;
     private TextView tVHospNameDoctorReg, tVHospKeyDoctorReg;
 
     private String doc_UniqueCode, doc_FirstName, doc_LastName, doc_Phone, doc_EmailReg, doc_PassReg, doc_ConfPassReg;
 
-    private ProgressDialog progressDialog;
-
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
 
     private String docHospital_Name = "";
     private String docHospital_Key = "";
+
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -218,7 +217,7 @@ public class DoctorRegistration extends AppCompatActivity {
         FirebaseUser doc = firebaseAuth.getCurrentUser();
         assert doc != null;
         String doc_Id = doc.getUid();
-        Doctor doctor = new Doctor(doc_UniqueCode, doc_FirstName, doc_LastName, doc_Phone, doc_EmailReg, docHospital_Key);
+        Doctor doctor = new Doctor(doc_UniqueCode, doc_FirstName, doc_LastName, doc_Phone, doc_EmailReg, docHospital_Name, docHospital_Key);
         databaseReference.child(doc_Id).setValue(doctor);
     }
 }

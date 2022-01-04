@@ -34,11 +34,11 @@ public class HospitalRegistration extends AppCompatActivity {
 
     private String hosp_UniqueCodeReg, hosp_NameReg, hosp_EmailReg, hosp_PassReg, hosp_ConfPassReg;
 
-    private ProgressDialog progressDialog;
-
     private FirebaseAuth firebaseAuth;
     private DatabaseReference dbRefHospUpload;
     private DatabaseReference dbRefHospCheck;
+
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

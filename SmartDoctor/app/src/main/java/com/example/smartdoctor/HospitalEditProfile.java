@@ -83,13 +83,13 @@ public class HospitalEditProfile extends AppCompatActivity {
 
                     Hospital hospital_Data = ds_User.getValue(Hospital.class);
 
-                    assert user_Db != null;
-                    assert hospital_Data != null;
-                    if (user_Db.getUid().equals(ds_User.getKey())){
-                        hospUniqueCodeUp.setText(hospital_Data.getHospUnique_Code());
-                        hospNameUp.setText(hospital_Data.getHosp_Name());
-                        hospEmailUp.setText(hospital_Data.getHospEmail_Address());
-                        tVHospitalEditProfile.setText("Edit profile of: " + hospital_Data.getHosp_Name());
+                    if (user_Db != null){
+                        if (user_Db.getUid().equals(ds_User.getKey())){
+                            hospUniqueCodeUp.setText(Objects.requireNonNull(hospital_Data).getHospUnique_Code());
+                            hospNameUp.setText(hospital_Data.getHosp_Name());
+                            hospEmailUp.setText(hospital_Data.getHospEmail_Address());
+                            tVHospitalEditProfile.setText("Edit profile of: " + hospital_Data.getHosp_Name());
+                        }
                     }
                 }
             }

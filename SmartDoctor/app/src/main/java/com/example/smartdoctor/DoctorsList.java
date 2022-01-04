@@ -3,6 +3,7 @@ package com.example.smartdoctor;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -32,6 +33,7 @@ public class DoctorsList extends AppCompatActivity {
     private String hospital_Name = "";
     private String hospital_Key = "";
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +47,6 @@ public class DoctorsList extends AppCompatActivity {
 
         getIntent().hasExtra("HOSPKey");
         hospital_Key = getIntent().getExtras().getString("HOSPKey");
-
 
         doctorListView = (ListView)findViewById(R.id.listViewDoctors);
 
@@ -64,7 +65,7 @@ public class DoctorsList extends AppCompatActivity {
                     assert doctor_data != null;
                     if(doctor_data.getDocHosp_Key().equals(hospital_Key)){
                         doctor_data.setDoc_Key(postSnapshot.getKey());
-                        doctorList.add(doctor_data.getDocFirst_Name()+" "+ doctor_data.docLast_Name);
+                        doctorList.add(doctor_data.getDocFirst_Name()+" "+ doctor_data.getDocLast_Name());
                     }
                 }
                 doctorListView.setAdapter(arrayAdapter);

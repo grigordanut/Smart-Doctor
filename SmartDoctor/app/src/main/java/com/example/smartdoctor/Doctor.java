@@ -4,24 +4,26 @@ import com.google.firebase.database.Exclude;
 
 public class Doctor {
 
-    public String docUnique_Code;
-    public String docFirst_Name;
-    public String docLast_Name;
-    public String docPhone_Number;
-    public String docEmail_Address;
-    public String docHosp_Key;
-    public String doc_Key;
+    private String docUnique_Code;
+    private String docFirst_Name;
+    private String docLast_Name;
+    private String docPhone_Number;
+    private String docEmail_Address;
+    private String docHosp_Name;
+    private String docHosp_Key;
+    private String doc_Key;
 
     public Doctor() {
 
     }
 
-    public Doctor(String docUnique_Code, String docFirst_Name, String docLast_Name, String docPhone_Number, String docEmail_Address, String docHosp_Key) {
+    public Doctor(String docUnique_Code, String docFirst_Name, String docLast_Name, String docPhone_Number, String docEmail_Address, String docHosp_Name, String docHosp_Key) {
         this.docUnique_Code = docUnique_Code;
         this.docFirst_Name = docFirst_Name;
         this.docLast_Name = docLast_Name;
         this.docPhone_Number = docPhone_Number;
         this.docEmail_Address = docEmail_Address;
+        this.docHosp_Name = docHosp_Name;
         this.docHosp_Key = docHosp_Key;
     }
 
@@ -63,6 +65,14 @@ public class Doctor {
 
     public void setDocEmail_Address(String docEmail_Address) {
         this.docEmail_Address = docEmail_Address;
+    }
+
+    public String getDocHosp_Name() {
+        return docHosp_Name;
+    }
+
+    public void setDocHosp_Name(String docHosp_Name) {
+        this.docHosp_Name = docHosp_Name;
     }
 
     public String getDocHosp_Key() {

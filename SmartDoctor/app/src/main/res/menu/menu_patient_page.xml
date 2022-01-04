@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.danut.smartdoctor.PatientPage">
+
+    <item
+        android:id="@+id/logOutPatient"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="Log Out">
+    </item>
+
+    <item
+        android:id="@+id/changePassword"
+        android:orderInCategory="300"
+        app:showAsAction="always"
+        android:title="Change Password">
+    </item>
+
+    <item
+        android:id="@+id/closeMenu"
+        android:orderInCategory="300"
+        app:showAsAction="never"
+        android:title="Close">
+    </item>
+
+</menu>

@@ -10,6 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SmartDoctor">
         <activity
+            android:name=".MedicalRecordPatient"
+            android:exported="false" />
+        <activity
+            android:name=".PatientChangePassword"
+            android:exported="false" />
+        <activity
+            android:name=".PatientPage"
+            android:exported="false" />
+        <activity
             android:name=".PatientRegistration"
             android:exported="false" />
         <activity

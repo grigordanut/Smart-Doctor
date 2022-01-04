@@ -109,6 +109,8 @@ public class DoctorPage extends AppCompatActivity {
                                         Intent add_Patients = new Intent(DoctorPage.this, PatientRegistration.class);
                                         add_Patients.putExtra("DOCName", doctor_Data.getDocFirst_Name() + " " + doctor_Data.getDocLast_Name());
                                         add_Patients.putExtra("DOCKey", doctor_Db.getUid());
+                                        add_Patients.putExtra("HOSPName", doctor_Data.getDocHosp_Name());
+                                        add_Patients.putExtra("HOSPKey", doctor_Data.getDocHosp_Key());
                                         startActivity(add_Patients);
                                         break;
 

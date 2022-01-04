@@ -25,12 +25,15 @@
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/activity_login_by.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/activity_patient_page.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/activity_patient_registration.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/doctor_page_header.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/hospital_page_header.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/image_doctor.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/image_hospital.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/menu/menu_doctor_page.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/menu/menu_main.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/menu/menu_patient_page.xml" value="0.25" />
       </map>
     </option>
   </component>

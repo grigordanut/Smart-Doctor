@@ -92,52 +92,49 @@ public class HospitalPage extends AppCompatActivity {
                     final FirebaseUser hosp_Db = firebaseAuth.getCurrentUser();
                     final Hospital hosp_Data = postSnapshot.getValue(Hospital.class);
 
-                    assert hosp_Db != null;
-                    assert hosp_Data != null;
+                    if (hosp_Db != null){
+                        if (hosp_Db.getUid().equalsIgnoreCase(postSnapshot.getKey())) {
+                            tVWelcomeHospital.setText("Welcome: " + Objects.requireNonNull(hosp_Data).getHosp_Name());
+                            tVShowHospitalDetails.setText("Hospital Name: \n" + hosp_Data.getHosp_Name()+"\n\nEmail: \n"+hosp_Data.getHospEmail_Address());
 
-                    hospital_Key = hosp_Db.getUid();
+                            //Adding Click Events to our navigation drawer item
+                            navigationViewUserRent.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                                @SuppressLint("NonConstantResourceId")
+                                @Override
+                                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                                    int id = item.getItemId();
+                                    switch (id) {
+                                        //Add Doctors
+                                        case R.id.hospital_addDoctors:
+                                            Intent add_Doctors = new Intent(HospitalPage.this, DoctorRegistration.class);
+                                            add_Doctors.putExtra("HOSPName", hosp_Data.getHosp_Name());
+                                            add_Doctors.putExtra("HOSPKey", hosp_Db.getUid());
+                                            startActivity(add_Doctors);
+                                            break;
 
-                    if (hosp_Db.getUid().equalsIgnoreCase(postSnapshot.getKey())) {
-                        tVWelcomeHospital.setText("Welcome: " + hosp_Data.getHosp_Name());
-                        tVShowHospitalDetails.setText("Hospital Name: \n" + hosp_Data.getHosp_Name()+"\n\nEmail: \n"+hosp_Data.hospEmail_Address);
+                                        //Show Doctors List
+                                        case R.id.hospitalShow_doctorsList:
+                                            Intent doc_List = new Intent(HospitalPage.this, DoctorsList.class);
+                                            doc_List.putExtra("HOSPName", hosp_Data.getHosp_Name());
+                                            doc_List.putExtra("HOSPKey", hosp_Db.getUid());
+                                            startActivity(doc_List);
+                                            break;
 
-                        //Adding Click Events to our navigation drawer item
-                        navigationViewUserRent.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-                            @SuppressLint("NonConstantResourceId")
-                            @Override
-                            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                                int id = item.getItemId();
-                                switch (id) {
-                                    //Add Doctors
-                                    case R.id.hospital_addDoctors:
-                                        Intent add_Doctors = new Intent(HospitalPage.this, DoctorRegistration.class);
-                                        add_Doctors.putExtra("HOSPName", hosp_Data.getHosp_Name());
-                                        add_Doctors.putExtra("HOSPKey", hosp_Db.getUid());
-                                        startActivity(add_Doctors);
-                                        break;
+                                        //Show Patients List
+                                        case R.id.hospShow_patientList:
+                                            Intent pat_List = new Intent(HospitalPage.this, PatientsListHospital.class);
+                                            pat_List.putExtra("HOSPName", hosp_Data.getHosp_Name());
+                                            pat_List.putExtra("HOSPId", hosp_Db.getUid());
+                                            startActivity(pat_List);
+                                            break;
 
-                                    //Show Doctors List
-                                    case R.id.hospitalShow_doctorsList:
-                                        Intent doc_List = new Intent(HospitalPage.this, DoctorsList.class);
-                                        doc_List.putExtra("HOSPName", hosp_Data.getHosp_Name());
-                                        doc_List.putExtra("HOSPKey", hosp_Db.getUid());
-                                        startActivity(doc_List);
-                                        break;
-
-                                    //Show Patients List
-                                    case R.id.hospShow_patientList:
-                                        Intent pat_List = new Intent(HospitalPage.this, PatientsListHospital.class);
-                                        pat_List.putExtra("HOSPName", hosp_Data.getHosp_Name());
-                                        pat_List.putExtra("HOSPId", hosp_Db.getUid());
-                                        startActivity(pat_List);
-                                        break;
-
-                                    default:
-                                        return true;
+                                        default:
+                                            return true;
+                                    }
+                                    return true;
                                 }
-                                return true;
-                            }
-                        });
+                            });
+                        }
                     }
                 }
             }
@@ -222,7 +219,10 @@ public class HospitalPage extends AppCompatActivity {
                 doctorsList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Doctor doctor_Data = postSnapshot.getValue(Doctor.class);
+
                     assert doctor_Data != null;
+                    hospital_Key = doctor_Data.getDocHosp_Key();
+
                     if(doctor_Data.getDocHosp_Key().equals(hospital_Key)){
                         doctor_Data.setDoc_Key(postSnapshot.getKey());
                         doctorsList.add(doctor_Data);
