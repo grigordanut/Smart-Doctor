@@ -7,24 +7,24 @@
     android:background="@drawable/backgrandier"
     tools:context=".MainActivity"
     tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="0dp"
-    tools:showIn="@layout/activity_main">
+    tools:layout_editor_absoluteY="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:showIn="@layout/activity_main">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
-            android:textColor="#000000"
+            android:text="@string/tv_mainPage"
             android:textAlignment="center"
-            android:textSize="22sp"
-            android:text="@string/tv_mainPage"/>
+            android:textColor="#000000"
+            android:textSize="22sp" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -32,7 +32,7 @@
             android:layout_height="330dp"
             android:layout_gravity="center"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/smart_doctormain"
             tools:ignore="ContentDescription" />
@@ -51,7 +51,7 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/btnRegisterMain"
+            android:id="@+id/btnLogInMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
@@ -59,14 +59,13 @@
             android:layout_marginEnd="60dp"
             android:layout_weight="1"
             android:background="@drawable/btn_fading"
-            android:text="@string/btn_registerMainPage"
-            android:textAppearance="?android:textAppearanceMedium"
+            android:text="@string/btn_loginMainPage"
             android:textColor="#ffffff"
             android:textSize="22sp"
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/btnLogInMain"
+            android:id="@+id/btnRegisterMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
@@ -74,8 +73,7 @@
             android:layout_marginEnd="60dp"
             android:layout_weight="1"
             android:background="@drawable/btn_fading"
-            android:text="@string/btn_loginMainPage"
-            android:textAppearance="?android:textAppearanceMedium"
+            android:text="@string/btn_registerMainPage"
             android:textColor="#ffffff"
             android:textSize="22sp"
             android:textStyle="bold" />

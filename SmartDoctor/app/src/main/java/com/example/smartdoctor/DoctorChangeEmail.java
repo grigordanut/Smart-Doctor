@@ -4,11 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class PatientsListHospital extends AppCompatActivity {
+public class DoctorChangeEmail extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_patients_list_hospital);
+        setContentView(R.layout.activity_doctor_change_email);
     }
 }

@@ -5,25 +5,25 @@
     <item
         android:id="@+id/hospitalLogOut"
         android:orderInCategory="100"
-        android:title="@string/menuHosp_MainLogOut"
+        android:title="@string/menuHosp_logOut"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/hospitalEditProfile"
         android:orderInCategory="100"
-        android:title="@string/menuHosp_MainEditProfile"
+        android:title="@string/menuHosp_editProfile"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/hospitalChangeEmail"
-        android:orderInCategory="200"
-        android:title="@string/menuHosp_MainChangeEmail"
+        android:orderInCategory="100"
+        android:title="@string/menuHosp_changeEmail"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/hospitalChangePassword"
-        android:orderInCategory="200"
-        android:title="@string/menuHosp_MainChangePassword"
+        android:orderInCategory="100"
+        android:title="@string/menuHosp_changePassword"
         app:showAsAction="never"/>
 </menu>
 

@@ -3,6 +3,7 @@ package com.example.smartdoctor;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -18,6 +19,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,31 +33,32 @@ import java.util.Objects;
 public class Login extends AppCompatActivity {
 
     //declare variables
-    private TextInputEditText etEmailLogUser, etPasswordLogUser;
-    private TextView tVInfoLogUser;
-
-    private int counter = 5;
     private FirebaseAuth firebaseAuth;
-    private ProgressDialog progressDialog;
-    private String email_LogUser, password_LogUser;
+    private FirebaseUser firebaseUser;
 
     private DatabaseReference databaseReference;
 
+    private TextInputEditText emailLogUser, passwordLogUser;
+    private String emailLog_User, passwordLog_User;
+
+    private ProgressDialog progressDialog;
+
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //Initialize variables
-        etEmailLogUser = findViewById(R.id.etEmailLogUser);
-        etPasswordLogUser = findViewById(R.id.etPassLogUser);
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Log in User");
 
-        tVInfoLogUser = findViewById(R.id.tvInfoLogUser);
-
-        tVInfoLogUser.setText("Number of attempts remaining: " + counter);
+        progressDialog = new ProgressDialog(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        progressDialog = new ProgressDialog(this);
+        firebaseUser = firebaseAuth.getCurrentUser();
+
+        //Initialize variables
+        emailLogUser = findViewById(R.id.etEmailLogUser);
+        passwordLogUser = findViewById(R.id.etPassLogUser);
 
         //Action button log in user
         Button buttonRegNewUser = (Button) findViewById(R.id.btnRegNewUser);
@@ -85,7 +89,7 @@ public class Login extends AppCompatActivity {
                     progressDialog.setMessage("Log in user");
                     progressDialog.show();
 
-                    firebaseAuth.signInWithEmailAndPassword(email_LogUser, password_LogUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    firebaseAuth.signInWithEmailAndPassword(emailLog_User, passwordLog_User).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
 
@@ -94,18 +98,20 @@ public class Login extends AppCompatActivity {
                                 checkEmailVerification();
 
                             } else {
-                                Toast.makeText(Login.this, "Log In failed, this email is not Registered", Toast.LENGTH_SHORT).show();
-                                counter--;
-                                progressDialog.dismiss();
-                                tVInfoLogUser.setText("No of attempts remaining: " + counter);
-
-                                if (counter == 0) {
-                                    tVInfoLogUser.setText("No more attempts remaining, please press Forgotten Password");
-                                    buttonLogIn.setEnabled(false);
-                                    buttonLogIn.setBackgroundColor(Color.parseColor("#cc3333"));
-                                    buttonLogIn.setText("Stop");
+                                try {
+                                    throw Objects.requireNonNull(task.getException());
+                                } catch (FirebaseAuthInvalidUserException e){
+                                    emailLogUser.setError("This email is not registered.");
+                                    emailLogUser.requestFocus();
+                                } catch (FirebaseAuthInvalidCredentialsException e){
+                                    passwordLogUser.setError("Invalid Password");
+                                    passwordLogUser.requestFocus();
+                                } catch (Exception e) {
+                                    Toast.makeText(Login.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             }
+
+                            progressDialog.dismiss();
                         }
                     });
                 }
@@ -115,24 +121,25 @@ public class Login extends AppCompatActivity {
 
     //validate input data into the editText
     public Boolean validateLogInData() {
+
         boolean result = false;
 
-        email_LogUser = Objects.requireNonNull(etEmailLogUser.getText()).toString().trim();
-        password_LogUser = Objects.requireNonNull(etPasswordLogUser.getText()).toString().trim();
+        emailLog_User = Objects.requireNonNull(emailLogUser.getText()).toString().trim();
+        passwordLog_User = Objects.requireNonNull(passwordLogUser.getText()).toString().trim();
 
-        if (email_LogUser.isEmpty()) {
-            etEmailLogUser.setError("Enter your Email Address");
-            etEmailLogUser.requestFocus();
+        if (emailLog_User.isEmpty()) {
+            emailLogUser.setError("Enter your Email Address");
+            emailLogUser.requestFocus();
         }
 
-        else if(!Patterns.EMAIL_ADDRESS.matcher(email_LogUser).matches()){
-            etEmailLogUser.setError("Enter a valid Email Address");
-            etEmailLogUser.requestFocus();
+        else if(!Patterns.EMAIL_ADDRESS.matcher(emailLog_User).matches()){
+            emailLogUser.setError("Enter a valid Email Address");
+            emailLogUser.requestFocus();
         }
 
-        else if (password_LogUser.isEmpty()){
-            etPasswordLogUser.setError("Enter your Password");
-            etPasswordLogUser.requestFocus();
+        else if (passwordLog_User.isEmpty()){
+            passwordLogUser.setError("Enter your Password");
+            passwordLogUser.requestFocus();
         }
 
         else{
@@ -145,23 +152,17 @@ public class Login extends AppCompatActivity {
     //check if the email has been verified
     private void checkEmailVerification(){
 
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (firebaseUser != null) {
+        firebaseUser = firebaseAuth.getCurrentUser();
 
+        if (firebaseUser != null) {
             boolean emailFlag = firebaseUser.isEmailVerified();
 
+            progressDialog.dismiss();
             if(emailFlag){
-
-                //progressDialog.dismiss();
                 checkUserAccount();
-
-                //clear data
-                etEmailLogUser.setText("");
-                etPasswordLogUser.setText("");
             }
 
             else{
-                progressDialog.dismiss();
                 Toast.makeText(this, "Please verify your Email first", Toast.LENGTH_SHORT).show();
                 firebaseAuth.signOut();
             }
@@ -170,22 +171,23 @@ public class Login extends AppCompatActivity {
 
     private void checkUserAccount() {
 
-        //check if the user Hospital try to log in
+        //check if the user Hospitals try to log in
         databaseReference = FirebaseDatabase.getInstance().getReference("Hospitals");
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot users: dataSnapshot.getChildren()){
-                    Hospital hos = users.getValue(Hospital.class);
-
-                    progressDialog.dismiss();
+                    Hospitals hos = users.getValue(Hospitals.class);
 
                     if (hos != null){
-                        if(email_LogUser.equals(hos.getHospEmail_Address())){
+                        if(emailLog_User.equals(hos.getHosp_Email())){
                             hos.setHosp_Key(users.getKey());
-                            finish();
-                            Toast.makeText(Login.this, "Log in successful Hospital", Toast.LENGTH_SHORT).show();
+
+                            progressDialog.dismiss();
+                            Toast.makeText(Login.this, "Log in successful Hospitals", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(Login.this, HospitalPage.class));
+                            finish();
                         }
                     }
                 }
@@ -197,22 +199,23 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        //check if the user Doctor try to log in
+        //check if the user Doctors try to log in
         databaseReference = FirebaseDatabase.getInstance().getReference("Doctors");
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot users: dataSnapshot.getChildren()){
-                    Doctor doc = users.getValue(Doctor.class);
-
-                    progressDialog.dismiss();
+                    Doctors doc = users.getValue(Doctors.class);
 
                     if (doc != null) {
-                        if(email_LogUser.equals(doc.getDocEmail_Address())){
+                        if(emailLog_User.equals(doc.getDocEmail_Address())){
                             doc.setDoc_Key(users.getKey());
-                            finish();
-                            Toast.makeText(Login.this, "Log in successful Doctor", Toast.LENGTH_SHORT).show();
+
+                            progressDialog.dismiss();
+                            Toast.makeText(Login.this, "Log in successful Doctors", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(Login.this, DoctorPage.class));
+                            finish();
                         }
                     }
                 }
@@ -224,22 +227,23 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        //check if the user Patient try to log in
+        //check if the user Patients try to log in
         databaseReference = FirebaseDatabase.getInstance().getReference("Patients");
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot users: dataSnapshot.getChildren()){
-                    Patient pat = users.getValue(Patient.class);
-
-                    progressDialog.dismiss();
+                    Patients pat = users.getValue(Patients.class);
 
                     if (pat != null) {
-                        if(email_LogUser.equals(pat.getPatEmail_Address())){
+                        if(emailLog_User.equals(pat.getPatEmail_Address())){
                             pat.setPatient_Key(users.getKey());
-                            finish();
-                            Toast.makeText(Login.this, "Log In successful Patient", Toast.LENGTH_SHORT).show();
+
+                            progressDialog.dismiss();
+                            Toast.makeText(Login.this, "Log In successful Patients", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(Login.this, PatientPage.class));
+                            finish();
                         }
                     }
                 }

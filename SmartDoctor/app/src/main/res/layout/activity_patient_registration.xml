@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/smart_doctor_addpatient"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="0dp">
+    android:background="@drawable/backgrandier"
+    tools:context=".PatientRegistration">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,28 +13,30 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvPatDocNameReg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="20dp"
-            android:text="Patient's Name"
-            android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:textSize="22sp" />
-
-        <TextView
             android:id="@+id/tvPatHospNameReg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="10dp"
             android:text="Hospital Name"
             android:textAlignment="center"
             android:textColor="@android:color/black"
-            android:textSize="22sp" />
+            android:textSize="24sp"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/tvPatDocNameReg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:text="Doctor Name"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -74,7 +75,7 @@
                 android:layout_height="match_parent"
                 android:ems="10"
                 android:hint="Enter Unique Code"
-                android:inputType="textPersonName"
+                android:inputType="text|textCapWords"
                 android:paddingStart="10dp"
                 android:textSize="22sp"
                 tools:ignore="RtlSymmetry" />
@@ -96,7 +97,7 @@
                 android:layout_height="match_parent"
                 android:ems="10"
                 android:hint="Enter First Name"
-                android:inputType="textPersonName"
+                android:inputType="textPersonName|textCapWords"
                 android:paddingStart="10dp"
                 android:textColorHint="#000000"
                 android:textSize="22sp"
@@ -119,10 +120,11 @@
                 android:layout_height="match_parent"
                 android:ems="10"
                 android:hint="Enter Last Name"
-                android:inputType="textPersonName"
-                android:paddingLeft="5dp"
+                android:inputType="textPersonName|textCapWords"
+                android:paddingStart="10dp"
                 android:textColorHint="#000000"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                tools:ignore="RtlSymmetry" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -155,7 +157,8 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="20dp"
-            android:textColorHint="#000000">
+            android:textColorHint="#000000"
+            app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPatPassReg"
@@ -165,7 +168,8 @@
                 android:hint="Enter Password"
                 android:inputType="textPassword"
                 android:paddingStart="10dp"
-                android:textSize="22sp" />
+                android:textSize="22sp"
+                tools:ignore="RtlSymmetry" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -176,7 +180,8 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="20dp"
-            android:textColorHint="#000000">
+            android:textColorHint="#000000"
+            app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPatConfPassReg"
@@ -186,7 +191,8 @@
                 android:hint="Confirm Password"
                 android:inputType="textPassword"
                 android:paddingStart="10dp"
-                android:textSize="22sp" />
+                android:textSize="22sp"
+                tools:ignore="RtlSymmetry" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
@@ -199,28 +205,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginEnd="10dp"
-                android:layout_weight="1"
                 android:layout_marginTop="15dp"
-                android:background="@drawable/bgdbutton"
-                android:text="SAVE"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_fading_left"
+                android:text="Register"
                 android:textSize="22sp"
-                android:textStyle="bold" />
+                tools:ignore="ButtonStyle" />
 
             <Button
                 android:id="@+id/btnBackDoctor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="20dp"
-                android:layout_weight="1"
                 android:layout_marginTop="15dp"
-                android:background="@drawable/bgdbutton"
-                android:text="BACK"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_fading_right"
+                android:text="Log In"
                 android:textSize="22sp"
-                android:textStyle="bold" />
+                tools:ignore="ButtonStyle" />
 
         </LinearLayout>
 
     </LinearLayout>
+
 </ScrollView>

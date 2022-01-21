@@ -6,13 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_bright"
-    tools:context=".DoctorPage"
-    tools:showIn="@layout/activity_doctor_page">
+    tools:context=".DoctorPage">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:showIn="@layout/activity_doctor_page">
 
         <TextView
             android:id="@+id/tvDoctorPage"
@@ -34,7 +34,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
-            android:text="@string/tv_welcomeDoctorPage"
+            android:text="@string/tv_doctorWelcomePage"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="24sp" />
@@ -52,7 +52,7 @@
         <TextView
             android:id="@+id/tvShowDoctorDetails"
             android:layout_width="match_parent"
-            android:layout_height="165dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
@@ -60,54 +60,55 @@
             android:inputType="textMultiLine"
             android:paddingStart="10dp"
             android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:textColor="#000000"
             android:textSize="24sp"
             tools:ignore="RtlSymmetry,TextViewEdits" />
-
-        <TextView
-            android:id="@+id/tvDoctorPageAccount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:text="@string/tv_doctorAccountDetails"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="24sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <!--Patients Available-->
-            <TextView
-                android:id="@+id/tvDoctorPatients"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="-20dp"
-                android:layout_weight="1"
-                android:text="@string/tv_doctorPatients"
-                android:textColor="#000000"
-                android:textSize="24sp" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvDoctorPatientsAv"
+                <!--Patients Available-->
+                <TextView
+                    android:id="@+id/tvDoctorPatients"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="0dp"
+                    android:text="@string/tv_doctorPatients"
+                    android:textColor="#000000"
+                    android:textSize="24sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="100dp"
-                android:layout_marginEnd="20dp"
-                android:background="#ffffff"
-                android:text="@string/tv_doctorPatientsAv"
-                android:textAlignment="center"
-                android:textColor="#000000"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvDoctorPatientsAv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="#ffffff"
+                    android:text="@string/tv_doctorPatientsAv"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

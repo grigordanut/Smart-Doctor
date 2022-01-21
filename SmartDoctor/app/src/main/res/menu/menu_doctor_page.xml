@@ -4,19 +4,25 @@
     <item
         android:id="@+id/doctorLogOut"
         android:orderInCategory="100"
-        android:title="@string/menuDoctor_MainLogOut"
+        android:title="@string/menuDoctor_logOut"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/doctorEditProfile"
         android:orderInCategory="100"
-        android:title="@string/menuDoctor_MainEditProfile"
+        android:title="@string/menuDoctor_editProfile"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/doctorChangeEmail"
+        android:orderInCategory="100"
+        android:title="@string/menuDoctor_changeEmail"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/doctorChangePassword"
         android:orderInCategory="200"
-        android:title="@string/menuDoctor_MainChangePassword"
+        android:title="@string/menuDoctor_changePassword"
         app:showAsAction="never"/>
 </menu>
 

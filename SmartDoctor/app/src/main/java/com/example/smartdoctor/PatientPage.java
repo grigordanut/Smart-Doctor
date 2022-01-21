@@ -3,6 +3,9 @@ package com.example.smartdoctor;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -20,16 +23,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 public class PatientPage extends AppCompatActivity {
 
-    //Declare variables
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser currentUser;
+
+    private DatabaseReference databaseReference;
+
     private TextView textViewWelcomePatient;
 
     private Button buttonSeeMedRecord;
-
-    private FirebaseAuth firebaseAuth;
-    private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,36 +42,52 @@ public class PatientPage extends AppCompatActivity {
         setContentView(R.layout.activity_patient_page);
 
         //initialise the variables
-        textViewWelcomePatient = (TextView) findViewById(R.id.tvWelcomePatient);
-
         firebaseAuth = FirebaseAuth.getInstance();
-        firebaseDatabase = FirebaseDatabase.getInstance();
+        currentUser = firebaseAuth.getCurrentUser();
+
+        textViewWelcomePatient = findViewById(R.id.tvWelcomePatient);
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        loadPatientData();
+    }
+
+    private void loadPatientData(){
 
         //retrieve data from database into text views
         databaseReference = FirebaseDatabase.getInstance().getReference("Patients");
+
         databaseReference.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 //retrieve data from database
-                for (DataSnapshot dsPat : dataSnapshot.getChildren()) {
-                    FirebaseUser user_Pat = firebaseAuth.getCurrentUser();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
-                    final Patient pat = dsPat.getValue(Patient.class);
+                    final FirebaseUser user_Pat = firebaseAuth.getCurrentUser();
+                    final Patients pat_Data = postSnapshot.getValue(Patients.class);
 
-                    if (user_Pat.getEmail().equalsIgnoreCase(pat.patEmail_Address)){
-                        textViewWelcomePatient.setText("Welcome "+pat.getPatFirst_Name()+" "+pat.getPatLast_Name());
+                    if (pat_Data != null) {
+                        if (user_Pat != null) {
+                            if (user_Pat.getUid().equals(postSnapshot.getKey())){
+                                textViewWelcomePatient.setText("Welcome: " + pat_Data.getPatFirst_Name()+ " " + pat_Data.getPatLast_Name());
 
-                        buttonSeeMedRecord = (Button)findViewById(R.id.btnSeeMedRecord);
-                        buttonSeeMedRecord.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent rec_Pat = new Intent(PatientPage.this, MedicalRecordPatient.class);
-                                rec_Pat.putExtra("PATID", pat.getPatFirst_Name()+" "+pat.getPatLast_Name()+" "+pat.getPatUnique_Code());
-                                rec_Pat.putExtra("DOCID", pat.getPatDoc_Key());
-                                startActivity(rec_Pat);
+                                buttonSeeMedRecord = (Button)findViewById(R.id.btnSeeMedRecord);
+                                buttonSeeMedRecord.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent rec_Pat = new Intent(PatientPage.this, MedicalRecordPatient.class);
+                                        rec_Pat.putExtra("DOCName", pat_Data.getPatDoc_Name());
+                                        rec_Pat.putExtra("PATName", pat_Data.getPatFirst_Name()+" "+pat_Data.getPatLast_Name());
+                                        rec_Pat.putExtra("PATKey", user_Pat.getUid());
+                                        startActivity(rec_Pat);
+                                    }
+                                });
                             }
-                        });
+                        }
                     }
                 }
             }
@@ -78,16 +99,26 @@ public class PatientPage extends AppCompatActivity {
         });
     }
 
-    //Patient log out
-    private void logOutPatient(){
+    //Patients log out
+    private void patientLogOut(){
         firebaseAuth.signOut();
-        finish();
         startActivity(new Intent(PatientPage.this, MainActivity.class));
+        finish();
     }
 
-    private void changePassword(){
+    private void patientEditProfile(){
+        startActivity(new Intent(PatientPage.this,PatientEditProfile.class));
         finish();
+    }
+
+    private void patientChangeEmail(){
+        startActivity(new Intent(PatientPage.this,PatientChangeEmail.class));
+        finish();
+    }
+
+    private void patientChangePassword(){
         startActivity(new Intent(PatientPage.this,PatientChangePassword.class));
+        finish();
     }
 
     @Override
@@ -98,18 +129,47 @@ public class PatientPage extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.logOutPatient:{
-                logOutPatient();
-                return true;
-            }
-            case R.id.changePassword:{
-                changePassword();
-                return true;
-            }
+
+        if (item.getItemId() == R.id.patientLogOut){
+            alertDialogPatientLogout();
         }
+
+        if (item.getItemId() == R.id.patientEditProfile){
+            patientEditProfile();
+        }
+
+        if (item.getItemId() == R.id.patientChangeEmail){
+            patientChangeEmail();
+        }
+
+        if (item.getItemId() == R.id.patientChangePassword){
+            patientChangePassword();
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
+    private void alertDialogPatientLogout(){
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(PatientPage.this);
+        alertDialogBuilder
+                .setMessage("Are sure to Log Out?")
+                .setCancelable(false)
+                .setPositiveButton("Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                patientLogOut();
+                            }
+                        })
+
+                .setNegativeButton("No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        AlertDialog alert1 = alertDialogBuilder.create();
+        alert1.show();
     }
 }

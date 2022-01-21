@@ -33,13 +33,13 @@ public class CheckUniqueCode extends AppCompatActivity {
 
             else{
                 if(editText_CheckCode.charAt(0) =='h'||editText_CheckCode.charAt(0)=='H'){
-                    Toast.makeText(CheckUniqueCode.this, "This is a correct code for Hospital",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CheckUniqueCode.this, "This is a correct code for Hospitals",Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(CheckUniqueCode.this, HospitalRegistration.class));
                 }
 
                 else if(editText_CheckCode.charAt(0) =='d'||editText_CheckCode.charAt(0)=='D'){
-                    Toast.makeText(CheckUniqueCode.this, "This is a correct code for Doctor",Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(CheckUniqueCode.this, HospitalImageAddDoctor.class));
+                    Toast.makeText(CheckUniqueCode.this, "This is a correct code for Doctors",Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(CheckUniqueCode.this, HospitalListAddDoctor.class));
                 }
 
                 else{

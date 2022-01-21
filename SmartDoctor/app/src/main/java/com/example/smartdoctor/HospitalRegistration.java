@@ -35,6 +35,7 @@ public class HospitalRegistration extends AppCompatActivity {
     private String hosp_UniqueCodeReg, hosp_NameReg, hosp_EmailReg, hosp_PassReg, hosp_ConfPassReg;
 
     private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
     private DatabaseReference dbRefHospUpload;
     private DatabaseReference dbRefHospCheck;
 
@@ -54,11 +55,12 @@ public class HospitalRegistration extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
 
-        //Upload data to Hospital table
+        //Upload data to Hospitals table
         dbRefHospUpload = FirebaseDatabase.getInstance().getReference("Hospitals");
 
-        //Retrieve data from Hospital table
+        //Retrieve data from Hospitals table
         dbRefHospCheck = FirebaseDatabase.getInstance().getReference("Hospitals");
 
         Button buttonHospLogReg = findViewById(R.id.btnHospLogReg);
@@ -132,13 +134,13 @@ public class HospitalRegistration extends AppCompatActivity {
         hosp_ConfPassReg = Objects.requireNonNull(hospConfPassReg.getText()).toString().trim();
 
         if (TextUtils.isEmpty(hosp_UniqueCodeReg)) {
-            hospUniqueCode.setError("Enter Hospital Unique Code");
+            hospUniqueCode.setError("Enter Hospitals Unique Code");
             hospUniqueCode.requestFocus();
         } else if (TextUtils.isEmpty(hosp_NameReg)) {
-            hospNameReg.setError("Enter Hospital Name");
+            hospNameReg.setError("Enter Hospitals Name");
             hospNameReg.requestFocus();
         } else if (TextUtils.isEmpty(hosp_EmailReg)) {
-            hospEmailReg.setError("Enter Hospital Email Address");
+            hospEmailReg.setError("Enter Hospitals Email Address");
             hospEmailReg.requestFocus();
         } else if (!Patterns.EMAIL_ADDRESS.matcher(hosp_EmailReg).matches()) {
             Toast.makeText(HospitalRegistration.this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
@@ -164,7 +166,9 @@ public class HospitalRegistration extends AppCompatActivity {
     }
 
     private void sendEmailVerification() {
+
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+
         if (firebaseUser != null) {
             firebaseUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
@@ -172,11 +176,13 @@ public class HospitalRegistration extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         uploadHospRegData();
                         progressDialog.dismiss();
-                        Toast.makeText(HospitalRegistration.this, "Successful Registered, Email verification has been sent", Toast.LENGTH_SHORT).show();
                         firebaseAuth.signOut();
-                        finish();
+                        Toast.makeText(HospitalRegistration.this, "Hospital successfully registered.\nVerification email has been sent", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(HospitalRegistration.this, Login.class));
-                    } else {
+                        finish();
+                    }
+
+                    else {
                         progressDialog.dismiss();
                         Toast.makeText(HospitalRegistration.this, "Verification email has not been sent", Toast.LENGTH_SHORT).show();
                     }
@@ -185,21 +191,21 @@ public class HospitalRegistration extends AppCompatActivity {
         }
     }
 
-    //Upload Hospital data
+    //Upload Hospitals data
     private void uploadHospRegData() {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         assert user != null;
         String hosp_Id = user.getUid();
-        Hospital hosp = new Hospital(hosp_UniqueCodeReg, hosp_NameReg, hosp_EmailReg);
+        Hospitals hosp = new Hospitals(hosp_UniqueCodeReg, hosp_NameReg, hosp_EmailReg);
         dbRefHospUpload.child(hosp_Id).setValue(hosp);
     }
 
-    //Notify if the Hospital name already exist in database
+    //Notify if the Hospitals name already exist in database
     public void alertHospitalExists() {
         final String hosp_NameCheckAlert = Objects.requireNonNull(hospNameReg.getText()).toString().trim();
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
-        alertDialogBuilder.setMessage("The Hospital: " + hosp_NameCheckAlert + " already exists!");
+        alertDialogBuilder.setMessage("The Hospitals: " + hosp_NameCheckAlert + " already exists!");
         alertDialogBuilder.setCancelable(false);
         alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override

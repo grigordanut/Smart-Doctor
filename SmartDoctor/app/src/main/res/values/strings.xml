@@ -12,10 +12,75 @@
 
     <!--    Activity Contact Us Form-->
 
-    <!--    Activity Hospital Image Add Doctor-->
+
+    <!--    Activity Hospitals Image Add Doctors-->
 
 
-    <!--    Activity Hospital Registration-->
+    <!--    Doctors Change Password-->
+
+
+    <!--    Doctors Edit Profile-->
+
+
+    <!--    Activity Doctor Page-->
+    <string name="tv_doctorPage">Doctor Page</string>
+    <string name="tv_doctorWelcomePage">Welcome</string>
+    <string name="tv_doctorPersonalDetails">Doctor Personal Details</string>
+    <string name="tv_doctorPatients">Patients Available</string>
+    <string name="tv_doctorPatientsAv">0</string>
+    <string name="open_doctorPage">Open</string>
+    <string name="close_doctorPage">Close</string>
+
+    <!--    Activity Doctors Registration-->
+    <string name="tv_doctorRegPage">Enter the Doctor Register details.</string>
+    <string name="et_doctorUniqueCode">Doctor Unique Code</string>
+    <string name="et_doctorFirstName">First Name</string>
+    <string name="et_doctorLastName">Last Name</string>
+    <string name="et_doctorPhoneNumber">Phone Number</string>
+    <string name="et_doctorEmailAddress">Email Address</string>
+    <string name="et_doctorPassword">Password</string>
+    <string name="et_doctorConfirmPassword">Confirm Password</string>
+
+    <!--    Activity Doctors List Hospital-->
+    <string name="tv_doctorListHosp">Hospital Name</string>
+
+    <!--    Activity Finger Print Scan-->
+
+
+    <!--    Activity Hospitals Change Email-->
+
+
+    <!--    Activity Hospitals Change Password-->
+    <string name="tv_hospChangePassAuth">Authenticate Hospital Password</string>
+    <string name="et_hospChangePassEmail">Email Address</string>
+    <string name="et_hospChangePassOldPass">Enter your old Password</string>
+    <string name="btn_hospChangePassAuth">Authenticate User</string>
+    <string name="et_hospChangePassNewPass">Enter your new Password</string>
+    <string name="btn_hospChangePassword">Change Password</string>
+
+
+    <!--    Hospitals Edit Profile-->
+    <string name="tv_hospitalEditProfile">Edit Hospital Profile</string>
+    <string name="et_hospitalUniqueCodeUp">Hospital Unique Code</string>
+    <string name="et_hospitalNameUp">Hospital Name</string>
+    <string name="et_hospitalEmailUp">Email Address</string>
+    <string name="btn_hospitalSaveUp">Save Changes</string>
+
+    <!--    Hospitals Image Add Doctors-->
+    /////////////
+
+    <!--    Activity Hospitals Page-->
+    <string name="tv_hospitalPage">Hospital Page</string>
+    <string name="tv_welcomeHospitalPage">Welcome</string>
+    <string name="tv_hospitalPersonalDetails">Hospital Personal Details</string>
+    <string name="tv_hospitalDoctors">Doctors Available</string>
+    <string name="tv_hospitalDoctorsAv">0</string>
+    <string name="tv_hospitalPatients">Patients Available</string>
+    <string name="tv_hospitalPatientsAv">0</string>
+    <string name="open_hospPage">Open</string>
+    <string name="close_hospPage">Close</string>
+
+    <!--    Activity Hospitals Registration-->
     <string name="tv_hospitalPageReg">Hospital Registration Page</string>
     <string name="et_hospitalUniqueCodeReg">Hospital Unique Code</string>
     <string name="et_hospitalNameReg">Hospital Name</string>
@@ -26,19 +91,18 @@
     <string name="btn_hospitalPageLog">Log In</string>
 
     <!--    Activity Login-->
-    <string name="tv_userPageLog">Users Log in Page</string>
+    <string name="tv_userPageLog">Enter your Log details</string>
     <string name="et_userEmailLog">Email Address</string>
     <string name="et_userPasswordLog">Password</string>
     <string name="btn_userPageSignUp">Sign Up</string>
-    <string name="btn_userPageSignIn">Sign In</string>
     <string name="tv_userForgottenPass">Forgotten Password</string>
-
+    <string name="btn_userPageSignIn">Sign In</string>
 
     <!--    Activity Login By-->
-    <string name="tv_loginByPage">Log in by:</string>
+    <string name="tv_loginByPage">Select your Log in option:</string>
     <string name="cb_loginByPersonalDetails">Entering Personal Details</string>
     <string name="btn_loginByPersonalDetails">Disabled</string>
-    <string name="cb_loginByFingerPrint">Fingerprint - DOCTOR ONLY</string>
+    <string name="cb_loginByFingerPrint">Fingerprint-DOCTOR ONLY</string>
     <string name="btn_loginByFingerPrint">Disabled</string>
 
     <!--    Activity Main-->
@@ -48,54 +112,47 @@
     <string name="btn_loginMainPage">Log In</string>
 
 
+    <!--    Activity Medical Record Patients-->
+
+
     <!--    Activity NFCActivity-->
 
-    <!--    Activity Hospital Page-->
-    <string name="tv_doctorPage">Doctor Page</string>
-    <string name="tv_welcomeDoctorPage">Welcome</string>
-    <string name="tv_doctorPersonalDetails">Doctor Personal Details</string>
-    <string name="tv_doctorAccountDetails">Doctor Personal Account:</string>
-    <string name="tv_doctorPatients">Patients Available</string>
-    <string name="tv_doctorPatientsAv">0</string>
-    <string name="open_doctorPage">Open</string>
-    <string name="close_doctorPage">Close</string>
+
+    <!--    Activity Patients Change Email-->
 
 
-    <!--    Activity Doctor Registration-->
-    <string name="tv_doctorRegPage">Enter the Doctor Register details.</string>
-    <string name="et_doctorUniqueCode">Doctor Unique Code</string>
-    <string name="et_doctorFirstName">First Name</string>
-    <string name="et_doctorLastName">Last Name</string>
-    <string name="et_doctorPhoneNumber">Phone Number</string>
-    <string name="et_doctorEmailAddress">Email Address</string>
-    <string name="et_doctorPassword">Password</string>
-    <string name="et_doctorConfirmPassword">Confirm Password</string>
+    <!--    Activity Patients Change Password-->
 
 
-    <!--    Activity Hospital Page-->
-    <string name="tv_hospitalPage">Hospital Page</string>
-    <string name="tv_welcomeHospitalPage">Welcome</string>
-    <string name="tv_hospitalPersonalDetails">Hospital Personal Details</string>
-    <string name="tv_hospitalAccountDetails">Hospital Personal Account:</string>
-    <string name="tv_hospitalDoctors">Doctors Available</string>
-    <string name="tv_hospitalDoctorsAv">0</string>
-    <string name="tv_hospitalPatients">Patients Available</string>
-    <string name="tv_hospitalPatientsAv">0</string>
-    <string name="open_hospPage">Open</string>
-    <string name="close_hospPage">Close</string>
+    <!--    Activity Patients Edit Profile-->
+
+
+    <!--    Activity Patients Page-->
+    <string name="tv_patientPage">Patient Page</string>
+    <string name="btn_patientShowMedRecord">Show Medical Record</string>
+
+    <!--    Dropdown Item Gender-->
+    <string name="tv_genderText">Gender Text</string>
 
     <!--    Menu-->
 
-    <!--    Menu Doctor Page-->
-    <string name="menuDoctor_MainLogOut">Log Out</string>
-    <string name="menuDoctor_MainEditProfile">Edit Profile</string>
-    <string name="menuDoctor_MainChangePassword">Change Password</string>
+    <!--    Menu Doctors Page-->
+    <string name="menuDoctor_logOut">Log Out</string>
+    <string name="menuDoctor_editProfile">Edit Profile</string>
+    <string name="menuDoctor_changeEmail">Change Email</string>
+    <string name="menuDoctor_changePassword">Change Password</string>
 
     <!--    Menu Drawer Doctor Page-->
     <string name="mDDoctor_addPatient">Add Patients</string>
     <string name="mDDoctor_showPatientList">Patients List</string>
     <string name="mDDoctor_addMedicalRecords">Add MedicalRecord</string>
     <string name="mDDoctor_showMedicalRecords">Medical Record List</string>
+
+    <!--    Menu Hospital Change Email-->
+    <string name="menuHospChangeEmail_goBack">Go Back</string>
+
+    <!--    Menu Hospital Change Password-->
+    <string name="menuHospChangePass_goBack">Go Back</string>
 
     <!--    Menu Drawer Hospital Page-->
     <string name="mDHosp_addDoctors">Add Doctors</string>
@@ -106,8 +163,24 @@
     <string name="menuHosp_EditProfileGoBack">Go Back</string>
 
     <!--    Menu Hospital Page-->
-    <string name="menuHosp_MainLogOut">Log Out</string>
-    <string name="menuHosp_MainEditProfile">Edit Profile</string>
-    <string name="menuHosp_MainChangeEmail">Change Email</string>
-    <string name="menuHosp_MainChangePassword">Change Password</string>
+    <string name="menuHosp_logOut">Log Out</string>
+    <string name="menuHosp_editProfile">Edit Profile</string>
+    <string name="menuHosp_changeEmail">Change Email</string>
+    <string name="menuHosp_changePassword">Change Password</string>
+
+    <!--    Menu Main-->
+    <string name="menuMain_logOut">Contact Us</string>
+
+    <!--    Menu Patient Page-->
+    <string name="menuPat_logOut">Log Out</string>
+    <string name="menuPat_editProfile">Edit Profile</string>
+    <string name="menuPat_changeEmail">Change Email</string>
+    <string name="menuPat_changePassword">Change Password</string>
+
+
+    <string-array name="Gender">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
 </resources>

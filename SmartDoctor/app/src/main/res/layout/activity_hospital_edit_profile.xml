@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_bright"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="0dp">
+    tools:context=".HospitalEditProfile">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,7 +20,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="10dp"
-            android:text="Edit Hospital Profile"
+            android:text="@string/tv_hospitalEditProfile"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="22sp" />
@@ -40,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
-                android:hint="Hospital Unique Code"
+                android:hint="@string/et_hospitalUniqueCodeUp"
                 android:inputType="text"
                 android:paddingStart="10dp"
                 android:textSize="22sp"
@@ -64,7 +63,7 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:paddingStart="10dp"
-                android:hint="Hospital Name"
+                android:hint="@string/et_hospitalNameUp"
                 android:textSize="22sp"
                 tools:ignore="Autofill,LabelFor,RtlSymmetry" />
 
@@ -86,7 +85,7 @@
                 android:ems="10"
                 android:inputType="textEmailAddress"
                 android:paddingStart="10dp"
-                android:hint="Email Address"
+                android:hint="@string/et_hospitalEmailUp"
                 android:textSize="22sp"
                 tools:ignore="Autofill,LabelFor,RtlSymmetry" />
 
@@ -99,9 +98,11 @@
             android:layout_gravity="center"
             android:layout_marginTop="25dp"
             android:background="@drawable/bgdbutton"
-            android:text="Save Changes"
+            android:text="@string/btn_hospitalSaveUp"
             android:textColor="#ffffff"
             android:textSize="22sp"
             android:textStyle="bold" />
+
     </LinearLayout>
+
 </ScrollView>

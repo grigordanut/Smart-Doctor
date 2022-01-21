@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,7 +50,13 @@ public class HospitalEditProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hospital_edit_profile);
 
+        progressDialog = new ProgressDialog(this);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
         //initialise the variables
+        tVHospitalEditProfile = findViewById(R.id.tvHospitalEditProfile);
+
         hospUniqueCodeUp = findViewById(R.id.etHospUniqueCodeUp);
         hospNameUp = findViewById(R.id.etHospNameUp);
         hospEmailUp = findViewById(R.id.etHospEmailUp);
@@ -64,12 +69,6 @@ public class HospitalEditProfile extends AppCompatActivity {
             }
         });
 
-        tVHospitalEditProfile = findViewById(R.id.tvHospitalEditProfile);
-
-        progressDialog = new ProgressDialog(this);
-
-        firebaseAuth = FirebaseAuth.getInstance();
-
         //load the user details in the edit texts
         hospDatabaseReferenceUp = FirebaseDatabase.getInstance().getReference("Hospitals");
         hospEventListenerUp = hospDatabaseReferenceUp.addValueEventListener(new ValueEventListener() {
@@ -81,14 +80,14 @@ public class HospitalEditProfile extends AppCompatActivity {
                 for (DataSnapshot ds_User : dataSnapshot.getChildren()) {
                     FirebaseUser user_Db = firebaseAuth.getCurrentUser();
 
-                    Hospital hospital_Data = ds_User.getValue(Hospital.class);
+                    Hospitals hospitals_Data = ds_User.getValue(Hospitals.class);
 
                     if (user_Db != null){
                         if (user_Db.getUid().equals(ds_User.getKey())){
-                            hospUniqueCodeUp.setText(Objects.requireNonNull(hospital_Data).getHospUnique_Code());
-                            hospNameUp.setText(hospital_Data.getHosp_Name());
-                            hospEmailUp.setText(hospital_Data.getHospEmail_Address());
-                            tVHospitalEditProfile.setText("Edit profile of: " + hospital_Data.getHosp_Name());
+                            hospUniqueCodeUp.setText(Objects.requireNonNull(hospitals_Data).getHosp_UniqueCode());
+                            hospNameUp.setText(hospitals_Data.getHosp_Name());
+                            hospEmailUp.setText(hospitals_Data.getHosp_Email());
+                            tVHospitalEditProfile.setText("Edit profile of: " + hospitals_Data.getHosp_Name());
                         }
                     }
                 }
@@ -114,7 +113,7 @@ public class HospitalEditProfile extends AppCompatActivity {
 
         if(validateHospitalEditData()){
 
-            progressDialog.setMessage("Update the Hospital Profile");
+            progressDialog.setMessage("Update the Hospitals Profile");
             progressDialog.show();
 
             hosp_UniqueCodeUp = Objects.requireNonNull(hospUniqueCodeUp.getText()).toString().trim();
@@ -123,8 +122,8 @@ public class HospitalEditProfile extends AppCompatActivity {
 
             String user_id = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
             DatabaseReference currentUser = hospDatabaseReferenceUp.child(user_id);
-            Hospital hospital_Up = new Hospital(hosp_UniqueCodeUp, hosp_NameUp, hosp_EmailUp);
-            currentUser.setValue(hospital_Up);
+            Hospitals hospitals_Up = new Hospitals(hosp_UniqueCodeUp, hosp_NameUp, hosp_EmailUp);
+            currentUser.setValue(hospitals_Up);
 
             //clear data input fields
             hospUniqueCodeUp.getText().clear();
@@ -133,8 +132,9 @@ public class HospitalEditProfile extends AppCompatActivity {
 
             progressDialog.dismiss();
             Toast.makeText(HospitalEditProfile.this, "Your details has been changed successfully", Toast.LENGTH_SHORT).show();
-            finish();
+
             startActivity(new Intent(HospitalEditProfile.this, LoginBy.class));
+            finish();
         }
     }
 
@@ -146,10 +146,10 @@ public class HospitalEditProfile extends AppCompatActivity {
         hosp_NameUp = Objects.requireNonNull(hospNameUp.getText()).toString().trim();
 
         if (TextUtils.isEmpty(hosp_UniqueCodeUp)) {
-            hospUniqueCodeUp.setError("Enter Hospital Unique Code");
+            hospUniqueCodeUp.setError("Enter Hospitals Unique Code");
             hospUniqueCodeUp.requestFocus();
         } else if (TextUtils.isEmpty(hosp_NameUp)) {
-            hospNameUp.setError("Enter Hospital Name");
+            hospNameUp.setError("Enter Hospitals Name");
             hospNameUp.requestFocus();
         } else {
             result = true;
@@ -181,16 +181,17 @@ public class HospitalEditProfile extends AppCompatActivity {
         return true;
     }
 
-    private void goBackEditCustom(){
-        finish();
+    private void hospEditProfileGoBack(){
         startActivity(new Intent(HospitalEditProfile.this, HospitalPage.class));
+        finish();
     }
 
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
         if (item.getItemId() == R.id.hospitalEditProfileGoBack) {
-            goBackEditCustom();
+            hospEditProfileGoBack();
         }
 
         return super.onOptionsItemSelected(item);

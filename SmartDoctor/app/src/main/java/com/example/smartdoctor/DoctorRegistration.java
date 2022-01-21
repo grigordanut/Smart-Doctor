@@ -3,6 +3,7 @@ package com.example.smartdoctor;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,18 +29,19 @@ public class DoctorRegistration extends AppCompatActivity {
 
     //Declare variables
     private TextInputEditText docUniqueCode, docFirstName, docLastName, docPhone, docEmailReg, docPassReg, docConfPassReg;
-    private TextView tVHospNameDoctorReg, tVHospKeyDoctorReg;
+    private TextView tVHospNameDoctorReg;
 
     private String doc_UniqueCode, doc_FirstName, doc_LastName, doc_Phone, doc_EmailReg, doc_PassReg, doc_ConfPassReg;
 
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
 
-    private String docHospital_Name = "";
-    private String docHospital_Key = "";
+    private String docHospitalName = "";
+    private String docHospitalKey = "";
 
     private ProgressDialog progressDialog;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,20 +49,18 @@ public class DoctorRegistration extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
 
-        getIntent().hasExtra("HOSPName");
-        docHospital_Name = Objects.requireNonNull(getIntent().getExtras()).getString("HOSPName");
+        tVHospNameDoctorReg = findViewById(R.id.tvHospNameDoctorReg);
 
-        tVHospNameDoctorReg = (TextView) findViewById(R.id.tvHospNameDoctorReg);
-        tVHospNameDoctorReg.setText("Add Doctor to: " + docHospital_Name);
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            docHospitalName = bundle.getString("HOSPName");
+            docHospitalKey = bundle.getString("HOSPKey");
+        }
 
-        getIntent().hasExtra("HOSPKey");
-        docHospital_Key = Objects.requireNonNull(getIntent().getExtras()).getString("HOSPKey");
+        tVHospNameDoctorReg.setText("Add doctor to: " + docHospitalName  + " Hospital");
 
-        tVHospKeyDoctorReg = (TextView) findViewById(R.id.tvHospKeyDoctorReg);
-        tVHospKeyDoctorReg.setText("Hospital Key: " + docHospital_Key);
-
-        Button buttonLoginDoctorReg = findViewById(R.id.btnLoginDoctorReg);
-        buttonLoginDoctorReg.setOnClickListener(new View.OnClickListener() {
+        Button buttonDocLogReg = findViewById(R.id.btnDocLogReg);
+        buttonDocLogReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -77,12 +77,13 @@ public class DoctorRegistration extends AppCompatActivity {
         docConfPassReg = findViewById(R.id.etDocConfPassReg);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Doctors");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Doctors");
 
         Button buttonDoctorReg = findViewById(R.id.btnDoctorReg);
         buttonDoctorReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                
                 if (validateDoctorData()) {
 
                     progressDialog.setMessage("Registering Doctor Details");
@@ -119,6 +120,7 @@ public class DoctorRegistration extends AppCompatActivity {
 
     //validate data in the input fields
     private Boolean validateDoctorData() {
+
         boolean result = false;
 
         doc_UniqueCode = Objects.requireNonNull(docUniqueCode.getText()).toString().trim();
@@ -130,12 +132,12 @@ public class DoctorRegistration extends AppCompatActivity {
         doc_ConfPassReg = Objects.requireNonNull(docConfPassReg.getText()).toString().trim();
 
         if (TextUtils.isEmpty(doc_UniqueCode)) {
-            docUniqueCode.setError("Enter Doctor Unique Code");
+            docUniqueCode.setError("Enter Doctors Unique Code");
             docUniqueCode.requestFocus();
         }
 
         else if (TextUtils.isEmpty(doc_FirstName)) {
-            docFirstName.setError("Enter Doctor's First Name");
+            docFirstName.setError("Enter Doctors's First Name");
             docFirstName.requestFocus();
         }
 
@@ -188,7 +190,9 @@ public class DoctorRegistration extends AppCompatActivity {
 
     //send email to user to verify if the email is real
     private void sendEmailVerification(){
+
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+
         if(firebaseUser!=null){
             firebaseUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
@@ -213,11 +217,11 @@ public class DoctorRegistration extends AppCompatActivity {
 
     private void sendDoctorRegData(){
 
-        //Add doctor data to Firebase Database
+        //Add doctors data to Firebase Database
         FirebaseUser doc = firebaseAuth.getCurrentUser();
         assert doc != null;
         String doc_Id = doc.getUid();
-        Doctor doctor = new Doctor(doc_UniqueCode, doc_FirstName, doc_LastName, doc_Phone, doc_EmailReg, docHospital_Name, docHospital_Key);
-        databaseReference.child(doc_Id).setValue(doctor);
+        Doctors doctors = new Doctors(doc_UniqueCode, doc_FirstName, doc_LastName, doc_Phone, doc_EmailReg, docHospitalName, docHospitalKey);
+        databaseReference.child(doc_Id).setValue(doctors);
     }
 }

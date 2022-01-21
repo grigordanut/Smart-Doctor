@@ -5,24 +5,26 @@
     tools:context="com.example.danut.smartdoctor.PatientPage">
 
     <item
-        android:id="@+id/logOutPatient"
+        android:id="@+id/patientLogOut"
         android:orderInCategory="100"
-        app:showAsAction="never"
-        android:title="Log Out">
-    </item>
+        android:title="@string/menuPat_logOut"
+        app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/changePassword"
-        android:orderInCategory="300"
-        app:showAsAction="always"
-        android:title="Change Password">
-    </item>
+        android:id="@+id/patientEditProfile"
+        android:orderInCategory="100"
+        android:title="@string/menuPat_editProfile"
+        app:showAsAction="never"/>
 
     <item
-        android:id="@+id/closeMenu"
-        android:orderInCategory="300"
-        app:showAsAction="never"
-        android:title="Close">
-    </item>
+        android:id="@+id/patientChangeEmail"
+        android:orderInCategory="100"
+        android:title="@string/menuPat_changeEmail"
+        app:showAsAction="never"/>
 
+    <item
+        android:id="@+id/patientChangePassword"
+        android:orderInCategory="100"
+        android:title="@string/menuPat_changePassword"
+        app:showAsAction="never"/>
 </menu>

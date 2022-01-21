@@ -17,13 +17,13 @@
             android:id="@+id/tvLoginBy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="30dp"
-            android:layout_marginEnd="50dp"
+            android:layout_marginEnd="20dp"
             android:text="@string/tv_loginByPage"
             android:textAlignment="center"
             android:textColor="?attr/colorPrimary"
-            android:textSize="28sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <CheckBox
@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="20dp"
             android:text="@string/cb_loginByPersonalDetails"
             android:textSize="22sp" />
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="50dp"
             android:background="@drawable/btn_fading"
             android:text="@string/btn_loginByPersonalDetails"
@@ -63,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="50dp"
             android:background="@drawable/btn_fading"
             android:text="@string/btn_loginByFingerPrint"

@@ -2,7 +2,7 @@ package com.example.smartdoctor;
 
 import com.google.firebase.database.Exclude;
 
-public class Doctor {
+public class Doctors {
 
     private String docUnique_Code;
     private String docFirst_Name;
@@ -13,11 +13,11 @@ public class Doctor {
     private String docHosp_Key;
     private String doc_Key;
 
-    public Doctor() {
+    public Doctors() {
 
     }
 
-    public Doctor(String docUnique_Code, String docFirst_Name, String docLast_Name, String docPhone_Number, String docEmail_Address, String docHosp_Name, String docHosp_Key) {
+    public Doctors(String docUnique_Code, String docFirst_Name, String docLast_Name, String docPhone_Number, String docEmail_Address, String docHosp_Name, String docHosp_Key) {
         this.docUnique_Code = docUnique_Code;
         this.docFirst_Name = docFirst_Name;
         this.docLast_Name = docLast_Name;

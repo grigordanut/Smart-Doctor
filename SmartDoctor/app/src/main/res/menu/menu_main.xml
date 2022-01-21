@@ -7,5 +7,5 @@
         android:id="@+id/contactUs"
         android:orderInCategory="200"
         app:showAsAction="ifRoom"
-        android:title="Contact Us"/>
+        android:title="@string/menuMain_logOut"/>
 </menu>

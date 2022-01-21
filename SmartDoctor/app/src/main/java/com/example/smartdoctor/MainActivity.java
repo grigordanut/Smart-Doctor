@@ -1,7 +1,6 @@
 package com.example.smartdoctor;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,8 +21,17 @@ public class MainActivity extends AppCompatActivity {
         buttonNFC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent nfc = new Intent(MainActivity.this, NFCActivity.class);
-                startActivity(nfc);
+                startActivity(new Intent(MainActivity.this, NFCReadCard.class));
+                //startActivity(new Intent(MainActivity.this, NFCActivity.class));
+            }
+        });
+
+        //Action button Login
+        Button buttonLogIn = (Button)findViewById(R.id.btnLogInMain);
+        buttonLogIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, LoginBy.class));
             }
         });
 
@@ -34,15 +42,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent sign = new Intent(MainActivity.this, CheckUniqueCode.class);
                 startActivity(sign);
-            }
-        });
-
-        //Action button Login
-        Button buttonLogIn = (Button)findViewById(R.id.btnLogInMain);
-        buttonLogIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, LoginBy.class));
             }
         });
     }

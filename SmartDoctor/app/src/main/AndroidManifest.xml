@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.smartdoctor">
+    package="com.example.smartdoctor" >
+
+    <uses-permission android:name="android.permission.NFC" />
+
+    <uses-feature android:name="android.hardware.nfc" />
 
     <application
         android:allowBackup="true"
@@ -8,7 +12,46 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SmartDoctor">
+        android:theme="@style/Theme.SmartDoctor" >
+        <activity
+            android:name=".NFCReadCard"
+            android:exported="false" />
+        <activity
+            android:name=".NFCActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PatientNFC"
+            android:exported="false" />
+        <activity
+            android:name=".HospitalChangeEmail"
+            android:exported="false" />
+        <activity
+            android:name=".UpdateMedicalRecord"
+            android:exported="false" />
+        <activity
+            android:name=".PatientListShowMedicalRecord"
+            android:exported="false" />
+        <activity
+            android:name=".MedicalRecordList"
+            android:exported="false" />
+        <activity
+            android:name=".AddMedicalRecord"
+            android:exported="false" />
+        <activity
+            android:name=".PatientListAddMedicalRecord"
+            android:exported="false" />
+        <activity
+            android:name=".PatientListDoctor"
+            android:exported="false" />
+        <activity
+            android:name=".PatientChangeEmail"
+            android:exported="false" />
+        <activity
+            android:name=".PatientEditProfile"
+            android:exported="false" />
+        <activity
+            android:name=".DoctorChangeEmail"
+            android:exported="false" />
         <activity
             android:name=".MedicalRecordPatient"
             android:exported="false" />
@@ -28,19 +71,16 @@
             android:name=".DoctorEditProfile"
             android:exported="false" />
         <activity
-            android:name=".PatientsListHospital"
+            android:name=".PatientListHospital"
             android:exported="false" />
         <activity
-            android:name=".DoctorsList"
+            android:name=".DoctorListHospital"
             android:exported="false" />
         <activity
             android:name=".DoctorRegistration"
             android:exported="false" />
         <activity
             android:name=".HospitalChangePassword"
-            android:exported="false" />
-        <activity
-            android:name=".HospitalChangeEmail"
             android:exported="false" />
         <activity
             android:name=".HospitalEditProfile"
@@ -64,10 +104,10 @@
             android:name=".HospitalRegistration"
             android:exported="false" />
         <activity
-            android:name=".HospitalImageAddDoctor"
+            android:name=".HospitalListAddDoctor"
             android:exported="false" />
         <activity
-            android:name=".NFCActivity"
+            android:name=".NFCActivityOld"
             android:exported="false" />
         <activity
             android:name=".CheckUniqueCode"
@@ -80,7 +120,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

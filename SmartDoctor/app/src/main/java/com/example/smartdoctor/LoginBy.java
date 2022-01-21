@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 
+import java.util.Objects;
+
 public class LoginBy extends AppCompatActivity {
     private Button buttonPersonalDetails, buttonFingerPrint;
 
@@ -18,6 +20,8 @@ public class LoginBy extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_by);
+
+        Objects.requireNonNull(getSupportActionBar()).setTitle("User Log in By: ");
 
         buttonPersonalDetails = findViewById(R.id.btnPersonalDetails);
         buttonFingerPrint = findViewById(R.id.btnFingerPrint);
@@ -32,6 +36,7 @@ public class LoginBy extends AppCompatActivity {
                     buttonPersonalDetails.setEnabled(true);
                     buttonPersonalDetails.setText("Enter");
                     buttonFingerPrint.setText("Disabled");
+                    buttonFingerPrint.setEnabled(false);
                     buttonPersonalDetails.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -56,6 +61,7 @@ public class LoginBy extends AppCompatActivity {
                     buttonFingerPrint.setEnabled(true);
                     buttonFingerPrint.setText("Enter");
                     buttonPersonalDetails.setText("Disabled");
+                    buttonPersonalDetails.setEnabled(false);
                     buttonFingerPrint.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

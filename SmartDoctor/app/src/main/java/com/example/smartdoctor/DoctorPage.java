@@ -39,13 +39,15 @@ public class DoctorPage extends AppCompatActivity {
     private ValueEventListener doctorEventListener;
 
     //Retrieve and Display data from Patients database
-    private DatabaseReference patientsDatabaseReference;
-    private ValueEventListener patientsEventListener;
-    private List<Patient> patientsList;
+    private DatabaseReference patientDatabaseReference;
+    private ValueEventListener patientEventListener;
+    private List<Patients> patientsList;
+
+    private TextView tVWelcomeDoctor, tVShowDoctorDetails, tVDoctorPatientsAv;
 
     private int numberPatientsAv;
 
-    private TextView tVWelcomeDoctor, tVShowDoctorDetails, tVShowPatientsAv;
+    private String patHospital_Key;
 
     //Declaring some objects
     private DrawerLayout drawerLayoutDoctor;
@@ -57,6 +59,8 @@ public class DoctorPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_page);
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Doctor Page");
+
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
 
@@ -64,12 +68,12 @@ public class DoctorPage extends AppCompatActivity {
 
         tVWelcomeDoctor = findViewById(R.id.tvWelcomeDoctor);
         tVShowDoctorDetails = findViewById(R.id.tvShowDoctorDetails);
-        tVShowPatientsAv = findViewById(R.id.tvDoctorPatientsAv);
+        tVDoctorPatientsAv = findViewById(R.id.tvDoctorPatientsAv);
 
         drawerLayoutDoctor = findViewById(R.id.activity_doctor_page);
         navigationViewDoctor = findViewById(R.id.navViewDoctorPage);
 
-        drawerToggleDoctor = new ActionBarDrawerToggle(this, drawerLayoutDoctor, R.string.open_hospPage, R.string.close_hospPage);
+        drawerToggleDoctor = new ActionBarDrawerToggle(this, drawerLayoutDoctor, R.string.open_doctorPage, R.string.close_doctorPage);
 
         drawerLayoutDoctor.addDrawerListener(drawerToggleDoctor);
         drawerToggleDoctor.syncState();
@@ -88,14 +92,14 @@ public class DoctorPage extends AppCompatActivity {
                 for (DataSnapshot ds_Doctor : dataSnapshot.getChildren()) {
                     final FirebaseUser doctor_Db = firebaseAuth.getCurrentUser();
 
-                    final Doctor doctor_Data = ds_Doctor.getValue(Doctor.class);
+                    final Doctors doctors_Data = ds_Doctor.getValue(Doctors.class);
 
                     assert doctor_Db != null;
-                    assert doctor_Data != null;
-                    if (doctor_Db.getUid().equalsIgnoreCase(ds_Doctor.getKey())) {
-                        tVWelcomeDoctor.setText("Welcome: " + doctor_Data.getDocFirst_Name() + " " + doctor_Data.getDocLast_Name());
-                        tVShowDoctorDetails.setText("Doctor Name: \n" + doctor_Data.getDocFirst_Name() + " "
-                                + doctor_Data.getDocLast_Name() + "\n\nEmail: \n" + doctor_Data.getDocEmail_Address());
+                    assert doctors_Data != null;
+                    if (doctor_Db.getUid().equals(ds_Doctor.getKey())) {
+                        tVWelcomeDoctor.setText("Welcome: " + doctors_Data.getDocFirst_Name() + " " + doctors_Data.getDocLast_Name());
+                        tVShowDoctorDetails.setText("Doctors Name: \n" + doctors_Data.getDocFirst_Name() + " "
+                                + doctors_Data.getDocLast_Name() + "\n\nEmail: \n" + doctors_Data.getDocEmail_Address());
 
                         //Adding Click Events to our navigation drawer item
                         navigationViewDoctor.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -107,35 +111,41 @@ public class DoctorPage extends AppCompatActivity {
                                     //Add Patients
                                     case R.id.doctor_addPatients:
                                         Intent add_Patients = new Intent(DoctorPage.this, PatientRegistration.class);
-                                        add_Patients.putExtra("DOCName", doctor_Data.getDocFirst_Name() + " " + doctor_Data.getDocLast_Name());
+
+                                        add_Patients.putExtra("HOSPName", doctors_Data.getDocHosp_Name());
+                                        add_Patients.putExtra("HOSPKey", doctors_Data.getDocHosp_Key());
+
+                                        add_Patients.putExtra("DOCName", doctors_Data.getDocFirst_Name() + " " + doctors_Data.getDocLast_Name());
                                         add_Patients.putExtra("DOCKey", doctor_Db.getUid());
-                                        add_Patients.putExtra("HOSPName", doctor_Data.getDocHosp_Name());
-                                        add_Patients.putExtra("HOSPKey", doctor_Data.getDocHosp_Key());
+
                                         startActivity(add_Patients);
                                         break;
 
                                     //Show Patients List
                                     case R.id.doctorShow_patientsList:
-                                        Intent pat_List = new Intent(DoctorPage.this, DoctorsList.class);
-                                        pat_List.putExtra("DOCName", doctor_Data.getDocFirst_Name() + " " + doctor_Data.getDocLast_Name());
+                                        Intent pat_List = new Intent(DoctorPage.this, PatientListDoctor.class);
+                                        pat_List.putExtra("HOSPName", doctors_Data.getDocHosp_Name());
+                                        pat_List.putExtra("HOSPKey", doctors_Data.getDocHosp_Key());
+
+                                        pat_List.putExtra("DOCName", doctors_Data.getDocFirst_Name() + " " + doctors_Data.getDocLast_Name());
                                         pat_List.putExtra("DOCKey", doctor_Db.getUid());
                                         startActivity(pat_List);
                                         break;
 
                                     //Add Medical Records
                                     case R.id.doctor_addMedicalRecords:
-//                                        Intent pat_List = new Intent(HospitalPage.this, PatientsListHospital.class);
-//                                        pat_List.putExtra("HOSPName", hosp_Data.getHosp_Name());
-//                                        pat_List.putExtra("HOSPId", hosp_Db.getUid());
-//                                        startActivity(pat_List);
+                                        Intent add_Record = new Intent(DoctorPage.this, PatientListAddMedicalRecord.class);
+                                        add_Record.putExtra("DOCName", doctors_Data.getDocFirst_Name() + " " + doctors_Data.getDocLast_Name());
+                                        add_Record.putExtra("DOCKey", doctor_Db.getUid());
+                                        startActivity(add_Record);
                                         break;
 
                                     //Show Medical Records
                                     case R.id.doctorShow_recordsList:
-//                                        Intent pat_List = new Intent(DoctorPage.this, DoctorsList.class);
-//                                        pat_List.putExtra("DOCName", doctor_Data.getDocFirst_Name() + " " + doctor_Data.getDocLast_Name());
-//                                        pat_List.putExtra("DOCKey", doctor_Db.getUid());
-//                                        startActivity(pat_List);
+                                        Intent show_Record = new Intent(DoctorPage.this, PatientListShowMedicalRecord.class);
+                                        show_Record.putExtra("DOCName", doctors_Data.getDocFirst_Name() + " " + doctors_Data.getDocLast_Name());
+                                        show_Record.putExtra("DOCKey", doctor_Db.getUid());
+                                        startActivity(show_Record);
                                         break;
 
                                     default:
@@ -150,7 +160,7 @@ public class DoctorPage extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(DoctorPage.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(DoctorPage.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -164,6 +174,11 @@ public class DoctorPage extends AppCompatActivity {
     public void doctorEditProfile(){
         finish();
         startActivity(new Intent(DoctorPage.this, DoctorEditProfile.class));
+    }
+
+    public void doctorChangeEmail(){
+        finish();
+        startActivity(new Intent(DoctorPage.this, DoctorChangeEmail.class));
     }
 
     public void doctorChangePassword(){
@@ -185,7 +200,6 @@ public class DoctorPage extends AppCompatActivity {
             return true;
         }
 
-
         if (item.getItemId() == R.id.doctorLogOut){
             alertDialogDoctorLogout();
         }
@@ -194,10 +208,13 @@ public class DoctorPage extends AppCompatActivity {
             doctorEditProfile();
         }
 
+        if (item.getItemId() == R.id.doctorChangeEmail){
+            doctorChangeEmail();
+        }
+
         if (item.getItemId() == R.id.doctorChangePassword){
             doctorChangePassword();
         }
-
 
         return super.onOptionsItemSelected(item);
     }
@@ -205,34 +222,40 @@ public class DoctorPage extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        //loadPatientsAv();
+        loadPatientsAv();
     }
 
-//    private void loadPatientsAv() {
-//        //initialize the bike storage database
-//        firebaseStBikesAvRentCustom = FirebaseStorage.getInstance();
-//        databaseRefBikesAvRentCustom = FirebaseDatabase.getInstance().getReference("Bikes");
-//
-//        bikesAvRentCustomEventListener = databaseRefBikesAvRentCustom.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                bikesRentListAvRentCustom.clear();
-//                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-//                    BikesRent bikesRent = postSnapshot.getValue(BikesRent.class);
-//                    assert bikesRent != null;
-//                    bikesRent.setBike_Key(postSnapshot.getKey());
-//                    bikesRentListAvRentCustom.add(bikesRent);
-//                    numberBikesAvRentCustom = bikesRentListAvRentCustom.size();
-//                    tVCustomBikesRentAv.setText(String.valueOf(numberBikesAvRentCustom));
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                Toast.makeText(CustomerPageRentBikes.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
+    private void loadPatientsAv() {
+
+        //initialize the Patients database
+        patientDatabaseReference = FirebaseDatabase.getInstance().getReference("Patients");
+
+        patientEventListener = patientDatabaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                patientsList.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Patients pat_Data = postSnapshot.getValue(Patients.class);
+
+                    assert pat_Data != null;
+                    patHospital_Key = pat_Data.getPatHosp_Key();
+
+                    if (pat_Data.getPatHosp_Key().equals(patHospital_Key)){
+                        pat_Data.setPatient_Key(postSnapshot.getKey());
+                        patientsList.add(pat_Data);
+                        numberPatientsAv = patientsList.size();
+                        tVDoctorPatientsAv.setText(String.valueOf(numberPatientsAv));
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(DoctorPage.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     private void alertDialogDoctorLogout(){
 

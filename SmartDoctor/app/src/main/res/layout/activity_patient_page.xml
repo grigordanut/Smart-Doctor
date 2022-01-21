@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgrandier"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="0dp">
+    android:background="@drawable/smart_doctor_addpatient"
+    tools:context=".PatientPage">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,24 +16,25 @@
             android:id="@+id/tvWelcomePatient"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="5dp"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
             android:layout_marginTop="30dp"
-            android:text="Welcome Patient"
+            android:layout_marginEnd="20dp"
+            android:paddingTop="5dp"
+            android:text="@string/tv_patientPage"
             android:textAlignment="center"
-            android:textSize="22sp"
-            android:textColor="#000000" />
+            android:textColor="#000000"
+            android:textSize="22sp" />
 
         <Button
             android:id="@+id/btnSeeMedRecord"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
             android:layout_marginTop="30dp"
-            android:textSize="22sp"
-            android:text="Medical Record" />
+            android:layout_marginEnd="40dp"
+            android:text="@string/btn_patientShowMedRecord"
+            android:textSize="22sp" />
 
     </LinearLayout>
+
 </ScrollView>
