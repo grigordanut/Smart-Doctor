@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
@@ -27,14 +28,17 @@ import java.util.Objects;
 
 public class DoctorRegistration extends AppCompatActivity {
 
+    private FirebaseAuth firebaseAuth;
+    //private FirebaseUser firebaseUser;
+
+    private DatabaseReference databaseReference;
+
     //Declare variables
     private TextInputEditText docUniqueCode, docFirstName, docLastName, docPhone, docEmailReg, docPassReg, docConfPassReg;
     private TextView tVHospNameDoctorReg;
 
     private String doc_UniqueCode, doc_FirstName, doc_LastName, doc_Phone, doc_EmailReg, doc_PassReg, doc_ConfPassReg;
 
-    private FirebaseAuth firebaseAuth;
-    private DatabaseReference databaseReference;
 
     private String docHospitalName = "";
     private String docHospitalKey = "";
@@ -49,6 +53,12 @@ public class DoctorRegistration extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+        //firebaseUser = firebaseAuth.getCurrentUser();
+
+        //Create Doctors table into database
+        databaseReference = FirebaseDatabase.getInstance().getReference("Doctors");
+
         tVHospNameDoctorReg = findViewById(R.id.tvHospNameDoctorReg);
 
         Bundle bundle = getIntent().getExtras();
@@ -57,7 +67,7 @@ public class DoctorRegistration extends AppCompatActivity {
             docHospitalKey = bundle.getString("HOSPKey");
         }
 
-        tVHospNameDoctorReg.setText("Add doctor to: " + docHospitalName  + " Hospital");
+        tVHospNameDoctorReg.setText("Add doctor to: " + docHospitalName + " Hospital");
 
         Button buttonDocLogReg = findViewById(R.id.btnDocLogReg);
         buttonDocLogReg.setOnClickListener(new View.OnClickListener() {
@@ -76,47 +86,52 @@ public class DoctorRegistration extends AppCompatActivity {
         docPassReg = findViewById(R.id.etDocPassReg);
         docConfPassReg = findViewById(R.id.etDocConfPassReg);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference("Doctors");
-
         Button buttonDoctorReg = findViewById(R.id.btnDoctorReg);
         buttonDoctorReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
-                if (validateDoctorData()) {
-
-                    progressDialog.setMessage("Registering Doctor Details");
-                    progressDialog.show();
-
-                    //create new user into Firebase Database
-                    firebaseAuth.createUserWithEmailAndPassword(doc_EmailReg, doc_PassReg).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful()){
-
-                                sendEmailVerification();
-
-                                //clear input fields
-                                docUniqueCode.setText("");
-                                docFirstName.setText("");
-                                docLastName.setText("");
-                                docPhone.setText("");
-                                docEmailReg.setText("");
-                                docPassReg.setText("");
-                                docConfPassReg.setText("");
-                            }
-
-                            else{
-                                progressDialog.dismiss();
-                                Toast.makeText(DoctorRegistration.this, "Registration Failed, this email address was already used to other account",Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-                }
+                registerDoctor();
             }
         });
     }
+
+    private void registerDoctor() {
+
+        if (validateDoctorData()) {
+
+            progressDialog.setMessage("Registering of Doctor details!");
+            progressDialog.show();
+
+            //create new user into Firebase Database
+            firebaseAuth.createUserWithEmailAndPassword(doc_EmailReg, doc_PassReg)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+
+                            if (task.isSuccessful()) {
+                                uploadDoctorData();
+
+                            } else {
+                                try {
+                                    throw Objects.requireNonNull(task.getException());
+                                } catch (Exception e) {
+                                    Toast.makeText(DoctorRegistration.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            progressDialog.dismiss();
+                        }
+                    })
+
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(DoctorRegistration.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+    }
+
 
     //validate data in the input fields
     private Boolean validateDoctorData() {
@@ -132,96 +147,107 @@ public class DoctorRegistration extends AppCompatActivity {
         doc_ConfPassReg = Objects.requireNonNull(docConfPassReg.getText()).toString().trim();
 
         if (TextUtils.isEmpty(doc_UniqueCode)) {
-            docUniqueCode.setError("Enter Doctors Unique Code");
+            docUniqueCode.setError("Enter Doctor's Unique Code");
             docUniqueCode.requestFocus();
-        }
-
-        else if (TextUtils.isEmpty(doc_FirstName)) {
-            docFirstName.setError("Enter Doctors's First Name");
+        } else if (TextUtils.isEmpty(doc_FirstName)) {
+            docFirstName.setError("Enter Doctor's First Name");
             docFirstName.requestFocus();
-        }
-
-        else if (TextUtils.isEmpty(doc_LastName)) {
+        } else if (TextUtils.isEmpty(doc_LastName)) {
             docLastName.setError("Enter Doctor's Last Name");
             docLastName.requestFocus();
-        }
-
-        else if (TextUtils.isEmpty(doc_Phone)) {
+        } else if (TextUtils.isEmpty(doc_Phone)) {
             docPhone.setError("Enter Doctor's Phone Number");
             docPhone.requestFocus();
-        }
-
-        else if (TextUtils.isEmpty(doc_EmailReg)) {
+        } else if (TextUtils.isEmpty(doc_EmailReg)) {
             docEmailReg.setError("Enter Doctor's Email Address");
             docEmailReg.requestFocus();
-        }
-
-        else if (!Patterns.EMAIL_ADDRESS.matcher(doc_EmailReg).matches()) {
-            Toast.makeText(DoctorRegistration.this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(doc_EmailReg).matches()) {
             docEmailReg.setError("Enter a valid Email Address");
             docEmailReg.requestFocus();
-        }
-
-        else if (TextUtils.isEmpty(doc_PassReg)) {
-            docPassReg.setError("Enter Password");
+        } else if (TextUtils.isEmpty(doc_PassReg)) {
+            docPassReg.setError("Enter the Password");
             docPassReg.requestFocus();
-        }
-
-        else if (doc_PassReg.length() > 0 && doc_PassReg.length() < 6) {
-            docPassReg.setError("The password is too short, enter minimum 6 character long");
-        }
-
-        else if (TextUtils.isEmpty(doc_ConfPassReg)) {
-            docConfPassReg.setError("Enter Password Confirmation");
+        } else if (doc_PassReg.length() < 6) {
+            docPassReg.setError("Password too short, enter minimum 6 character long");
+            docPassReg.requestFocus();
+        } else if (TextUtils.isEmpty(doc_ConfPassReg)) {
+            docConfPassReg.setError("Enter the Confirm Password");
             docConfPassReg.requestFocus();
-        }
-
-        else if (!doc_PassReg.equals(doc_ConfPassReg)) {
-            Toast.makeText(DoctorRegistration.this, "Confirm Password does not match Password", Toast.LENGTH_SHORT).show();
-            docConfPassReg.setError("The Password does not match");
+        } else if (!doc_ConfPassReg.equals(doc_PassReg)) {
+            docConfPassReg.setError("The Confirm Password does not match Password");
             docConfPassReg.requestFocus();
-        }
-
-        else {
+        } else {
             result = true;
         }
         return result;
     }
 
-    //send email to user to verify if the email is real
-    private void sendEmailVerification(){
+    private void uploadDoctorData() {
 
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
-        if(firebaseUser!=null){
-            firebaseUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if(task.isSuccessful()){
-                        sendDoctorRegData();
-                        progressDialog.dismiss();
-                        Toast.makeText(DoctorRegistration.this, "Successful Registered, Email verification was sent", Toast.LENGTH_SHORT).show();
-                        firebaseAuth.signOut();
-                        finish();
-                        startActivity(new Intent(DoctorRegistration.this, Login.class));
-                    }
-
-                    else{
-                        progressDialog.dismiss();
-                        Toast.makeText(DoctorRegistration.this, "Verification email has not been sent", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-        }
-    }
-
-    private void sendDoctorRegData(){
-
-        //Add doctors data to Firebase Database
-        FirebaseUser doc = firebaseAuth.getCurrentUser();
-        assert doc != null;
-        String doc_Id = doc.getUid();
+        assert firebaseUser != null;
+        String doc_Id = firebaseUser.getUid();
         Doctors doctors = new Doctors(doc_UniqueCode, doc_FirstName, doc_LastName, doc_Phone, doc_EmailReg, docHospitalName, docHospitalKey);
-        databaseReference.child(doc_Id).setValue(doctors);
+
+        databaseReference.child(doc_Id).setValue(doctors)
+                .addOnCompleteListener(DoctorRegistration.this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                        if (task.isSuccessful()) {
+                            firebaseUser.sendEmailVerification();
+
+                            Toast.makeText(DoctorRegistration.this, "Doctor Successfully registered. Verification Email sent", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(DoctorRegistration.this, MainActivity.class));
+                            finish();
+
+                        } else {
+                            try {
+                                throw Objects.requireNonNull(task.getException());
+                            } catch (Exception e) {
+                                Toast.makeText(DoctorRegistration.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        progressDialog.dismiss();
+                    }
+                });
+
     }
+
+//    //send email to user to verify if the email is real
+//    private void sendEmailVerification() {
+//
+//        firebaseUser.sendEmailVerification()
+//                .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//
+//                        if (task.isSuccessful()) {
+//
+//                            Toast.makeText(DoctorRegistration.this, "Doctor Successfully registered. Verification Email sent", Toast.LENGTH_SHORT).show();
+//                            startActivity(new Intent(DoctorRegistration.this, MainActivity.class));
+//                            finish();
+//
+//                        } else {
+//                            try {
+//                                throw Objects.requireNonNull(task.getException());
+//                            } catch (Exception e) {
+//                                Toast.makeText(DoctorRegistration.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+//
+//                            }
+//                        }
+//
+//                        progressDialog.dismiss();
+//                    }
+//                })
+//
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Toast.makeText(DoctorRegistration.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//
+//    }
 }

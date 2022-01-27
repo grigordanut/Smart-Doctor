@@ -20,6 +20,8 @@ public class CheckUniqueCode extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_unique_code);
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Check Unique Code");
+
         eTCheckUniqueCode = findViewById(R.id.etCheckUniqueCode);
 
         Button buttonCheckCode = findViewById(R.id.btnCheckCode);

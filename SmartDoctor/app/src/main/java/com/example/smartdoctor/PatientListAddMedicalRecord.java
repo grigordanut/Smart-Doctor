@@ -33,7 +33,7 @@ public class PatientListAddMedicalRecord extends AppCompatActivity implements Pa
     private RecyclerView medRecordRecyclerView;
     private PatientAdapter patientAdapter;
 
-    private String doctor_Name;
+    private String doctor_Name = "";
     private String doctor_Key = "";
 
     private ProgressDialog progressDialog;

@@ -98,7 +98,7 @@ public class PatientListShowMedicalRecord extends AppCompatActivity implements P
                         if(patAddRec.getPatDoc_Key().equals(doctorKey)) {
                             patAddRec.setPatient_Key(postSnapshot.getKey());
                             patListShowRec.add(patAddRec);
-                            tVPatListShowMedRecPatName.setText("Select your Patient!");
+                            tVPatListShowMedRecPatName.setText("Select your Patient");
                         }
                     }
                 }

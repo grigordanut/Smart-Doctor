@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.nfc.NdefMessage;
@@ -50,11 +51,15 @@ public class NFCReadCard extends AppCompatActivity {
 
     private List<Tag> mTags;
 
+    private ProgressDialog progressDialog;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfcread_card);
+
+        progressDialog = new ProgressDialog(this);
 
         mTags = new ArrayList<>();
 
@@ -220,7 +225,6 @@ public class NFCReadCard extends AppCompatActivity {
                 saveCode.setText(String.valueOf(toReversedDec(id)));
                 saveCode.setClickable(false);
                 btn_Save.setClickable(false);
-                //btn_Clear.setClickable(true);
             }
         });
 
@@ -233,7 +237,7 @@ public class NFCReadCard extends AppCompatActivity {
                 }
 
                 else{
-                    saveCode.setText("Click SAVE to get Patient Id");
+                    saveCode.setText("Click SAVE to get the Patient Id");
                     btn_Save.setClickable(true);
                     Toast.makeText(NFCReadCard.this, "The Button SAVE is clickable", Toast.LENGTH_SHORT).show();
                 }
@@ -398,7 +402,6 @@ public class NFCReadCard extends AppCompatActivity {
 
             String str = record.str();
 
-
             builder.append(str).append("\n");
         }
 
@@ -406,6 +409,9 @@ public class NFCReadCard extends AppCompatActivity {
     }
 
     private void checkCodePatient(){
+
+        progressDialog.setMessage("The patient is identified!!");
+        progressDialog.show();
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Patients");
 
@@ -432,6 +438,7 @@ public class NFCReadCard extends AppCompatActivity {
                         Toast.makeText(NFCReadCard.this, "Patient Not Found!!", Toast.LENGTH_SHORT).show();
                     }
                 }
+                progressDialog.dismiss();
             }
 
             @Override

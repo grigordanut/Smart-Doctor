@@ -6,13 +6,13 @@ import android.nfc.NdefRecord;
 import com.google.android.gms.common.internal.Preconditions;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 
  //NFC Text Record
 
 public class TextRecord implements ParsedNdefRecord {
-
 
     private final String mLanguageCode;
 
@@ -31,7 +31,6 @@ public class TextRecord implements ParsedNdefRecord {
         return mText;
     }
 
-
     public String getLanguageCode() {
         return mLanguageCode;
     }
@@ -45,7 +44,7 @@ public class TextRecord implements ParsedNdefRecord {
 
             String textEncoding = ((payload[0] & 0200) == 0) ? "UTF-8" : "UTF-16";
             int languageCodeLength = payload[0] & 0077;
-            String languageCode = new String(payload, 1, languageCodeLength, "US-ASCII");
+            String languageCode = new String(payload, 1, languageCodeLength, StandardCharsets.US_ASCII);
             String text =
                     new String(payload, languageCodeLength + 1,
                             payload.length - languageCodeLength - 1, textEncoding);

@@ -32,7 +32,7 @@ public class HospitalPage extends AppCompatActivity {
 
     //Access customer database
     private FirebaseAuth firebaseAuth;
-    private FirebaseUser currentUser;
+    private FirebaseUser firebaseUser;
 
     //Retrieve and Display data from Hospitals database
     private DatabaseReference hospitalDatabaseReference;
@@ -51,7 +51,7 @@ public class HospitalPage extends AppCompatActivity {
     private int numberDoctorsAv;
     private int numberPatientsAv;
 
-    private String docHospital_Key;
+    //private String docHospital_Key;
     private String patHospital_Key;
 
     private TextView tVWelcomeHospital, tVShowHospitalDetails, tVHospDoctorsAv, tVHospPatientsAv;
@@ -66,8 +66,19 @@ public class HospitalPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hospital_page);
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Hospital Page");
+
         firebaseAuth = FirebaseAuth.getInstance();
-        currentUser = firebaseAuth.getCurrentUser();
+        firebaseUser = firebaseAuth.getCurrentUser();
+
+        //Retrieve data from Hospitals database
+        hospitalDatabaseReference = FirebaseDatabase.getInstance().getReference("Hospitals");
+
+        //Retrieve data from Doctors database
+        doctorDatabaseReference = FirebaseDatabase.getInstance().getReference("Doctors");
+
+        //Retrieve data from Patients database
+        patientDatabaseReference = FirebaseDatabase.getInstance().getReference("Patients");
 
         doctorsList = new ArrayList<>();
         patientsList = new ArrayList<>();
@@ -87,9 +98,6 @@ public class HospitalPage extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        //retrieve data from database into text views
-        hospitalDatabaseReference = FirebaseDatabase.getInstance().getReference("Hospitals");
-
         hospitalEventListener = hospitalDatabaseReference.addValueEventListener(new ValueEventListener() {
             @SuppressLint({"SetTextI18n", "NewApi"})
             @Override
@@ -98,54 +106,52 @@ public class HospitalPage extends AppCompatActivity {
                 //retrieve data from database
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
-                    final FirebaseUser user_Hosp = firebaseAuth.getCurrentUser();
-                    final Hospitals hosp_Data = postSnapshot.getValue(Hospitals.class);
+                    Hospitals hosp_Data = postSnapshot.getValue(Hospitals.class);
 
                     if (hosp_Data != null) {
-                        if (user_Hosp != null){
-                            if (user_Hosp.getUid().equals(postSnapshot.getKey())) {
-                                tVWelcomeHospital.setText("Welcome to: " + hosp_Data.getHosp_Name() + " Hospital!");
-                                tVShowHospitalDetails.setText("Hospital Name: \n" + hosp_Data.getHosp_Name()+"\n\nEmail: \n"+hosp_Data.getHosp_Email());
+                        if (firebaseUser.getUid().equals(postSnapshot.getKey())) {
+                            tVWelcomeHospital.setText("Welcome to: " + hosp_Data.getHosp_Name() + " Hospital!");
+                            tVShowHospitalDetails.setText("Hospital Name: \n" + hosp_Data.getHosp_Name() + "\n\nEmail: \n" + hosp_Data.getHosp_Email());
 
-                                //Adding Click Events to our navigation drawer item
-                                navigationViewUserRent.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-                                    @SuppressLint("NonConstantResourceId")
-                                    @Override
-                                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                                        int id = item.getItemId();
-                                        switch (id) {
-                                            //Add Doctors
-                                            case R.id.hospital_addDoctors:
-                                                Intent add_Doctors = new Intent(HospitalPage.this, DoctorRegistration.class);
-                                                add_Doctors.putExtra("HOSPName", hosp_Data.getHosp_Name());
-                                                add_Doctors.putExtra("HOSPKey", user_Hosp.getUid());
-                                                startActivity(add_Doctors);
-                                                break;
+                            //Adding Click Events to our navigation drawer item
+                            navigationViewUserRent.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                                @SuppressLint("NonConstantResourceId")
+                                @Override
+                                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                                    int id = item.getItemId();
+                                    switch (id) {
+                                        //Add Doctors
+                                        case R.id.hospital_addDoctors:
+                                            Intent add_Doctors = new Intent(HospitalPage.this, DoctorRegistration.class);
+                                            add_Doctors.putExtra("HOSPName", hosp_Data.getHosp_Name());
+                                            add_Doctors.putExtra("HOSPKey", firebaseUser.getUid());
+                                            startActivity(add_Doctors);
+                                            break;
 
-                                            //Show Doctors List
-                                            case R.id.hospitalShow_doctorsList:
-                                                Intent doc_List = new Intent(HospitalPage.this, DoctorListHospital.class);
-                                                doc_List.putExtra("HOSPName", hosp_Data.getHosp_Name());
-                                                doc_List.putExtra("HOSPKey", user_Hosp.getUid());
-                                                startActivity(doc_List);
-                                                break;
+                                        //Show Doctors List
+                                        case R.id.hospitalShow_doctorsList:
+                                            Intent doc_List = new Intent(HospitalPage.this, DoctorListHospital.class);
+                                            doc_List.putExtra("HOSPName", hosp_Data.getHosp_Name());
+                                            doc_List.putExtra("HOSPKey", firebaseUser.getUid());
+                                            startActivity(doc_List);
+                                            break;
 
-                                            //Show Patients List
-                                            case R.id.hospShow_patientList:
-                                                Intent pat_List = new Intent(HospitalPage.this, PatientListHospital.class);
-                                                pat_List.putExtra("HOSPName", hosp_Data.getHosp_Name());
-                                                pat_List.putExtra("HOSPKey", user_Hosp.getUid());
-                                                startActivity(pat_List);
-                                                break;
+                                        //Show Patients List
+                                        case R.id.hospShow_patientList:
+                                            Intent pat_List = new Intent(HospitalPage.this, PatientListHospital.class);
+                                            pat_List.putExtra("HOSPName", hosp_Data.getHosp_Name());
+                                            pat_List.putExtra("HOSPKey", firebaseUser.getUid());
+                                            startActivity(pat_List);
+                                            break;
 
-                                            default:
-                                                return true;
-                                        }
-                                        return true;
+                                        default:
+                                            return true;
                                     }
-                                });
-                            }
+                                    return true;
+                                }
+                            });
                         }
+
                     }
                 }
             }
@@ -157,33 +163,30 @@ public class HospitalPage extends AppCompatActivity {
         });
     }
 
-    public void hospitalLogOut(){
-        firebaseAuth.signOut();
-        finish();
-        startActivity(new Intent(HospitalPage.this, MainActivity.class));
-    }
-
-    public void hospitalEditProfile(){
-        finish();
-        startActivity(new Intent(HospitalPage.this, HospitalEditProfile.class));
-    }
-
-    public void hospitalChangeEmail(){
-        finish();
-        startActivity(new Intent(HospitalPage.this, HospitalChangeEmail.class));
-    }
-
-    public void hospitalChangePassword(){
-        finish();
-        startActivity(new Intent(HospitalPage.this, HospitalChangePassword.class));
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_hospital_page, menu);
         return true;
     }
 
+    public void hospitalLogOut() {
+        alertDialogHospLogout();
+    }
+
+    public void hospitalEditProfile() {
+        startActivity(new Intent(HospitalPage.this, HospitalEditProfile.class));
+        finish();
+    }
+
+    public void hospitalChangeEmail() {
+        startActivity(new Intent(HospitalPage.this, HospitalChangeEmail.class));
+        finish();
+    }
+
+    public void hospitalChangePassword() {
+        startActivity(new Intent(HospitalPage.this, HospitalChangePassword.class));
+        finish();
+    }
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -193,23 +196,42 @@ public class HospitalPage extends AppCompatActivity {
             return true;
         }
 
-        if (item.getItemId() == R.id.hospitalLogOut){
-            alertDialogHospLogout();
+        if (item.getItemId() == R.id.hospital_logOut) {
+            hospitalLogOut();
         }
 
-        if (item.getItemId() == R.id.hospitalEditProfile){
+        if (item.getItemId() == R.id.hospital_editProfile) {
             hospitalEditProfile();
         }
 
-        if (item.getItemId() == R.id.hospitalChangeEmail){
+        if (item.getItemId() == R.id.hospital_changeEmail) {
             hospitalChangeEmail();
         }
 
-        if (item.getItemId() == R.id.hospitalChangePassword){
+        if (item.getItemId() == R.id.hospital_changePassword) {
             hospitalChangePassword();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void alertDialogHospLogout() {
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(HospitalPage.this);
+        alertDialogBuilder
+                .setTitle("Log out Hospital")
+                .setMessage("Are sure to Log out?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", (dialog, id) -> {
+                    firebaseAuth.signOut();
+                    startActivity(new Intent(HospitalPage.this, LoginBy.class));
+                    finish();
+                })
+
+                .setNegativeButton("No", (dialog, id) -> dialog.cancel());
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     @Override
@@ -221,9 +243,6 @@ public class HospitalPage extends AppCompatActivity {
 
     private void loadDoctorsAv() {
 
-        //initialize the Doctors database
-        doctorDatabaseReference = FirebaseDatabase.getInstance().getReference("Doctors");
-
         doctorEventListener = doctorDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -231,14 +250,13 @@ public class HospitalPage extends AppCompatActivity {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Doctors doctors_Data = postSnapshot.getValue(Doctors.class);
 
-                    assert doctors_Data != null;
-                    docHospital_Key = doctors_Data.getDocHosp_Key();
-
-                    if(doctors_Data.getDocHosp_Key().equals(docHospital_Key)){
-                        doctors_Data.setDoc_Key(postSnapshot.getKey());
-                        doctorsList.add(doctors_Data);
-                        numberDoctorsAv = doctorsList.size();
-                        tVHospDoctorsAv.setText(String.valueOf(numberDoctorsAv));
+                    if (doctors_Data != null) {
+                        if (doctors_Data.getDocHosp_Key().equals(firebaseUser.getUid())) {
+                            doctors_Data.setDoc_Key(postSnapshot.getKey());
+                            doctorsList.add(doctors_Data);
+                            numberDoctorsAv = doctorsList.size();
+                            tVHospDoctorsAv.setText(String.valueOf(numberDoctorsAv));
+                        }
                     }
                 }
             }
@@ -252,9 +270,6 @@ public class HospitalPage extends AppCompatActivity {
 
     private void loadPatientsAv() {
 
-        //initialize the Patients database
-        patientDatabaseReference = FirebaseDatabase.getInstance().getReference("Patients");
-
         patientEventListener = patientDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -265,7 +280,7 @@ public class HospitalPage extends AppCompatActivity {
                     assert pat_Data != null;
                     patHospital_Key = pat_Data.getPatHosp_Key();
 
-                    if (pat_Data.getPatHosp_Key().equals(patHospital_Key)){
+                    if (pat_Data.getPatHosp_Key().equals(patHospital_Key)) {
                         pat_Data.setPatient_Key(postSnapshot.getKey());
                         patientsList.add(pat_Data);
                         numberPatientsAv = patientsList.size();
@@ -280,29 +295,5 @@ public class HospitalPage extends AppCompatActivity {
                 Toast.makeText(HospitalPage.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void alertDialogHospLogout(){
-
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(HospitalPage.this);
-        alertDialogBuilder
-                .setMessage("Are sure to Log Out?")
-                .setCancelable(false)
-                .setPositiveButton("Yes",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                hospitalLogOut();
-                            }
-                        })
-
-                .setNegativeButton("No",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-
-        AlertDialog alert1 = alertDialogBuilder.create();
-        alert1.show();
     }
 }

@@ -56,20 +56,19 @@ public class AddMedicalRecord extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
 
+        //Create table Medical Record into database
         databaseReference = FirebaseDatabase.getInstance().getReference("Medical Records");
 
         tVMedRecPatName = findViewById(R.id.tvMedRecPatName);
-
         tVPatientGender = findViewById(R.id.tvPatientGender);
-
         String[] gender = getResources().getStringArray(R.array.Gender);
 
         ArrayAdapter<String> genderAdapter = new ArrayAdapter<>(this, R.layout.dropdown_item_gender, gender);
         tVPatientGender.setAdapter(genderAdapter);
 
         medRecDateBirth = findViewById(R.id.etDateBirthMedRecord);
-        medRecPPSNo = (EditText) findViewById(R.id.etPPSMedRecord);
-        medRecAddress = (EditText) findViewById(R.id.etAddressMedRecord);
+        medRecPPSNo = findViewById(R.id.etPPSMedRecord);
+        medRecAddress = findViewById(R.id.etAddressMedRecord);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -77,47 +76,49 @@ public class AddMedicalRecord extends AppCompatActivity {
             patientKeyMedRec = bundle.getString("PATKey");
         }
 
-        tVMedRecPatName.setText("Add Med Record to: " + patientNameMedRec);
+        tVMedRecPatName.setText("Patient: " + patientNameMedRec);
 
         Button buttonSaveMedRecord = findViewById(R.id.btnSaveMedRecord);
         buttonSaveMedRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveMedicalRecord();
+                uploadMedicalRecordData();
             }
         });
     }
 
-    public void saveMedicalRecord() {
+    private void uploadMedicalRecordData() {
 
         if (validateMedRecordData()) {
-            medRec_Gender = tVPatientGender.getText().toString();
-            medRec_DateBirth = medRecDateBirth.getText().toString().trim();
-            medRec_PPSNo = medRecPPSNo.getText().toString().trim();
-            medRec_Address = medRecAddress.getText().toString().trim();
+
+            progressDialog.setMessage("The Medical Record is adding!");
+            progressDialog.show();
 
             String record_ID = databaseReference.push().getKey();
-
             MedicalRecords medRec = new MedicalRecords(medRec_Gender, medRec_DateBirth, medRec_PPSNo, medRec_Address, patientNameMedRec, patientKeyMedRec);
 
-            assert record_ID != null;
-            databaseReference.child(record_ID).setValue(medRec).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        finish();
-                        Toast.makeText(AddMedicalRecord.this, "Record Added", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(AddMedicalRecord.this, DoctorPage.class));
-                    }
-                }
-            })
+            if (record_ID != null) {
+                databaseReference.child(record_ID).setValue(medRec).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
 
-            .addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(AddMedicalRecord.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
+                            Toast.makeText(AddMedicalRecord.this, "Medical Record successfully added!", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(AddMedicalRecord.this, DoctorPage.class));
+                            finish();
+
+                        } else {
+                            try {
+                                throw Objects.requireNonNull(task.getException());
+                            } catch (Exception e) {
+                                Toast.makeText(AddMedicalRecord.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        progressDialog.dismiss();
+                    }
+                });
+            }
         }
     }
 
@@ -148,16 +149,14 @@ public class AddMedicalRecord extends AppCompatActivity {
         return result;
     }
 
-    //Notify if Gender is missing
+    //Notify if the Gender is missing
     private void alertDialogGender() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("Please select the Gender");
-        alertDialogBuilder.setPositiveButton("OK",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                    }
-                });
+        alertDialogBuilder
+                .setTitle("Select Gender")
+                .setMessage("Please select the Gender!")
+                .setCancelable(false)
+                .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();

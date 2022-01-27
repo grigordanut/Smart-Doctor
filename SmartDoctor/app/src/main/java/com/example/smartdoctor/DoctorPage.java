@@ -64,6 +64,9 @@ public class DoctorPage extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
 
+        //Retrieve data from Patients database
+        patientDatabaseReference = FirebaseDatabase.getInstance().getReference("Patients");
+
         patientsList = new ArrayList<>();
 
         tVWelcomeDoctor = findViewById(R.id.tvWelcomeDoctor);
@@ -165,31 +168,31 @@ public class DoctorPage extends AppCompatActivity {
         });
     }
 
-    public void doctorLogOut(){
-        firebaseAuth.signOut();
-        finish();
-        startActivity(new Intent(DoctorPage.this, MainActivity.class));
-    }
-
-    public void doctorEditProfile(){
-        finish();
-        startActivity(new Intent(DoctorPage.this, DoctorEditProfile.class));
-    }
-
-    public void doctorChangeEmail(){
-        finish();
-        startActivity(new Intent(DoctorPage.this, DoctorChangeEmail.class));
-    }
-
-    public void doctorChangePassword(){
-        finish();
-        startActivity(new Intent(DoctorPage.this, DoctorChangePassword.class));
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_doctor_page, menu);
         return true;
+    }
+
+    public void doctorLogOut(){
+        firebaseAuth.signOut();
+        startActivity(new Intent(DoctorPage.this, LoginBy.class));
+        finish();
+    }
+
+    public void doctorEditProfile(){
+        startActivity(new Intent(DoctorPage.this, DoctorEditProfile.class));
+        finish();
+    }
+
+    public void doctorChangeEmail(){
+        startActivity(new Intent(DoctorPage.this, DoctorChangeEmail.class));
+        finish();
+    }
+
+    public void doctorChangePassword(){
+        startActivity(new Intent(DoctorPage.this, DoctorChangePassword.class));
+        finish();
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -200,19 +203,19 @@ public class DoctorPage extends AppCompatActivity {
             return true;
         }
 
-        if (item.getItemId() == R.id.doctorLogOut){
+        if (item.getItemId() == R.id.doctor_logOut){
             alertDialogDoctorLogout();
         }
 
-        if (item.getItemId() == R.id.doctorEditProfile){
+        if (item.getItemId() == R.id.doctor_editProfile){
             doctorEditProfile();
         }
 
-        if (item.getItemId() == R.id.doctorChangeEmail){
+        if (item.getItemId() == R.id.doctor_changeEmail){
             doctorChangeEmail();
         }
 
-        if (item.getItemId() == R.id.doctorChangePassword){
+        if (item.getItemId() == R.id.doctor_changePassword){
             doctorChangePassword();
         }
 
@@ -226,9 +229,6 @@ public class DoctorPage extends AppCompatActivity {
     }
 
     private void loadPatientsAv() {
-
-        //initialize the Patients database
-        patientDatabaseReference = FirebaseDatabase.getInstance().getReference("Patients");
 
         patientEventListener = patientDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override

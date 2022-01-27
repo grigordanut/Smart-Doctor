@@ -3,25 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/hospitalLogOut"
+        android:id="@+id/hospital_logOut"
         android:orderInCategory="100"
         android:title="@string/menuHosp_logOut"
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/hospitalEditProfile"
+        android:id="@+id/hospital_editProfile"
         android:orderInCategory="100"
         android:title="@string/menuHosp_editProfile"
         app:showAsAction="never"/>
 
     <item
-        android:id="@+id/hospitalChangeEmail"
+        android:id="@+id/hospital_changeEmail"
         android:orderInCategory="100"
         android:title="@string/menuHosp_changeEmail"
         app:showAsAction="never"/>
 
     <item
-        android:id="@+id/hospitalChangePassword"
+        android:id="@+id/hospital_changePassword"
         android:orderInCategory="100"
         android:title="@string/menuHosp_changePassword"
         app:showAsAction="never"/>

@@ -37,13 +37,11 @@ public class HospitalChangePassword extends AppCompatActivity {
 
     private TextView tVHospAuthPass;
 
-    private EditText hospEmail, hospOldPassword, hospNewPassword;
+    private EditText hospEmail, hospOldPassword, hospNewPassword, hospConfNewPassword;
 
-    private String hosp_Email, hospOld_Password, hospNew_Password;
+    private String hosp_Email, hospOld_Password, hospNew_Password, hospConf_NewPassword;
 
     private ProgressDialog progressDialog;
-
-
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -62,6 +60,7 @@ public class HospitalChangePassword extends AppCompatActivity {
         hospEmail.setEnabled(false);
         hospOldPassword = findViewById(R.id.etHospOldPass);
         hospNewPassword = findViewById(R.id.etHospNewPass);
+        hospConfNewPassword = findViewById(R.id.etHospConfNewPass);
 
         tVHospAuthPass = findViewById(R.id.tvHospAuthPass);
         tVHospAuthPass.setText("Your profile is not authenticated yet. Please authenticate your profile first and then change the Password!!");
@@ -84,7 +83,6 @@ public class HospitalChangePassword extends AppCompatActivity {
             public void onClick(View view) {
 
                 hosp_Email =  hospEmail.getText().toString().trim();
-
                 hospOld_Password = hospOldPassword.getText().toString().trim();
 
                 if (TextUtils.isEmpty(hospOld_Password)) {
@@ -128,14 +126,24 @@ public class HospitalChangePassword extends AppCompatActivity {
                                     public void onClick(View view) {
 
                                         hospNew_Password = hospNewPassword.getText().toString().trim();
+                                        hospConf_NewPassword = hospConfNewPassword.getText().toString().trim();
 
                                         if (TextUtils.isEmpty(hospNew_Password)){
                                             hospNewPassword.setError("Enter your new Password");
                                             hospNewPassword.requestFocus();
                                         }
                                         else if (hospNew_Password.length() < 6) {
-                                            hospNewPassword.setError("The password is too short, enter minimum 6 character long");
-                                            Toast.makeText(HospitalChangePassword.this, "The password is too short, enter minimum 6 character long", Toast.LENGTH_SHORT).show();
+                                            hospNewPassword.setError("The password is too short.\nEnter minimum 6 character long");
+                                            hospNewPassword.requestFocus();
+                                        }
+                                        else if (TextUtils.isEmpty(hospConf_NewPassword)) {
+                                            hospConfNewPassword.setError("Confirm your new Password");
+                                            hospConfNewPassword.requestFocus();
+                                        }
+                                        else if (!hospConf_NewPassword.equals(hospNew_Password)) {
+                                            Toast.makeText(HospitalChangePassword.this, "Confirm Password does not match Password", Toast.LENGTH_SHORT).show();
+                                            hospConfNewPassword.setError("The Password does not match");
+                                            hospConfNewPassword.requestFocus();
                                         }
                                         else{
 
@@ -147,13 +155,22 @@ public class HospitalChangePassword extends AppCompatActivity {
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()){
 
-                                                        progressDialog.dismiss();
-                                                        Toast.makeText(HospitalChangePassword.this, "The password will be changed.", Toast.LENGTH_SHORT).show();
                                                         firebaseAuth.signOut();
+                                                        Toast.makeText(HospitalChangePassword.this, "The password will be changed.", Toast.LENGTH_SHORT).show();
                                                         startActivity(new Intent(HospitalChangePassword.this, LoginBy.class));
                                                         finish();
 
                                                     }
+
+                                                    else{
+                                                        try {
+                                                            throw Objects.requireNonNull(task.getException());
+                                                        } catch (Exception e) {
+                                                            Toast.makeText(HospitalChangePassword.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+
+                                                    progressDialog.dismiss();
                                                 }
                                             });
                                         }
@@ -173,6 +190,7 @@ public class HospitalChangePassword extends AppCompatActivity {
                                     Toast.makeText(HospitalChangePassword.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             }
+
                             progressDialog.dismiss();
                         }
                     });

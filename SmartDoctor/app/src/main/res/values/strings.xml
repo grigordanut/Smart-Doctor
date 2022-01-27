@@ -3,6 +3,14 @@
 
     <!--    Layout Activities-->
 
+    <!--    Add Medical Record-->
+    <string name="tv_medRecPatName">Patient Name</string>
+    <string name="tv_medRecGender">Gender</string>
+    <string name="et_medRecDateBirth">Date of Birth</string>
+    <string name="et_medRecPPSN">PPS Number</string>
+    <string name="et_medRecAddress">Address</string>
+    <string name="btn_medRecSave">Save Record</string>
+
     <!--    Activity Check Unique Code-->
     <string name="tv_checkUniqueCode">Check your Unique Code</string>
     <string name="tv_hospitalUniqueCode">Enter H.. or h.. for Hospital</string>
@@ -11,7 +19,12 @@
     <string name="btn_checkUniqueCode">Check Code</string>
 
     <!--    Activity Contact Us Form-->
-
+    <string name="tv_welcomeContactUs">Please enter your contact details</string>
+    <string name="et_nameContactUs">Name</string>
+    <string name="et_emailContactUs">Email Address</string>
+    <string name="et_subjectContactUs">Subject</string>
+    <string name="tv_MessageContactUs">Message</string>
+    <string name="btn_sendContactUs">Send</string>
 
     <!--    Activity Hospitals Image Add Doctors-->
 
@@ -56,6 +69,7 @@
     <string name="et_hospChangePassOldPass">Enter your old Password</string>
     <string name="btn_hospChangePassAuth">Authenticate User</string>
     <string name="et_hospChangePassNewPass">Enter your new Password</string>
+    <string name="et_hospChangePassConfNewPass">Confirm your new Password</string>
     <string name="btn_hospChangePassword">Change Password</string>
 
 
@@ -91,7 +105,7 @@
     <string name="btn_hospitalPageLog">Log In</string>
 
     <!--    Activity Login-->
-    <string name="tv_userPageLog">Enter your Log details</string>
+    <string name="tv_userPageLog">Enter your Log in details</string>
     <string name="et_userEmailLog">Email Address</string>
     <string name="et_userPasswordLog">Password</string>
     <string name="btn_userPageSignUp">Sign Up</string>
@@ -176,7 +190,7 @@
     <string name="menuPat_editProfile">Edit Profile</string>
     <string name="menuPat_changeEmail">Change Email</string>
     <string name="menuPat_changePassword">Change Password</string>
-
+    <string name="menuPat_deleteAccount">Delete Account</string>
 
     <string-array name="Gender">
         <item>Male</item>

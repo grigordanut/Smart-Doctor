@@ -156,6 +156,14 @@ public class HospitalChangeEmail extends AppCompatActivity {
                                                     if (task.isSuccessful()){
                                                         sendEmailVerification();
                                                     }
+
+                                                    else{
+                                                        try{
+                                                            throw Objects.requireNonNull(task.getException());
+                                                        } catch (Exception e) {
+                                                            Toast.makeText(HospitalChangeEmail.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
                                                 }
                                             });
                                         }

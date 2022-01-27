@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,13 +25,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 public class PatientRegistration extends AppCompatActivity {
 
     //Declare variables
     private EditText patCardCode, patUniqueCode, patFirstName, patLastName, patEmailReg, patPassReg, patConfPassReg;
     private TextView tVPatHospNameReg, tVPatDocNameReg;
 
-    private Button buttonPatReg, buttonPatCancelReg;
     private String pat_CardCode, pat_UniqueCode, pat_FirstName, pat_LastName, pat_EmailReg, pat_PassReg, pat_ConfPassReg;
 
     private FirebaseAuth firebaseAuth;
@@ -38,8 +40,8 @@ public class PatientRegistration extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
 
-    private String patHospName= "";
-    private String patHospitalKey ="";
+    private String patHospName = "";
+    private String patHospitalKey = "";
 
     private String patDoctorName = "";
     private String patDoctorKey = "";
@@ -57,6 +59,7 @@ public class PatientRegistration extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
 
+        //Create Patients table into database
         databaseReference = FirebaseDatabase.getInstance().getReference("Patients");
 
         tVPatHospNameReg = findViewById(R.id.tvPatHospNameReg);
@@ -83,7 +86,7 @@ public class PatientRegistration extends AppCompatActivity {
         patPassReg = findViewById(R.id.etPatPassReg);
         patConfPassReg = findViewById(R.id.etPatConfPassReg);
 
-        buttonPatReg = findViewById(R.id.btnAddPatient);
+        Button buttonPatReg = findViewById(R.id.btnAddPatient);
         buttonPatReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,28 +96,32 @@ public class PatientRegistration extends AppCompatActivity {
                     progressDialog.show();
 
                     //create new patient into FirebaseDatabase
-                    firebaseAuth.createUserWithEmailAndPassword(pat_EmailReg, pat_PassReg).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful()){
+                    firebaseAuth.createUserWithEmailAndPassword(pat_EmailReg, pat_PassReg)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
 
-                                sendEmailVerification();
+                                    if (task.isSuccessful()) {
+                                        uploadPatientData();
 
-                                //clear input fields
-                                patUniqueCode.setText("");
-                                patFirstName.setText("");
-                                patLastName.setText("");
-                                patEmailReg.setText("");
-                                patPassReg.setText("");
-                                patConfPassReg.setText("");
-                            }
+                                    } else {
+                                        try {
+                                            throw Objects.requireNonNull(task.getException());
+                                        } catch (Exception e) {
+                                            Toast.makeText(PatientRegistration.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
 
-                            else{
-                                progressDialog.dismiss();
-                                Toast.makeText(PatientRegistration.this, "Registration Failed, this email address was already used to other account",Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                                    progressDialog.dismiss();
+                                }
+                            })
+
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(PatientRegistration.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
                 }
             }
         });
@@ -136,85 +143,99 @@ public class PatientRegistration extends AppCompatActivity {
         if (TextUtils.isEmpty(pat_UniqueCode)) {
             patUniqueCode.setError("Enter Patients Unique code");
             patUniqueCode.requestFocus();
-        }
-
-        else if (TextUtils.isEmpty(pat_FirstName)) {
+        } else if (TextUtils.isEmpty(pat_FirstName)) {
             patFirstName.setError("Enter Patient's First Name");
             patFirstName.requestFocus();
-        }
-
-        else if (TextUtils.isEmpty(pat_LastName)) {
+        } else if (TextUtils.isEmpty(pat_LastName)) {
             patLastName.setError("Enter Patient's Last Name");
             patLastName.requestFocus();
-        }
-
-        else if (TextUtils.isEmpty(pat_EmailReg)) {
+        } else if (TextUtils.isEmpty(pat_EmailReg)) {
             patEmailReg.setError("Enter Patient's Email Address");
             patEmailReg.requestFocus();
-        }
-
-        else if (!Patterns.EMAIL_ADDRESS.matcher(pat_EmailReg).matches()) {
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(pat_EmailReg).matches()) {
             Toast.makeText(PatientRegistration.this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
             patEmailReg.setError("Enter a valid Email Address");
             patEmailReg.requestFocus();
-        }
-
-        else if (TextUtils.isEmpty(pat_PassReg)) {
+        } else if (TextUtils.isEmpty(pat_PassReg)) {
             patPassReg.setError("Enter Patient's password");
             patPassReg.requestFocus();
-        }
-
-        else if (pat_PassReg.length() > 0 && pat_PassReg.length() < 6) {
+        } else if (pat_PassReg.length() > 0 && pat_PassReg.length() < 6) {
             patPassReg.setError("The password is too short, enter minimum 6 character long");
-        }
-
-        else if (TextUtils.isEmpty(pat_ConfPassReg)) {
+        } else if (TextUtils.isEmpty(pat_ConfPassReg)) {
             patConfPassReg.setError("Enter Password Confirmation");
             patConfPassReg.requestFocus();
-        }
-
-        else if (!pat_PassReg.equals(pat_ConfPassReg)) {
+        } else if (!pat_ConfPassReg.equals(pat_PassReg)) {
             Toast.makeText(PatientRegistration.this, "Confirm Password does not match Password", Toast.LENGTH_SHORT).show();
             patConfPassReg.setError("The Password does not match");
             patConfPassReg.requestFocus();
-        }
-
-        else {
+        } else {
             result = true;
         }
         return result;
     }
 
-    //send email to user to verify if the email is real
-    private void sendEmailVerification(){
+    private void uploadPatientData() {
 
-        if(firebaseUser!=null){
-            firebaseUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if(task.isSuccessful()){
-                        sendPatientData();
-                        progressDialog.dismiss();
-                        firebaseAuth.signOut();
-                        Toast.makeText(PatientRegistration.this, "Patient successfully registered.\nVerification email has been sent", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent (PatientRegistration.this, Login.class));
-                        finish();
-                    }
+        String pat_Id = firebaseUser.getUid();
+        Patients patients = new Patients(pat_CardCode, pat_UniqueCode, pat_FirstName, pat_LastName,
+                pat_EmailReg, patHospName, patHospitalKey, patDoctorName, patDoctorKey);
 
-                    else{
-                        progressDialog.dismiss();
-                        Toast.makeText(PatientRegistration.this, "Verification email has not been sent", Toast.LENGTH_SHORT).show();
+        databaseReference.child(pat_Id).setValue(patients)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                        if (task.isSuccessful()) {
+                            sendEmailVerification();
+                        } else {
+                            try {
+                                throw Objects.requireNonNull(task.getException());
+                            } catch (Exception e) {
+                                Toast.makeText(PatientRegistration.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
-                }
-            });
-        }
+                })
+
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(PatientRegistration.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
-    private void sendPatientData(){
+    //send email to user to verify if the email is real
+    private void sendEmailVerification() {
 
-        String patID = firebaseUser.getUid();
-        Patients patients = new Patients(pat_CardCode, pat_UniqueCode, pat_FirstName, pat_LastName,
-                                        pat_EmailReg, patHospName, patHospitalKey,patDoctorName, patDoctorKey);
-        databaseReference.child(patID).setValue(patients);
+        firebaseUser.sendEmailVerification()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                        if (task.isSuccessful()) {
+
+                            Toast.makeText(PatientRegistration.this, "Patient successfully registered.\nVerification email has been sent", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(PatientRegistration.this, Login.class));
+                            finish();
+
+                        } else {
+                            try {
+                                throw Objects.requireNonNull(task.getException());
+                            } catch (Exception e) {
+                                Toast.makeText(PatientRegistration.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        progressDialog.dismiss();
+                    }
+                })
+
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(PatientRegistration.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }

@@ -23,7 +23,8 @@
             android:text="@string/tv_patientPage"
             android:textAlignment="center"
             android:textColor="#000000"
-            android:textSize="22sp" />
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnSeeMedRecord"

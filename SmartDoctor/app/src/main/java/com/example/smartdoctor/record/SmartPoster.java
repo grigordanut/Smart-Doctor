@@ -17,15 +17,11 @@ import java.util.NoSuchElementException;
 
 public class SmartPoster implements ParsedNdefRecord {
 
-
     private final TextRecord mTitleRecord;
-
 
     private final UriRecord mUriRecord;
 
-
     private final RecommendedAction mAction;
-
 
     private final String mType;
 

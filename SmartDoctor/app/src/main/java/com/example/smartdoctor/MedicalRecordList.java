@@ -146,8 +146,8 @@ public class MedicalRecordList extends AppCompatActivity implements MedicalRecor
                     }
                 });
 
-        AlertDialog alert1 = builderAlert.create();
-        alert1.show();
+        AlertDialog alertDialog = builderAlert.create();
+        alertDialog.show();
     }
     @Override
     protected void onDestroy(){

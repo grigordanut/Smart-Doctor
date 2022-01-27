@@ -102,7 +102,7 @@ public class HospitalListAddDoctor extends AppCompatActivity implements Hospital
         });
     }
 
-    //Action on Hospitals onClick
+    //Action on Hospital onClick
     @Override
     public void onItemClick(int position) {
         Hospitals selected_Hosp = hospitalListAddDoc.get(position);

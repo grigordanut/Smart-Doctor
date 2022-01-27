@@ -18,6 +18,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,28 +34,32 @@ import java.util.Objects;
 
 public class HospitalEditProfile extends AppCompatActivity {
 
-    //declare variables
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
+
+    private DatabaseReference databaseRefUpdate;
+    private DatabaseReference databaseRefLoad;
+    private ValueEventListener eventListener;
+
     private TextInputEditText hospUniqueCodeUp, hospNameUp, hospEmailUp;
 
     private String hosp_UniqueCodeUp, hosp_NameUp, hosp_EmailUp;
 
     private TextView tVHospitalEditProfile;
 
-    private FirebaseAuth firebaseAuth;
-    private DatabaseReference hospDatabaseReferenceUp;
-
-    ValueEventListener hospEventListenerUp;
-
-    private ProgressDialog progressDialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hospital_edit_profile);
 
-        progressDialog = new ProgressDialog(this);
-
         firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+
+        //Retrieve data from Users database and load the user details in the edit texts
+        databaseRefLoad = FirebaseDatabase.getInstance().getReference("Hospitals");
+
+        //Upload Hospital updated data
+        databaseRefUpdate = FirebaseDatabase.getInstance().getReference("Hospitals");
 
         //initialise the variables
         tVHospitalEditProfile = findViewById(R.id.tvHospitalEditProfile);
@@ -69,25 +76,104 @@ public class HospitalEditProfile extends AppCompatActivity {
             }
         });
 
-        //load the user details in the edit texts
-        hospDatabaseReferenceUp = FirebaseDatabase.getInstance().getReference("Hospitals");
-        hospEventListenerUp = hospDatabaseReferenceUp.addValueEventListener(new ValueEventListener() {
+        //save the user details in the database
+        Button buttonHospSaveUp = (Button) findViewById(R.id.btnHospSaveUp);
+        buttonHospSaveUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateHospitalDetails();
+            }
+        });
+    }
+
+    private void updateHospitalDetails() {
+
+        if (validateHospUpdatedData()) {
+
+            hosp_UniqueCodeUp = Objects.requireNonNull(hospUniqueCodeUp.getText()).toString().trim();
+            hosp_NameUp = Objects.requireNonNull(hospNameUp.getText()).toString().trim();
+            hosp_EmailUp = Objects.requireNonNull(hospEmailUp.getText()).toString().trim();
+
+            String user_Id = firebaseUser.getUid();
+
+            Hospitals hosp_Data = new Hospitals(hosp_UniqueCodeUp, hosp_NameUp, hosp_EmailUp);
+
+            databaseRefUpdate.child(user_Id).setValue(hosp_Data)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+
+                            if (task.isSuccessful()) {
+
+                                Toast.makeText(HospitalEditProfile.this, "Your details has been successfully changed!", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(HospitalEditProfile.this, HospitalPage.class));
+                                finish();
+                            }
+
+                            else {
+                                try {
+                                    throw Objects.requireNonNull(task.getException());
+                                } catch (Exception e) {
+                                    Toast.makeText(HospitalEditProfile.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
+                    })
+
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(HospitalEditProfile.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+
+        }
+    }
+
+    private Boolean validateHospUpdatedData() {
+
+        boolean result = false;
+
+        hosp_UniqueCodeUp = Objects.requireNonNull(hospUniqueCodeUp.getText()).toString().trim();
+        hosp_NameUp = Objects.requireNonNull(hospNameUp.getText()).toString().trim();
+
+        if (TextUtils.isEmpty(hosp_UniqueCodeUp)) {
+            hospUniqueCodeUp.setError("Enter Hospital's Unique Code");
+            hospUniqueCodeUp.requestFocus();
+        } else if (TextUtils.isEmpty(hosp_NameUp)) {
+            hospNameUp.setError("Enter Hospital's Name");
+            hospNameUp.requestFocus();
+        } else {
+            result = true;
+        }
+        return result;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadHospitalData();
+    }
+
+    private void loadHospitalData() {
+
+        eventListener = databaseRefLoad.addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 //retrieve data from database
-                for (DataSnapshot ds_User : dataSnapshot.getChildren()) {
-                    FirebaseUser user_Db = firebaseAuth.getCurrentUser();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
-                    Hospitals hospitals_Data = ds_User.getValue(Hospitals.class);
+                    Hospitals hospitals_Data = postSnapshot.getValue(Hospitals.class);
 
-                    if (user_Db != null){
-                        if (user_Db.getUid().equals(ds_User.getKey())){
-                            hospUniqueCodeUp.setText(Objects.requireNonNull(hospitals_Data).getHosp_UniqueCode());
+                    if (hospitals_Data != null) {
+                        if (firebaseUser.getUid().equals(postSnapshot.getKey())) {
+                            hospUniqueCodeUp.setText(hospitals_Data.getHosp_UniqueCode());
                             hospNameUp.setText(hospitals_Data.getHosp_Name());
                             hospEmailUp.setText(hospitals_Data.getHosp_Email());
-                            tVHospitalEditProfile.setText("Edit profile of: " + hospitals_Data.getHosp_Name());
+                            tVHospitalEditProfile.setText("Edit profile: " + hospitals_Data.getHosp_Name() + " Hospital");
                         }
                     }
                 }
@@ -99,65 +185,9 @@ public class HospitalEditProfile extends AppCompatActivity {
             }
         });
 
-        //save the user details in the database
-        Button buttonHospSaveUp = (Button) findViewById(R.id.btnHospSaveUp);
-        buttonHospSaveUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateBikeStoreDetails();
-            }
-        });
     }
 
-    public void updateBikeStoreDetails() {
-
-        if(validateHospitalEditData()){
-
-            progressDialog.setMessage("Update the Hospitals Profile");
-            progressDialog.show();
-
-            hosp_UniqueCodeUp = Objects.requireNonNull(hospUniqueCodeUp.getText()).toString().trim();
-            hosp_NameUp = Objects.requireNonNull(hospNameUp.getText()).toString().trim();
-            hosp_EmailUp = Objects.requireNonNull(hospEmailUp.getText()).toString().trim();
-
-            String user_id = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
-            DatabaseReference currentUser = hospDatabaseReferenceUp.child(user_id);
-            Hospitals hospitals_Up = new Hospitals(hosp_UniqueCodeUp, hosp_NameUp, hosp_EmailUp);
-            currentUser.setValue(hospitals_Up);
-
-            //clear data input fields
-            hospUniqueCodeUp.getText().clear();
-            hospNameUp.getText().clear();
-            hospEmailUp.getText().clear();
-
-            progressDialog.dismiss();
-            Toast.makeText(HospitalEditProfile.this, "Your details has been changed successfully", Toast.LENGTH_SHORT).show();
-
-            startActivity(new Intent(HospitalEditProfile.this, LoginBy.class));
-            finish();
-        }
-    }
-
-    private Boolean validateHospitalEditData() {
-
-        boolean result = false;
-
-        hosp_UniqueCodeUp = Objects.requireNonNull(hospUniqueCodeUp.getText()).toString().trim();
-        hosp_NameUp = Objects.requireNonNull(hospNameUp.getText()).toString().trim();
-
-        if (TextUtils.isEmpty(hosp_UniqueCodeUp)) {
-            hospUniqueCodeUp.setError("Enter Hospitals Unique Code");
-            hospUniqueCodeUp.requestFocus();
-        } else if (TextUtils.isEmpty(hosp_NameUp)) {
-            hospNameUp.setError("Enter Hospitals Name");
-            hospNameUp.requestFocus();
-        } else {
-            result = true;
-        }
-        return result;
-    }
-
-    private void alertEmailChangePlace(){
+    private void alertEmailChangePlace() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
                 .setMessage("The Email Address cannot be change here.\nPlease use Change Email option!")
@@ -181,7 +211,7 @@ public class HospitalEditProfile extends AppCompatActivity {
         return true;
     }
 
-    private void hospEditProfileGoBack(){
+    private void hospEditProfileGoBack() {
         startActivity(new Intent(HospitalEditProfile.this, HospitalPage.class));
         finish();
     }
