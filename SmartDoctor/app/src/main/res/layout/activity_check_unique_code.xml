@@ -52,8 +52,8 @@
             android:textSize="24sp" />
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:id="@+id/checkUniqueCodeWrapper"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -80,11 +80,10 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="40dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/bgdbutton"
+            android:background="@drawable/btn_fading"
             android:text="@string/btn_checkUniqueCode"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="#ffffff"
-            android:textSize="26sp" />
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

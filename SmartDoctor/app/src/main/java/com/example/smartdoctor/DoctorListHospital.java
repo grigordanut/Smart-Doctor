@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class DoctorListHospital extends AppCompatActivity {
 
@@ -47,6 +48,8 @@ public class DoctorListHospital extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_list_hospital);
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Doctors available");
+
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
 
@@ -60,7 +63,7 @@ public class DoctorListHospital extends AppCompatActivity {
             hospitalKey = bundle.getString("HOSPKey");
         }
 
-        tVDocListHospName.setText("No Doctors available!!");
+        tVDocListHospName.setText("No registered Doctors!!");
 
         doctorHospRecyclerView = findViewById(R.id.docHospRecyclerView);
         doctorHospRecyclerView.setHasFixedSize(true);

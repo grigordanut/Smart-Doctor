@@ -41,7 +41,7 @@
             android:layout_marginBottom="10dp"
             android:layout_weight="1"
             android:background="@drawable/btn_fading"
-            android:text="Add Doctor"
+            android:text="@string/btn_docListHospAddDoctor"
             android:textColor="#ffffff"
             android:textSize="18sp"
             tools:ignore="ButtonStyle" />
@@ -56,7 +56,7 @@
             android:layout_marginBottom="10dp"
             android:layout_weight="1"
             android:background="@drawable/btn_fading"
-            android:text="Back"
+            android:text="@string/btn_docListHospBack"
             android:textColor="#ffffff"
             android:textSize="18sp"
             tools:ignore="ButtonStyle" />

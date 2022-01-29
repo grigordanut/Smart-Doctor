@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MedicalRecordPatient extends AppCompatActivity {
 
@@ -47,6 +48,8 @@ public class MedicalRecordPatient extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medical_record_patient);
+
+        Objects.requireNonNull(getSupportActionBar()).setTitle("PATIENT: Medical Records");
 
         progressDialog = new ProgressDialog(this);
         progressDialog.show();

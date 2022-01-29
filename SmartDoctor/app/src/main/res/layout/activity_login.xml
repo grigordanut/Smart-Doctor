@@ -79,6 +79,7 @@
             android:background="@drawable/btn_fading"
             android:text="@string/btn_userPageSignIn"
             android:textColor="#ffffff"
+            android:textStyle="bold"
             android:textSize="22sp" />
 
         <TextView
@@ -88,11 +89,14 @@
             android:layout_marginStart="50dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="50dp"
-            android:background="@drawable/bgdbutton"
+            android:background="@drawable/btn_fading"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:text="@string/tv_userForgottenPass"
             android:textAlignment="center"
             android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnRegNewUser"
@@ -106,7 +110,8 @@
             android:background="@drawable/btn_fading"
             android:text="@string/btn_userPageSignUp"
             android:textColor="#ffffff"
-            android:textSize="22sp" />
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

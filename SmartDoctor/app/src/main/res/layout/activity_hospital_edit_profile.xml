@@ -22,9 +22,9 @@
             android:layout_marginEnd="10dp"
             android:text="@string/tv_hospitalEditProfile"
             android:textAlignment="center"
-            android:textStyle="bold"
             android:textColor="#000000"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -62,9 +62,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
+                android:hint="@string/et_hospitalNameUp"
                 android:inputType="textPersonName"
                 android:paddingStart="10dp"
-                android:hint="@string/et_hospitalNameUp"
                 android:textSize="22sp"
                 tools:ignore="Autofill,LabelFor,RtlSymmetry" />
 
@@ -84,9 +84,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
+                android:hint="@string/et_hospitalEmailUp"
                 android:inputType="textEmailAddress"
                 android:paddingStart="10dp"
-                android:hint="@string/et_hospitalEmailUp"
                 android:textSize="22sp"
                 tools:ignore="Autofill,LabelFor,RtlSymmetry" />
 
@@ -97,12 +97,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
             android:layout_marginTop="20dp"
+            android:layout_marginEnd="40dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/bgdbutton"
+            android:background="@drawable/btn_fading"
             android:text="@string/btn_hospitalSaveUp"
-            android:textColor="#ffffff"
             android:textSize="22sp"
             android:textStyle="bold" />
 

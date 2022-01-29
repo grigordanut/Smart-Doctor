@@ -17,9 +17,6 @@
             android:name=".NFCReadCard"
             android:exported="false" />
         <activity
-            android:name=".NFCActivity"
-            android:exported="false" />
-        <activity
             android:name=".PatientNFC"
             android:exported="false" />
         <activity

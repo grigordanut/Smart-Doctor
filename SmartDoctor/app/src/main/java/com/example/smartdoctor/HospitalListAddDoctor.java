@@ -21,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class HospitalListAddDoctor extends AppCompatActivity implements HospitalAdapter.OnItemClickListener {
 
@@ -40,6 +41,8 @@ public class HospitalListAddDoctor extends AppCompatActivity implements Hospital
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hospital_list_add_doctor);
+
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Hospitals available");
 
         progressDialog = new ProgressDialog(this);
         progressDialog.show();

@@ -24,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PatientListShowMedicalRecord extends AppCompatActivity implements PatientAdapter.OnItemClickListener {
 
@@ -49,6 +50,8 @@ public class PatientListShowMedicalRecord extends AppCompatActivity implements P
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_list_show_medical_record);
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Patients available");
+
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
 
@@ -65,7 +68,7 @@ public class PatientListShowMedicalRecord extends AppCompatActivity implements P
         }
 
         tVPatListShowMedRecDocName.setText("Doctor: " + doctorName);
-        tVPatListShowMedRecPatName.setText("No medical record found?");
+        tVPatListShowMedRecPatName.setText("No registered Medical Records!!");
 
         patientListShowMedRecRecyclerView = findViewById(R.id.patListShowMedRecRecyclerView);
         patientListShowMedRecRecyclerView.setHasFixedSize(true);

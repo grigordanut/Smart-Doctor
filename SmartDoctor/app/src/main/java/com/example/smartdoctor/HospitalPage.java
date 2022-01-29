@@ -66,7 +66,7 @@ public class HospitalPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hospital_page);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Hospital Page");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("HOSPITAL: maim page");
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
@@ -224,7 +224,7 @@ public class HospitalPage extends AppCompatActivity {
                 .setCancelable(false)
                 .setPositiveButton("Yes", (dialog, id) -> {
                     firebaseAuth.signOut();
-                    startActivity(new Intent(HospitalPage.this, LoginBy.class));
+                    startActivity(new Intent(HospitalPage.this, MainActivity.class));
                     finish();
                 })
 

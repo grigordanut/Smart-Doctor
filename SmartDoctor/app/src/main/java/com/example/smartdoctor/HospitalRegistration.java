@@ -31,15 +31,14 @@ import java.util.Objects;
 
 public class HospitalRegistration extends AppCompatActivity {
 
-    private TextInputEditText hospUniqueCode, hospNameReg, hospEmailReg, hospPassReg, hospConfPassReg;
-
-    private String hosp_UniqueCodeReg, hosp_NameReg, hosp_EmailReg, hosp_PassReg, hosp_ConfPassReg;
-
     private FirebaseAuth firebaseAuth;
-    //private FirebaseUser firebaseUser;
 
     private DatabaseReference dbRefHospUpload;
     private DatabaseReference dbRefHospCheck;
+
+    private TextInputEditText hospUniqueCode, hospNameReg, hospEmailReg, hospPassReg, hospConfPassReg;
+
+    private String hosp_UniqueCodeReg, hosp_NameReg, hosp_EmailReg, hosp_PassReg, hosp_ConfPassReg;
 
     private ProgressDialog progressDialog;
 
@@ -48,16 +47,11 @@ public class HospitalRegistration extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hospital_registration);
 
-        hospUniqueCode = findViewById(R.id.etHospUniqueCodeReg);
-        hospNameReg = findViewById(R.id.etHospNameReg);
-        hospEmailReg = findViewById(R.id.etHospEmailReg);
-        hospPassReg = findViewById(R.id.etHospPassReg);
-        hospConfPassReg = findViewById(R.id.etHospConfPassReg);
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Hospital Registration");
 
         progressDialog = new ProgressDialog(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        //firebaseUser = firebaseAuth.getCurrentUser();
 
         //Create Hospitals table into database
         dbRefHospUpload = FirebaseDatabase.getInstance().getReference("Hospitals");
@@ -65,16 +59,22 @@ public class HospitalRegistration extends AppCompatActivity {
         //Checks if the Hospital name already exists
         dbRefHospCheck = FirebaseDatabase.getInstance().getReference("Hospitals");
 
-        Button buttonHospLogReg = findViewById(R.id.btnHospLogReg);
-        buttonHospLogReg.setOnClickListener(new View.OnClickListener() {
+        hospUniqueCode = findViewById(R.id.etHospUniqueCodeReg);
+        hospNameReg = findViewById(R.id.etHospNameReg);
+        hospEmailReg = findViewById(R.id.etHospEmailReg);
+        hospPassReg = findViewById(R.id.etHospPassReg);
+        hospConfPassReg = findViewById(R.id.etHospConfPassReg);
+
+        Button btn_hospLogReg = findViewById(R.id.btnHospLogReg);
+        btn_hospLogReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HospitalRegistration.this, Login.class));
             }
         });
 
-        Button buttonHospReg = findViewById(R.id.btnHospReg);
-        buttonHospReg.setOnClickListener(new View.OnClickListener() {
+        Button btn_hospReg = findViewById(R.id.btnHospReg);
+        btn_hospReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 checkHospitalName();
@@ -86,32 +86,32 @@ public class HospitalRegistration extends AppCompatActivity {
 
         final String hosp_NameCheck = Objects.requireNonNull(hospNameReg.getText()).toString().trim();
 
-        dbRefHospCheck.orderByChild("hosp_Name").equalTo(hosp_NameCheck)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        dbRefHospCheck.orderByChild("hosp_Name").equalTo(hosp_NameCheck).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        if (dataSnapshot.exists()) {
-                            alertHospitalExists();
-                        } else {
-                            registerHospital();
-                        }
-                    }
+                if (dataSnapshot.exists()) {
+                    alertHospitalExists();
+                } else {
+                    registerHospital();
+                }
+            }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Toast.makeText(HospitalRegistration.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(HospitalRegistration.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void registerHospital() {
 
         if (validateHospitalData()) {
 
-            progressDialog.setMessage("Registering Hospital Details");
+            progressDialog.setMessage("Registering Hospital details");
             progressDialog.show();
 
+            //Create new Hospital user into database
             firebaseAuth.createUserWithEmailAndPassword(hosp_EmailReg, hosp_PassReg).addOnCompleteListener(HospitalRegistration.this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -150,7 +150,7 @@ public class HospitalRegistration extends AppCompatActivity {
 
                         firebaseUser.sendEmailVerification();
 
-                        Toast.makeText(HospitalRegistration.this, "Hospital successfully registered.\nVerification email has been sent", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HospitalRegistration.this, "Hospital successfully registered.\nVerification email has been sent!", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(HospitalRegistration.this, Login.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
@@ -217,7 +217,7 @@ public class HospitalRegistration extends AppCompatActivity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
                 .setTitle("Hospital Registration")
-                .setMessage("The Hospitals: " + hosp_NameCheckAlert + " already exists!")
+                .setMessage("The Hospital: " + hosp_NameCheckAlert + " already exists!")
                 .setCancelable(false)
                 .setPositiveButton("Ok", (dialog, id) -> dialog.dismiss());
 

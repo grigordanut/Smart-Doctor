@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PatientListHospital extends AppCompatActivity {
 
@@ -47,6 +48,8 @@ public class PatientListHospital extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_list_hospital);
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Patients available");
+
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
 
@@ -60,7 +63,7 @@ public class PatientListHospital extends AppCompatActivity {
             hospitalKey = bundle.getString("HOSPKey");
         }
 
-        tVPatListHospName.setText("No Patients available!!");
+        tVPatListHospName.setText("No registered Patients!!");
 
         patientHospRecyclerView = findViewById(R.id.patHospRecyclerView);
         patientHospRecyclerView.setHasFixedSize(true);

@@ -53,6 +53,8 @@ public class PatientPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_page);
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle("PATIENT: maim page");
+
         progressDialog = new ProgressDialog(this);
 
         //initialise the variables

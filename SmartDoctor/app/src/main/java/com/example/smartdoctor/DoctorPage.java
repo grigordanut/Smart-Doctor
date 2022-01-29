@@ -59,7 +59,7 @@ public class DoctorPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_page);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Doctor Page");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("DOCTOR: main page");
 
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
@@ -176,7 +176,7 @@ public class DoctorPage extends AppCompatActivity {
 
     public void doctorLogOut(){
         firebaseAuth.signOut();
-        startActivity(new Intent(DoctorPage.this, LoginBy.class));
+        startActivity(new Intent(DoctorPage.this, MainActivity.class));
         finish();
     }
 

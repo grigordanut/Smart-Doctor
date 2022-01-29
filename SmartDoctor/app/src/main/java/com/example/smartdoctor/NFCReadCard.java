@@ -19,7 +19,6 @@ import android.nfc.tech.MifareClassic;
 import android.nfc.tech.MifareUltralight;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -35,15 +34,18 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class NFCReadCard extends AppCompatActivity {
 
     private NfcAdapter nfcAdapter;
     private PendingIntent pendingIntent;
 
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseRefCheckPat;
+    private DatabaseReference databaseRefNFCId;
+    private ValueEventListener eventListener;
 
-    private TextView showNFC, saveCode;
+    private TextView tVShowNFC, tVSaveCode;
 
     private String save_Code;
 
@@ -59,21 +61,27 @@ public class NFCReadCard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfcread_card);
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle("NFC Read Card");
+
         progressDialog = new ProgressDialog(this);
+
+        databaseRefCheckPat = FirebaseDatabase.getInstance().getReference("Patients");
+        databaseRefNFCId = FirebaseDatabase.getInstance().getReference("Patients");
 
         mTags = new ArrayList<>();
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
-        showNFC = findViewById(R.id.tvShowNFC);
-        saveCode = findViewById(R.id.tvSaveCode);
+        tVShowNFC = findViewById(R.id.tvShowNFC);
+        tVSaveCode = findViewById(R.id.tvSaveCode);
 
-        saveCode.setText("No patient NFC Id");
+        tVShowNFC.setText("Hold the card in the back of your device");
+        tVSaveCode.setText("No patient NFC Id");
 
         btn_Save = findViewById(R.id.btnSave);
         btn_Clear = findViewById(R.id.btnClear);
 
-        saveCode.setOnClickListener(new View.OnClickListener() {
+        tVSaveCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 alertNoNFCId();
@@ -98,7 +106,7 @@ public class NFCReadCard extends AppCompatActivity {
         btn_Check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                save_Code = saveCode.getText().toString().trim();
+                save_Code = tVSaveCode.getText().toString().trim();
                 if (save_Code.equals("No patient NFC Id") || save_Code.equals("Click SAVE to get the Patient Id")){
                     alertNoNFCFound();
                 }
@@ -216,14 +224,14 @@ public class NFCReadCard extends AppCompatActivity {
         sb.append("ID (dec): ").append(toDec(id)).append('\n');
         sb.append("ID (reversed dec): ").append(toReversedDec(id)).append('\n');
 
-        saveCode.setClickable(false);
-        saveCode.setText("Click SAVE to get the Patient Id");
+        tVSaveCode.setClickable(false);
+        tVSaveCode.setText("Click SAVE to get the Patient Id");
 
         btn_Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveCode.setText(String.valueOf(toReversedDec(id)));
-                saveCode.setClickable(false);
+                tVSaveCode.setText(String.valueOf(toReversedDec(id)));
+                tVSaveCode.setClickable(false);
                 btn_Save.setClickable(false);
             }
         });
@@ -231,13 +239,13 @@ public class NFCReadCard extends AppCompatActivity {
         btn_Clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                save_Code = saveCode.getText().toString().trim();
+                save_Code = tVSaveCode.getText().toString().trim();
                 if (save_Code.equals("Click SAVE to get the Patient Id")){
                     alertNothingToClear();
                 }
 
                 else{
-                    saveCode.setText("Click SAVE to get the Patient Id");
+                    tVSaveCode.setText("Click SAVE to get the Patient Id");
                     btn_Save.setClickable(true);
                     Toast.makeText(NFCReadCard.this, "The Button SAVE is clickable", Toast.LENGTH_SHORT).show();
                 }
@@ -405,46 +413,109 @@ public class NFCReadCard extends AppCompatActivity {
             builder.append(str).append("\n");
         }
 
-        showNFC.setText(builder.toString());
+        tVShowNFC.setText(builder.toString());
     }
 
     private void checkCodePatient(){
 
-        progressDialog.setMessage("The patient is identified!!");
+        progressDialog.setMessage("The Patient is identified!!");
         progressDialog.show();
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Patients");
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseRefCheckPat.orderByChild("Patients").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot postSnapshot : snapshot.getChildren()){
-                    Patients pat_data = postSnapshot.getValue(Patients.class);
 
-                    String save_Code = saveCode.getText().toString().trim();
+                if (snapshot.exists()){
+                    checkPatientNFCId();
 
-                    assert pat_data != null;
-                    if (save_Code.equals(pat_data.getPatCard_Code())){
-                        pat_data.setPatient_Key(postSnapshot.getKey());
-                        Intent intent = new Intent(NFCReadCard.this, PatientNFC.class);
-                        intent.putExtra("FIRSTNAME", pat_data.getPatFirst_Name());
-                        intent.putExtra("LASTNAME", pat_data.getPatLast_Name());
-                        intent.putExtra("DOCTORNAME", pat_data.getPatDoc_Name());
-                        intent.putExtra("HOSPNAME", pat_data.getPatHosp_Name());
-                        startActivity(intent);
-                    }
-
-                    else{
-                        Toast.makeText(NFCReadCard.this, "Patient Not Found!!", Toast.LENGTH_SHORT).show();
-                    }
+                }
+                else{
+                    alertNoPatientRegisteredFound();
                 }
                 progressDialog.dismiss();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(NFCReadCard.this, "Patient Not Found!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(NFCReadCard.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void checkPatientNFCId() {
+
+//        progressDialog.setMessage("The Patient is identified!!");
+//        progressDialog.show();
+
+        eventListener = databaseRefNFCId.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot postSnapshot : snapshot.getChildren()){
+
+                    Patients pat_data = postSnapshot.getValue(Patients.class);
+                    String save_Code = tVSaveCode.getText().toString().trim();
+
+                    if (pat_data != null) {
+                        if (save_Code.equals(pat_data.getPatCard_Code())){
+                            pat_data.setPatient_Key(postSnapshot.getKey());
+                            Intent intent = new Intent(NFCReadCard.this, PatientNFC.class);
+                            intent.putExtra("FIRSTNAME", pat_data.getPatFirst_Name());
+                            intent.putExtra("LASTNAME", pat_data.getPatLast_Name());
+                            intent.putExtra("DOCTORNAME", pat_data.getPatDoc_Name());
+                            intent.putExtra("HOSPNAME", pat_data.getPatHosp_Name());
+                            startActivity(intent);
+                        }
+
+                        else{
+
+                            alertNoPatientFond();
+                        }
+
+                        //progressDialog.dismiss();
+                    }
+                }
+
+                //progressDialog.dismiss();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(NFCReadCard.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void alertNoPatientRegisteredFound(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder
+                .setMessage("No Patients registered in the database were found.\nPlease register Patients and then check the NFC id!!")
+                .setCancelable(false)
+                .setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    private void alertNoPatientFond() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder
+                .setMessage("No Patient found to be registered with the NCF Id: " + save_Code)
+                .setCancelable(false)
+                .setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }

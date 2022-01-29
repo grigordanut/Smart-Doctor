@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 public class PatientNFC extends AppCompatActivity {
 
     private EditText patFirstName, patLastName, patDoctorName, patHospName;
@@ -21,6 +23,8 @@ public class PatientNFC extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_nfc);
+
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Patient Identification");
 
         patFirstName = findViewById(R.id.etPatNFCFirstName);
         patFirstName.setEnabled(false);

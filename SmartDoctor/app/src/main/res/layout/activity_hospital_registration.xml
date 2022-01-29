@@ -136,26 +136,26 @@
             android:id="@+id/btnHospReg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="50dp"
             android:layout_marginTop="15dp"
-            android:layout_marginEnd="30dp"
-            android:background="#0D47A1"
+            android:layout_marginEnd="50dp"
+            android:background="@drawable/btn_fading"
             android:text="@string/btn_hospitalPageReg"
             android:textSize="22sp"
-            tools:ignore="ButtonStyle" />
+            android:textStyle="bold" />
 
         <Button
-            style="@style/Widget.MaterialComponents.Button"
             android:id="@+id/btnHospLogReg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="60dp"
             android:layout_marginTop="15dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginEnd="60dp"
             android:layout_marginBottom="15dp"
-            android:background="#90CAF9"
+            android:background="@drawable/btn_fading"
             android:text="@string/btn_hospitalPageLog"
-            android:textSize="22sp"/>
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

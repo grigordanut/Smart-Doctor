@@ -29,7 +29,6 @@ import java.util.Objects;
 public class DoctorRegistration extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
-    //private FirebaseUser firebaseUser;
 
     private DatabaseReference databaseReference;
 
@@ -38,7 +37,6 @@ public class DoctorRegistration extends AppCompatActivity {
     private TextView tVHospNameDoctorReg;
 
     private String doc_UniqueCode, doc_FirstName, doc_LastName, doc_Phone, doc_EmailReg, doc_PassReg, doc_ConfPassReg;
-
 
     private String docHospitalName = "";
     private String docHospitalKey = "";
@@ -51,10 +49,11 @@ public class DoctorRegistration extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_registration);
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Doctor Registration");
+
         progressDialog = new ProgressDialog(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        //firebaseUser = firebaseAuth.getCurrentUser();
 
         //Create Doctors table into database
         databaseReference = FirebaseDatabase.getInstance().getReference("Doctors");
@@ -69,15 +68,6 @@ public class DoctorRegistration extends AppCompatActivity {
 
         tVHospNameDoctorReg.setText("Add doctor to: " + docHospitalName + " Hospital");
 
-        Button buttonDocLogReg = findViewById(R.id.btnDocLogReg);
-        buttonDocLogReg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-                startActivity(new Intent(DoctorRegistration.this, Login.class));
-            }
-        });
-
         docUniqueCode = findViewById(R.id.etDocUniqueCode);
         docFirstName = findViewById(R.id.etDocFirstName);
         docLastName = findViewById(R.id.etDocLastName);
@@ -86,8 +76,18 @@ public class DoctorRegistration extends AppCompatActivity {
         docPassReg = findViewById(R.id.etDocPassReg);
         docConfPassReg = findViewById(R.id.etDocConfPassReg);
 
-        Button buttonDoctorReg = findViewById(R.id.btnDoctorReg);
-        buttonDoctorReg.setOnClickListener(new View.OnClickListener() {
+        Button btn_docLogReg = findViewById(R.id.btnDocLogReg);
+        btn_docLogReg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DoctorRegistration.this, Login.class));
+                finish();
+            }
+        });
+
+
+        Button btn_doctorReg = findViewById(R.id.btnDoctorReg);
+        btn_doctorReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 registerDoctor();
@@ -99,41 +99,68 @@ public class DoctorRegistration extends AppCompatActivity {
 
         if (validateDoctorData()) {
 
-            progressDialog.setMessage("Registering of Doctor details!");
+            progressDialog.setMessage("Registering Doctor details!");
             progressDialog.show();
 
-            //create new user into Firebase Database
-            firebaseAuth.createUserWithEmailAndPassword(doc_EmailReg, doc_PassReg)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
+            //Create new Doctor user into database
+            firebaseAuth.createUserWithEmailAndPassword(doc_EmailReg, doc_PassReg).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
 
-                            if (task.isSuccessful()) {
-                                uploadDoctorData();
+                    if (task.isSuccessful()) {
+                        uploadDoctorData();
 
-                            } else {
-                                try {
-                                    throw Objects.requireNonNull(task.getException());
-                                } catch (Exception e) {
-                                    Toast.makeText(DoctorRegistration.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            }
-
-                            progressDialog.dismiss();
-                        }
-                    })
-
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
+                    } else {
+                        try {
+                            throw Objects.requireNonNull(task.getException());
+                        } catch (Exception e) {
                             Toast.makeText(DoctorRegistration.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
-                    });
+                    }
+
+                    progressDialog.dismiss();
+                }
+            });
         }
     }
 
+    private void uploadDoctorData() {
 
-    //validate data in the input fields
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+
+        if (firebaseUser != null) {
+
+            String doc_Id = firebaseUser.getUid();
+            Doctors doc_Data = new Doctors(doc_UniqueCode, doc_FirstName, doc_LastName, doc_Phone, doc_EmailReg, docHospitalName, docHospitalKey);
+
+            databaseReference.child(doc_Id).setValue(doc_Data).addOnCompleteListener(DoctorRegistration.this, new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+
+                    if (task.isSuccessful()) {
+
+                        firebaseUser.sendEmailVerification();
+
+                        Toast.makeText(DoctorRegistration.this, "Doctor successfully registered.\nVerification Email has been sent!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(DoctorRegistration.this, Login.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+
+                    } else {
+                        try {
+                            throw Objects.requireNonNull(task.getException());
+                        } catch (Exception e) {
+                            Toast.makeText(DoctorRegistration.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    progressDialog.dismiss();
+                }
+            });
+        }
+    }
+
     private Boolean validateDoctorData() {
 
         boolean result = false;
@@ -181,73 +208,4 @@ public class DoctorRegistration extends AppCompatActivity {
         }
         return result;
     }
-
-    private void uploadDoctorData() {
-
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-
-        assert firebaseUser != null;
-        String doc_Id = firebaseUser.getUid();
-        Doctors doctors = new Doctors(doc_UniqueCode, doc_FirstName, doc_LastName, doc_Phone, doc_EmailReg, docHospitalName, docHospitalKey);
-
-        databaseReference.child(doc_Id).setValue(doctors)
-                .addOnCompleteListener(DoctorRegistration.this, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-
-                        if (task.isSuccessful()) {
-                            firebaseUser.sendEmailVerification();
-
-                            Toast.makeText(DoctorRegistration.this, "Doctor Successfully registered. Verification Email sent", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(DoctorRegistration.this, MainActivity.class));
-                            finish();
-
-                        } else {
-                            try {
-                                throw Objects.requireNonNull(task.getException());
-                            } catch (Exception e) {
-                                Toast.makeText(DoctorRegistration.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        progressDialog.dismiss();
-                    }
-                });
-
-    }
-
-//    //send email to user to verify if the email is real
-//    private void sendEmailVerification() {
-//
-//        firebaseUser.sendEmailVerification()
-//                .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//
-//                        if (task.isSuccessful()) {
-//
-//                            Toast.makeText(DoctorRegistration.this, "Doctor Successfully registered. Verification Email sent", Toast.LENGTH_SHORT).show();
-//                            startActivity(new Intent(DoctorRegistration.this, MainActivity.class));
-//                            finish();
-//
-//                        } else {
-//                            try {
-//                                throw Objects.requireNonNull(task.getException());
-//                            } catch (Exception e) {
-//                                Toast.makeText(DoctorRegistration.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-//
-//                            }
-//                        }
-//
-//                        progressDialog.dismiss();
-//                    }
-//                })
-//
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Toast.makeText(DoctorRegistration.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//
-//    }
 }

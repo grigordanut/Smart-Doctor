@@ -22,6 +22,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 public class UpdateMedicalRecord extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
@@ -43,6 +45,8 @@ public class UpdateMedicalRecord extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_medical_record);
+
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Update Medical Record");
 
         progressDialog = new ProgressDialog(this);
 

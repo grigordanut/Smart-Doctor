@@ -60,9 +60,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
+                android:hint="Patient Date of Birth"
                 android:inputType="text|datetime"
                 android:paddingStart="10dp"
-                android:hint="Patient Date of Birth"
                 android:textSize="22sp"
                 tools:ignore="Autofill,LabelFor,RtlSymmetry" />
 
@@ -82,9 +82,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
+                android:hint="Patient PPS Number"
                 android:inputType="text"
                 android:paddingStart="10dp"
-                android:hint="Patient PPS Number"
                 android:textSize="22sp"
                 tools:ignore="Autofill,LabelFor,RtlSymmetry" />
 
@@ -104,9 +104,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
+                android:hint="Patient Address"
                 android:inputType="text|textCapWords"
                 android:paddingStart="10dp"
-                android:hint="Patient Address"
                 android:textSize="22sp"
                 tools:ignore="Autofill,LabelFor,RtlSymmetry" />
 
@@ -116,14 +116,13 @@
             android:id="@+id/btnMedRecSaveUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
             android:layout_gravity="center"
+            android:layout_marginStart="40dp"
             android:layout_marginTop="15dp"
+            android:layout_marginEnd="40dp"
             android:layout_marginBottom="15dp"
-            android:background="@drawable/bgdbutton"
+            android:background="@drawable/btn_fading"
             android:text="@string/btn_hospitalSaveUp"
-            android:textColor="#ffffff"
             android:textSize="22sp"
             android:textStyle="bold" />
 

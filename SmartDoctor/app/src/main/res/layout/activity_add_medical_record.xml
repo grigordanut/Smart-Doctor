@@ -22,29 +22,56 @@
             android:text="@string/tv_medRecPatName"
             android:textAlignment="center"
             android:textColor="@android:color/black"
-            android:textStyle="bold"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="30dp"
+            android:text="Select Gender*"
+            android:textColor="@android:color/black"
             android:textSize="24sp" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        <RadioGroup
+            android:id="@+id/radioGroupGender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="15dp"
             android:layout_marginEnd="20dp"
-            android:textColorHint="#000000">
 
-            <AutoCompleteTextView
-                android:id="@+id/tvPatientGender"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioButtonMale"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
-                android:hint="@string/tv_medRecGender"
-                android:inputType="none"
-                android:textSize="22sp"
-                tools:ignore="RtlSymmetry" />
+                android:background="#ffffff"
+                android:text=" Male"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+            <RadioButton
+                android:id="@+id/radioButtonFemale"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:background="#ffffff"
+                android:text=" Female"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+        </RadioGroup>
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -119,7 +146,6 @@
             android:layout_marginBottom="15dp"
             android:background="@drawable/btn_fading"
             android:text="@string/btn_medRecSave"
-            android:textColor="#ffffff"
             android:textSize="22sp"
             android:textStyle="bold" />
 

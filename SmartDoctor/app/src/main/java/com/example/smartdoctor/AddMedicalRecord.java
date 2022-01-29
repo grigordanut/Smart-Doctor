@@ -1,21 +1,27 @@
 package com.example.smartdoctor;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -28,6 +34,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Calendar;
 import java.util.Objects;
 
 public class AddMedicalRecord extends AppCompatActivity {
@@ -35,17 +42,21 @@ public class AddMedicalRecord extends AppCompatActivity {
     private DatabaseReference databaseReference;
 
     private TextView tVMedRecPatName;
-    private AutoCompleteTextView tVPatientGender;
+    private RadioGroup radioGender;
+    private RadioButton genderMale, genderFemale;
 
     private EditText medRecPPSNo, medRecAddress, medRecDateBirth;
 
-    private String medRec_Gender, medRec_PPSNo, medRec_Address, medRec_DateBirth;
+    private String medRec_PPSNo, medRec_Address, medRec_DateBirth;
+
+    private String medRec_Gender;
 
     String patientNameMedRec = "";
     String patientKeyMedRec = "";
 
     private ProgressDialog progressDialog;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,15 +71,24 @@ public class AddMedicalRecord extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference("Medical Records");
 
         tVMedRecPatName = findViewById(R.id.tvMedRecPatName);
-        tVPatientGender = findViewById(R.id.tvPatientGender);
-        String[] gender = getResources().getStringArray(R.array.Gender);
 
-        ArrayAdapter<String> genderAdapter = new ArrayAdapter<>(this, R.layout.dropdown_item_gender, gender);
-        tVPatientGender.setAdapter(genderAdapter);
+        radioGender = findViewById(R.id.radioGroupGender);
+        genderMale = findViewById(R.id.radioButtonMale);
+        genderFemale = findViewById(R.id.radioButtonFemale);
+
 
         medRecDateBirth = findViewById(R.id.etDateBirthMedRecord);
+        medRecDateBirth.setFocusable(false);
         medRecPPSNo = findViewById(R.id.etPPSMedRecord);
         medRecAddress = findViewById(R.id.etAddressMedRecord);
+
+
+        medRecDateBirth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectDateOfBirth();
+            }
+        });
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -123,11 +143,25 @@ public class AddMedicalRecord extends AppCompatActivity {
     }
 
     //validate data in the input fields
+    @SuppressLint("NonConstantResourceId")
     private Boolean validateMedRecordData() {
 
         boolean result = false;
 
-        medRec_Gender = tVPatientGender.getText().toString();
+//        if (genderMale.isChecked()) {
+//            medRec_Gender = "Male";
+//        }
+//        if (genderFemale.isChecked()) {
+//            medRec_Gender = "Female";
+//        }
+
+        int rad_Id = radioGender.getCheckedRadioButtonId();
+        switch (rad_Id){
+            case R.id.radioButtonMale:
+                medRec_Gender = "Male";
+                break;
+        }
+
         medRec_DateBirth = medRecDateBirth.getText().toString().trim();
         medRec_PPSNo = medRecPPSNo.getText().toString().trim();
         medRec_Address = medRecAddress.getText().toString().trim();
@@ -135,7 +169,7 @@ public class AddMedicalRecord extends AppCompatActivity {
         if (TextUtils.isEmpty(medRec_Gender)) {
             alertDialogGender();
         } else if (TextUtils.isEmpty(medRec_DateBirth)) {
-            medRecDateBirth.setError("Enter patient's Date of Birth");
+            alertDialogDateOfBirthEmpty();
             medRecDateBirth.requestFocus();
         } else if (TextUtils.isEmpty(medRec_PPSNo)) {
             medRecPPSNo.setError("Please enter patient's PPS");
@@ -153,10 +187,47 @@ public class AddMedicalRecord extends AppCompatActivity {
     private void alertDialogGender() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
-                .setTitle("Select Gender")
+                .setTitle("Patient Gender")
                 .setMessage("Please select the Gender!")
                 .setCancelable(false)
-                .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
+                .setPositiveButton("OK", (dialog, id) -> {
+                    radioGender.requestFocus();
+                    dialog.dismiss();
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    //Pick the Patients date of birth
+    private void selectDateOfBirth() {
+
+        Calendar calendar = Calendar.getInstance();
+        int day  = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
+
+        DatePickerDialog dialog = new DatePickerDialog(AddMedicalRecord.this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+                String picked_Date = dayOfMonth + "/" + (month+1) + "/" + year;
+                medRecDateBirth.setText(picked_Date);
+            }
+        }, year, month, day);
+        //dialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+        dialog.show();
+    }
+
+    private void alertDialogDateOfBirthEmpty() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder
+                .setTitle("Patient Date of Birth")
+                .setMessage("The Date of Birth cannot be empty!")
+                .setPositiveButton("OK", (dialog, id) -> {
+                    selectDateOfBirth();
+                    dialog.dismiss();
+                });
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();

@@ -24,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PatientListDoctor extends AppCompatActivity {
 
@@ -50,8 +51,13 @@ public class PatientListDoctor extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_list_doctor);
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Patients available");
+
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
+
+        //Retrieve data from Patients database
+        databaseReference = FirebaseDatabase.getInstance().getReference("Patients");
 
         tVPatListHospName = findViewById(R.id.tvPatListHospName);
         tVPatListDoctorName = findViewById(R.id.tvPatListDoctorName);
@@ -59,7 +65,6 @@ public class PatientListDoctor extends AppCompatActivity {
         patDocList = new ArrayList<>();
 
         Bundle bundle = getIntent().getExtras();
-
         if (bundle != null){
             hospitalName = bundle.getString("HOSPName");
             hospitalKey = bundle.getString("HOSPKey");
@@ -68,7 +73,7 @@ public class PatientListDoctor extends AppCompatActivity {
         }
 
         tVPatListHospName.setText(hospitalName + " Hospital");
-        tVPatListDoctorName.setText("No Patients available!!");
+        tVPatListDoctorName.setText("No registered Patients!!");
 
         patientDocRecyclerView = findViewById(R.id.patDocRecyclerView);
         patientDocRecyclerView.setHasFixedSize(true);
@@ -110,8 +115,6 @@ public class PatientListDoctor extends AppCompatActivity {
 
     private void loadPatientsListDoctor() {
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Patients");
-
         eventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
@@ -124,7 +127,7 @@ public class PatientListDoctor extends AppCompatActivity {
                         if (patDoc_Data.getPatDoc_Key().equals(doctorKey)){
                             patDoc_Data.setPatient_Key(postSnapshot.getKey());
                             patDocList.add(patDoc_Data);
-                            tVPatListDoctorName.setText("Patients list Dr: " + patDoc_Data.getPatDoc_Name());
+                            tVPatListDoctorName.setText("Patients of Dr: " + patDoc_Data.getPatDoc_Name());
                         }
                     }
                 }

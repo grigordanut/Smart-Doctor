@@ -52,10 +52,12 @@ public class HospitalEditProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hospital_edit_profile);
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle("HOSPITAL: edit Profile");
+
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
 
-        //Retrieve data from Users database and load the user details in the edit texts
+        //Retrieve data from Hospitals database and load the user details in the edit texts
         databaseRefLoad = FirebaseDatabase.getInstance().getReference("Hospitals");
 
         //Upload Hospital updated data
@@ -166,14 +168,14 @@ public class HospitalEditProfile extends AppCompatActivity {
                 //retrieve data from database
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
-                    Hospitals hospitals_Data = postSnapshot.getValue(Hospitals.class);
+                    Hospitals hosp_Data = postSnapshot.getValue(Hospitals.class);
 
-                    if (hospitals_Data != null) {
+                    if (hosp_Data != null) {
                         if (firebaseUser.getUid().equals(postSnapshot.getKey())) {
-                            hospUniqueCodeUp.setText(hospitals_Data.getHosp_UniqueCode());
-                            hospNameUp.setText(hospitals_Data.getHosp_Name());
-                            hospEmailUp.setText(hospitals_Data.getHosp_Email());
-                            tVHospitalEditProfile.setText("Edit profile: " + hospitals_Data.getHosp_Name() + " Hospital");
+                            hospUniqueCodeUp.setText(hosp_Data.getHosp_UniqueCode());
+                            hospNameUp.setText(hosp_Data.getHosp_Name());
+                            hospEmailUp.setText(hosp_Data.getHosp_Email());
+                            tVHospitalEditProfile.setText("Edit profile: " + hosp_Data.getHosp_Name() + " Hospital");
                         }
                     }
                 }
@@ -220,7 +222,7 @@ public class HospitalEditProfile extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        if (item.getItemId() == R.id.hospitalEditProfileGoBack) {
+        if (item.getItemId() == R.id.hospitalEditProfile_goBack) {
             hospEditProfileGoBack();
         }
 

@@ -15,7 +15,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="20dp"
-        android:text="Doctor Name"
+        android:text="@string/tv_medRecPatDocName"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="24sp"
@@ -28,7 +28,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="20dp"
-        android:text="Patient Name"
+        android:text="@string/tv_medRecPatPatName"
         android:textStyle="bold"
         android:textColor="#000000"
         android:textSize="24sp" />
@@ -49,6 +49,7 @@
         android:layout_marginEnd="40dp"
         android:background="@drawable/btn_fading"
         android:textSize="18sp"
-        android:text="Back Patient Page"/>
+        android:textStyle="bold"
+        android:text="@string/btn_medRecBak"/>
 
 </LinearLayout>

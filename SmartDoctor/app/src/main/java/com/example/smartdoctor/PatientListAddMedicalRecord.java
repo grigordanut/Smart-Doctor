@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PatientListAddMedicalRecord extends AppCompatActivity implements PatientAdapter.OnItemClickListener{
 
@@ -44,6 +45,8 @@ public class PatientListAddMedicalRecord extends AppCompatActivity implements Pa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_list_add_medical_record);
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Patients available");
+
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
 
@@ -59,6 +62,7 @@ public class PatientListAddMedicalRecord extends AppCompatActivity implements Pa
         }
 
         tVDoctorNameAddRec.setText("Doctor: " + doctor_Name);
+        tVPatListAddRec.setText("No registered Patients!!");
 
         medRecordRecyclerView = findViewById(R.id.patListRecyclerView);
         medRecordRecyclerView.setHasFixedSize(true);
