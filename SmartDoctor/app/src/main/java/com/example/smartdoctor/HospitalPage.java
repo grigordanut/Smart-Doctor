@@ -51,9 +51,6 @@ public class HospitalPage extends AppCompatActivity {
     private int numberDoctorsAv;
     private int numberPatientsAv;
 
-    //private String docHospital_Key;
-    private String patHospital_Key;
-
     private TextView tVWelcomeHospital, tVShowHospitalDetails, tVHospDoctorsAv, tVHospPatientsAv;
 
     //Declaring some objects
@@ -277,16 +274,14 @@ public class HospitalPage extends AppCompatActivity {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Patients pat_Data = postSnapshot.getValue(Patients.class);
 
-                    assert pat_Data != null;
-                    patHospital_Key = pat_Data.getPatHosp_Key();
-
-                    if (pat_Data.getPatHosp_Key().equals(patHospital_Key)) {
-                        pat_Data.setPatient_Key(postSnapshot.getKey());
-                        patientsList.add(pat_Data);
-                        numberPatientsAv = patientsList.size();
-                        tVHospPatientsAv.setText(String.valueOf(numberPatientsAv));
+                    if (pat_Data != null) {
+                        if (pat_Data.getPatHosp_Key().equals(firebaseUser.getUid())) {
+                            pat_Data.setPatient_Key(postSnapshot.getKey());
+                            patientsList.add(pat_Data);
+                            numberPatientsAv = patientsList.size();
+                            tVHospPatientsAv.setText(String.valueOf(numberPatientsAv));
+                        }
                     }
-
                 }
             }
 

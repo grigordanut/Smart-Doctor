@@ -34,7 +34,6 @@ public class Login extends AppCompatActivity {
 
     //declare variables
     private FirebaseAuth firebaseAuth;
-    //private FirebaseUser firebaseUser;
 
     private DatabaseReference databaseRefHosp;
     private DatabaseReference databaseRefDoc;
@@ -56,7 +55,6 @@ public class Login extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        //firebaseUser = firebaseAuth.getCurrentUser();
 
         //Initialize variables
         emailLogUser = findViewById(R.id.etEmailLogUser);

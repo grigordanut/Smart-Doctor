@@ -104,9 +104,6 @@
             android:name=".HospitalListAddDoctor"
             android:exported="false" />
         <activity
-            android:name=".NFCActivityOld"
-            android:exported="false" />
-        <activity
             android:name=".CheckUniqueCode"
             android:exported="false" />
         <activity

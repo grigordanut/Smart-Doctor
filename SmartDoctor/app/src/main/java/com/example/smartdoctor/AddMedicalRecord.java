@@ -148,18 +148,11 @@ public class AddMedicalRecord extends AppCompatActivity {
 
         boolean result = false;
 
-//        if (genderMale.isChecked()) {
-//            medRec_Gender = "Male";
-//        }
-//        if (genderFemale.isChecked()) {
-//            medRec_Gender = "Female";
-//        }
-
-        int rad_Id = radioGender.getCheckedRadioButtonId();
-        switch (rad_Id){
-            case R.id.radioButtonMale:
-                medRec_Gender = "Male";
-                break;
+        if (genderMale.isChecked()) {
+            medRec_Gender = "Male";
+        }
+        if (genderFemale.isChecked()) {
+            medRec_Gender = "Female";
         }
 
         medRec_DateBirth = medRecDateBirth.getText().toString().trim();
