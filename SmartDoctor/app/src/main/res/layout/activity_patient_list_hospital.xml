@@ -15,7 +15,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
-        android:text="Hospital Name"
+        android:text="@string/tv_patListHospName"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="24sp"
@@ -36,7 +36,7 @@
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/btn_fading"
-        android:text="Back Hospital Page"
+        android:text="@string/btn_patListBackHosp"
         android:textSize="18sp" />
 
 </LinearLayout>

@@ -15,7 +15,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="20dp"
-        android:text="Hospital Name"
+        android:text="@string/tv_patListHospitalName"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="22sp"
@@ -28,7 +28,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
-        android:text="Doctor Name"
+        android:text="@string/tv_patListDoctorName"
         android:textColor="#000000"
         android:textStyle="bold"
         android:textSize="22sp" />
@@ -54,7 +54,7 @@
             android:layout_marginBottom="10dp"
             android:layout_weight="1"
             android:background="@drawable/btn_fading"
-            android:text="Add Patient"
+            android:text="@string/btn_patListAddPatient"
             android:textSize="16sp"
             tools:ignore="ButtonStyle" />
 
@@ -68,7 +68,7 @@
             android:layout_marginBottom="10dp"
             android:layout_weight="1"
             android:background="@drawable/btn_fading"
-            android:text="Back Doctor"
+            android:text="@string/btn_patListBackDoctor"
             android:textSize="16sp"
             tools:ignore="ButtonStyle" />
 

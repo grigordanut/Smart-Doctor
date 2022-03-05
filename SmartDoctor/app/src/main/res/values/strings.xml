@@ -158,33 +158,83 @@
 
 
     <!--    Activity Patient Edit Profile-->
-
+    <string name="tv_patEditProfile">Edit Patient Profile</string>
+    <string name="et_patCardCodeUp">Patient Card Code</string>
+    <string name="et_patUniqueCodeUp">Patient Unique Code</string>
+    <string name="et_patFirstNameUp">Patient First Name</string>
+    <string name="et_patLastNameUp">Patient Last Name</string>
+    <string name="et_patEmailUp">Email Address</string>
+    <string name="btn_patSaveUp">Save Changes</string>
 
     <!--    Activity Patient List Add Medical Record-->
+    <string name="tv_patListAddRecDocName">Doctor Name</string>
+    <string name="tv_patListAddRecPatName">Patients List</string>
 
+    <!--    Activity Patient List Doctor-->
+    <string name="tv_patListHospitalName">Hospital Name</string>
+    <string name="tv_patListDoctorName">Doctor Name</string>
+    <string name="btn_patListAddPatient">Add Patient</string>
+    <string name="btn_patListBackDoctor">Back Doctor</string>
+
+    <!--    Activity Patient List Hospital-->
+    <string name="tv_patListHospName">Hospital Name</string>
+    <string name="btn_patListBackHosp">Back Hospital Page</string>
+
+    <!--    Activity Patient List Show Medical Record-->
+    <string name="tv_patListShowRecDocName">Doctor Name</string>
+    <string name="tv_patListPatientName">Patient name</string>
+
+    <!--    Activity Patient NFC-->
+    <string name="tv_patNFCPage">Patient successfully identified!!</string>
+    <string name="tv_patNFCPatFirstName">Patient First Name:</string>
+    <string name="tv_patNFCPatLastName">Patient Last Name:</string>
+    <string name="tv_patNFCDoctorName">Doctor Name:</string>
+    <string name="tv_patNFCHospitalName">Hospital Name:</string>
 
     <!--    Activity Patient Page-->
     <string name="tv_patientPage">Patient Page</string>
     <string name="btn_patientShowMedRecord">Show Medical Record</string>
 
     <!--    Activity Patient Registration-->
-    <string name="tv_DoctorNameAddRec">Doctor Name</string>
-    <string name="tv_PatListAddRec">Patients List</string>
-
-
-
-
+    <string name="tv_patRegHospitalName">Hospital Name</string>
+    <string name="tv_patRegDoctorName">Doctor Name</string>
+    <string name="tv_patRegCardCode">Enter Card Code</string>
+    <string name="tv_patRegUniqueCode">Enter Unique Code</string>
+    <string name="tv_patRegFirstName">Enter First Name</string>
+    <string name="tv_patRegLastName">Enter Last Name</string>
+    <string name="tv_patRegEmail">Enter Email Address</string>
+    <string name="tv_patRegPassword">Enter Password</string>
+    <string name="tv_patRegConfPassword">Confirm Password</string>
+    <string name="btn_patRegister">Register</string>
+    <string name="btn_patLogIn">Log In</string>
 
     <!--    Activity Reset Password-->
     <string name="tv_resetPassword">Enter your registered Email</string>
     <string name="et_resetPasswordEmail">Please enter your Email Address</string>
     <string name="btn_resetPassword">Reset Password</string>
 
+    <!--    Activity Update Medical Record-->
+    <string name="tv_updateMedRec">Update Medical Record</string>
+    <string name="tv_updateMedRecSelectGender">Select Gender</string>
+    <string name="tv_updateMedRecDateOfBirth">Patient Date of Birth</string>
+    <string name="tv_updateMedRecPPSNumber">Patient PPS Number</string>
+    <string name="tv_updateMedRecPatAddress">Patient Address</string>
+    <string name="btn_updateMedRecSaveChanges">Save Changes</string>
+
     <!--    Dropdown Item Gender-->
     <string name="tv_genderText">Gender Text</string>
 
-                    <!--Menu-->
+    <!--    Image Doctor-->
+    <string name="tv_doctorDetails">Doctor Details:</string>
+    <string name="tv_doctorFirstName">First Name:</string>
+    <string name="tv_doctorLastName">Last Name:</string>
+    <string name="tv_doctorPhoneNo">Phone No:</string>
 
+    <!--    Image Hospital-->
+    <string name="tv_hospitalDetails">Hospital Details:</string>
+    <string name="tv_hospitalName">Name:</string>
+
+                    <!--Menu-->
     <!--    Menu Doctors Page-->
     <string name="menuDoctor_logOut">Log Out</string>
     <string name="menuDoctor_editProfile">Edit Profile</string>

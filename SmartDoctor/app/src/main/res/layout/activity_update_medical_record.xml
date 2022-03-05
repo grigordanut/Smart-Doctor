@@ -20,7 +20,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="10dp"
-            android:text="Update Medical Record"
+            android:text="@string/tv_updateMedRec"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="22sp" />
@@ -39,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:hint="Gender"
+                android:hint="@string/tv_updateMedRecSelectGender"
                 android:inputType="none"
                 android:textSize="22sp"
                 tools:ignore="RtlSymmetry" />
@@ -60,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
-                android:hint="Patient Date of Birth"
+                android:hint="@string/tv_updateMedRecDateOfBirth"
                 android:inputType="text|datetime"
                 android:paddingStart="10dp"
                 android:textSize="22sp"
@@ -82,7 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
-                android:hint="Patient PPS Number"
+                android:hint="@string/tv_updateMedRecPPSNumber"
                 android:inputType="text"
                 android:paddingStart="10dp"
                 android:textSize="22sp"
@@ -104,7 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
-                android:hint="Patient Address"
+                android:hint="@string/tv_updateMedRecPatAddress"
                 android:inputType="text|textCapWords"
                 android:paddingStart="10dp"
                 android:textSize="22sp"
@@ -122,7 +122,7 @@
             android:layout_marginEnd="40dp"
             android:layout_marginBottom="15dp"
             android:background="@drawable/btn_fading"
-            android:text="@string/btn_hospitalSaveUp"
+            android:text="@string/btn_updateMedRecSaveChanges"
             android:textSize="22sp"
             android:textStyle="bold" />
 
