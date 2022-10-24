@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1080113805620",
+    "project_id": "smart-doctor-24fe5",
+    "storage_bucket": "smart-doctor-24fe5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1080113805620:android:0b7a77ef4b671e383bcd61",
+        "android_client_info": {
+          "package_name": "com.example.danut.smartdoctor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1080113805620-9n7rkp2jd7mncevlnh4q0i62esshmjv4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhfWy6F7etMmu4fKUgzm6emU6fb3qMMmE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1080113805620-9n7rkp2jd7mncevlnh4q0i62esshmjv4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

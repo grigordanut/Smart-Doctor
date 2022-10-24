@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backgrandier"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="0dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="30dp">
+
+        <TextView
+            android:id="@+id/textViewUserPage"
+            android:layout_width="350dp"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="Update Doctor's details."
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="22sp"/>
+
+        <EditText
+            android:id="@+id/etNewDocUCode"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bgrinput"
+            android:layout_below="@id/textViewUserPage"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:ems="10"
+            android:text="Unique Code:"
+            android:paddingLeft="5dp"
+            android:inputType="textPersonName"/>
+
+        <EditText
+            android:id="@+id/etNewDocFName"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bgrinput"
+            android:layout_below="@id/etNewDocUCode"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:ems="10"
+            android:text="First Name:"
+            android:paddingLeft="5dp"
+            android:inputType="textPersonName"/>
+
+        <EditText
+            android:id="@+id/etNewDocLName"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bgrinput"
+            android:layout_below="@id/etNewDocFName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:ems="10"
+            android:text="Last Name:"
+            android:paddingLeft="5dp"
+            android:inputType="textPersonName"/>
+
+        <EditText
+            android:id="@+id/etNewDocFNumber"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bgrinput"
+            android:layout_below="@id/etNewDocLName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:ems="10"
+            android:text="Phone:"
+            android:paddingLeft="5dp"
+            android:inputType="phone" />
+
+        <EditText
+            android:id="@+id/etNewDocEmail"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bgrinput"
+            android:layout_below="@id/etNewDocFNumber"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:ems="10"
+            android:text="Email"
+            android:paddingLeft="5dp"
+            android:inputType="textEmailAddress"/>
+
+        <EditText
+            android:id="@+id/etNewDocHospID"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bgrinput"
+            android:layout_below="@id/etNewDocEmail"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:ems="10"
+            android:text="Hospital Name:"
+            android:paddingLeft="5dp"
+            android:inputType="textPersonName"/>
+
+        <Button
+            android:id="@+id/btnNewDocSave"
+            android:layout_width="250dp"
+            android:layout_height="45dp"
+            android:layout_below="@id/etNewDocHospID"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:text="Save Changes"
+            android:textSize="22sp"
+            android:textColor="@android:color/white"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:background="@drawable/btnfading"/>
+
+
+    </RelativeLayout>
+
+</ScrollView>
