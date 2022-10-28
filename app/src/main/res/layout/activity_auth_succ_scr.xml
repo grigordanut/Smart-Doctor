@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgrandier"
+    android:background="@drawable/bg_pages"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="0dp">
 
@@ -22,7 +22,7 @@
         android:layout_marginEnd="218dp"
         android:layout_marginRight="218dp"
         android:layout_marginBottom="-1dp"
-        android:background="@drawable/bgdbutton"
+        android:background="@drawable/btn_blue"
         android:text="Doctor"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -38,7 +38,7 @@
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
             android:layout_marginBottom="0dp"
-            android:background="@drawable/bgdbutton"
+            android:background="@drawable/btn_blue"
             android:text="Hospital"
             android:textSize="24sp"
             android:textStyle="bold" />

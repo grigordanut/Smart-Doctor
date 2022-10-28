@@ -177,16 +177,16 @@ public class LogIn extends AppCompatActivity {
 
     private void checkUserAccount() {
 
-        //check if the user Hospital try to log in
+        //check if the user Hospitals try to log in
         databaseReference = FirebaseDatabase.getInstance().getReference("Hospitals");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot users: dataSnapshot.getChildren()){
-                    Hospital hos = users.getValue(Hospital.class);
+                    Hospitals hos = users.getValue(Hospitals.class);
                     if(emailLog_User.equals(hos.getHospEmail_Address())){
                         //hos.setHospitalKey(users.getKey());
-                        Toast.makeText(LogIn.this, "Log In successful Hospital", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LogIn.this, "Log In successful Hospitals", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LogIn.this, HospitalPage.class));
                         progressDialog.dismiss();
                         finish();

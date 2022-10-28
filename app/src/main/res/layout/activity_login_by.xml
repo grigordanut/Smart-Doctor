@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgrandier"
+    android:background="@drawable/bg_pages"
     tools:context=".LoginBy">
 
     <TextView
@@ -33,7 +33,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:paddingLeft="10dp"
-        android:background="@drawable/bgrinput"
+        android:background="@drawable/bg_edit_text"
         android:text="Entering Personal Details"
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -43,7 +43,7 @@
         app:layout_constraintVertical_bias="0.02" />
 
     <Button
-        android:background="@drawable/bgdbutton"
+        android:background="@drawable/btn_blue"
         android:id="@+id/btnEnterDetails"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
         android:layout_marginRight="9dp"
         android:layout_marginBottom="108dp"
         android:paddingLeft="10dp"
-        android:background="@drawable/bgrinput"
+        android:background="@drawable/bg_edit_text"
         android:text="Figerprint-DOCTOR ONLY"
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -97,7 +97,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
-        android:background="@drawable/bgdbutton"
+        android:background="@drawable/btn_blue"
         app:layout_constraintVertical_bias="0.531" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -31,8 +31,6 @@ public class HospitalListAddDoctor extends AppCompatActivity {
 
     private TextView textViewHospListAddDoc;
 
-    Hospital hosp;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,29 +38,21 @@ public class HospitalListAddDoctor extends AppCompatActivity {
 
         textViewHospListAddDoc = (TextView)findViewById(R.id.tvHospListAddDoc);
 
-        hosp = new Hospital();
-
         hospListViewAddDoc = (ListView)findViewById(R.id.listViewHosListAddDoc);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Hospitals");
         hospListAddDoc = new ArrayList<>();
-        arrayAdapter = new ArrayAdapter<String>(this,R.layout.hospital_info,R.id.tvHospitalInfo,hospListAddDoc);
+        arrayAdapter = new ArrayAdapter<String>(this,R.layout.image_hospital,R.id.tvHospitalInfo,hospListAddDoc);
         databaseReference .addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 hospListAddDoc.clear();
                 for (DataSnapshot dsHosp: dataSnapshot.getChildren()){
-                    Hospital hospital = dsHosp.getValue(Hospital.class);
-                    assert hospital != null;
-                    hospListAddDoc.add(hospital.hosp_Name+" Hospital");
-                    textViewHospListAddDoc.setText("Select your Hospital");
-                    textViewHospListAddDoc.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                        }
-                    });
+                    Hospitals hospitals = dsHosp.getValue(Hospitals.class);
+                    assert hospitals != null;
+                    hospListAddDoc.add(hospitals.hosp_Name+" Hospital");
+                    //textViewHospListAddDoc.setText("Select your Hospital");
                 }
                 hospListViewAddDoc.setAdapter(arrayAdapter);
             }
@@ -84,6 +74,7 @@ public class HospitalListAddDoctor extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("SetTextI18n")
     public void onStart(){
         super.onStart();
         if(hospListViewAddDoc==null || arrayAdapter.getCount()== 0){
@@ -91,7 +82,7 @@ public class HospitalListAddDoctor extends AppCompatActivity {
             textViewHospListAddDoc.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(HospitalListAddDoctor.this, HospitalRegister.class));
+                    startActivity(new Intent(HospitalListAddDoctor.this, HospitalRegistration.class));
                 }
             });
         }

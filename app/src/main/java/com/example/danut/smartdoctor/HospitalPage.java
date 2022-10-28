@@ -48,17 +48,17 @@ public class HospitalPage extends AppCompatActivity {
                 for (DataSnapshot dsHosp : dataSnapshot.getChildren()) {
                     FirebaseUser user_Hosp = firebaseAuth.getCurrentUser();
 
-                    final Hospital userHosp = dsHosp.getValue(Hospital.class);
+                    final Hospitals userHosp = dsHosp.getValue(Hospitals.class);
 
                     if (user_Hosp.getEmail().equalsIgnoreCase(userHosp.hospEmail_Address)) {
-                        textViewWelcomeHospital.setText("Welcome to "+userHosp.getHosp_Name()+" Hospital");
+                        textViewWelcomeHospital.setText("Welcome to "+userHosp.getHosp_Name()+" Hospitals");
 
                         buttonHospAddDoc = (Button)findViewById(R.id.btnHospAddDoc);
                         buttonHospAddDoc.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 Intent intent = new Intent(HospitalPage.this, DoctorRegister.class);
-                                intent.putExtra("HOSPID",userHosp.getHosp_Name()+" Hospital");
+                                intent.putExtra("HOSPID",userHosp.getHosp_Name()+" Hospitals");
                                 startActivity(intent);
                             }
                         });
@@ -68,7 +68,7 @@ public class HospitalPage extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 Intent intent = new Intent(HospitalPage.this, DoctorsList.class);
-                                intent.putExtra("HOSPID",userHosp.getHosp_Name()+" Hospital");
+                                intent.putExtra("HOSPID",userHosp.getHosp_Name()+" Hospitals");
                                 startActivity(intent);
                             }
                         });
@@ -79,7 +79,7 @@ public class HospitalPage extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 Intent intent = new Intent(HospitalPage.this,PatientsListHospital.class);
-                                intent.putExtra("HOSPKey",userHosp.getHosp_Name()+" Hospital");
+                                intent.putExtra("HOSPKey",userHosp.getHosp_Name()+" Hospitals");
                                 startActivity(intent);
                             }
                         });

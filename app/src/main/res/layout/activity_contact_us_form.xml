@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
-    android:background="@drawable/backgrandier"
+    android:background="@drawable/bg_pages"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
                 android:paddingLeft="10dp"
-                android:background="@drawable/bgrinput"
+                android:background="@drawable/bg_edit_text"
                 android:layout_marginBottom="20dp"
                 android:inputType="text"
                 android:singleLine="true"
@@ -53,7 +53,7 @@
 
             <EditText
                 android:id="@+id/usrEmail"
-                android:background="@drawable/bgrinput"
+                android:background="@drawable/bg_edit_text"
                 android:layout_width="match_parent"
                 android:paddingLeft="10dp"
                 android:layout_height="38dp"
@@ -72,7 +72,7 @@
                 android:textSize="12sp" />
 
             <EditText
-                android:background="@drawable/bgrinput"
+                android:background="@drawable/bg_edit_text"
                 android:id="@+id/usrObject"
 
                 android:layout_width="match_parent"
@@ -108,7 +108,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
                 android:layout_gravity="center"
-                android:background="@drawable/btnfading"
+                android:background="@drawable/btn_fading_left"
                 android:paddingBottom="1dp"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"

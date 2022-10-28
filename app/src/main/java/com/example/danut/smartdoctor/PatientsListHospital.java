@@ -46,7 +46,7 @@ public class PatientsListHospital extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Patients");
         patientListHosp = new ArrayList<>();
-        arrayAdapter = new ArrayAdapter<String>(this,R.layout.patient_info,R.id.tvPatientInfo,patientListHosp);
+        arrayAdapter = new ArrayAdapter<String>(this,R.layout.image_patient,R.id.tvPatientInfo,patientListHosp);
 
         patientDBEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @Override

@@ -51,7 +51,7 @@ public class PatientListShowMedRecord extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Patients");
         patListShowRec = new ArrayList<>();
-        arrayAdapter = new ArrayAdapter<String>(this,R.layout.patient_info,R.id.tvPatientInfo,patListShowRec);
+        arrayAdapter = new ArrayAdapter<String>(this,R.layout.image_patient,R.id.tvPatientInfo,patListShowRec);
 
         patientDBEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @Override

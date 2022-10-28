@@ -1,16 +1,16 @@
 package com.example.danut.smartdoctor;
 
-public class Hospital {
+public class Hospitals {
 
     public String hospUnique_Code;
     public String hosp_Name;
     public String hospEmail_Address;
 
-    public Hospital(){
+    public Hospitals(){
 
     }
 
-    public Hospital(String hospUnique_Code, String hosp_Name, String hospEmail_Address) {
+    public Hospitals(String hospUnique_Code, String hosp_Name, String hospEmail_Address) {
         this.hospUnique_Code = hospUnique_Code;
         this.hosp_Name = hosp_Name;
         this.hospEmail_Address = hospEmail_Address;

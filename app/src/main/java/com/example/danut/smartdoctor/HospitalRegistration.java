@@ -19,11 +19,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class HospitalRegister extends AppCompatActivity {
+public class HospitalRegistration extends AppCompatActivity {
 
     //Declare variables
     private EditText hospUniqueCode, hospName, hospEmailReg, hospPassReg, hospConfPassReg;
-    private Button buttonHospReg, buttonHospCancelReg;
+    private Button btn_HospReg, buttonHospCancelReg;
     private String hosp_UniqueCode, hosp_Name, hosp_EmailReg, hosp_PassReg, hosp_ConfPassReg;
 
     private ProgressDialog progressDialog;
@@ -36,7 +36,7 @@ public class HospitalRegister extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hospital_registration);
 
-        buttonHospCancelReg = (Button)findViewById(R.id.btnHospCancelReg);
+        buttonHospCancelReg = (Button)findViewById(R.id.btnHospLogReg);
         buttonHospCancelReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,7 +47,7 @@ public class HospitalRegister extends AppCompatActivity {
                 hospPassReg.setText("");
                 hospConfPassReg.setText("");
                 finish();
-                startActivity(new Intent(HospitalRegister.this, MainActivity.class));
+                startActivity(new Intent(HospitalRegistration.this, MainActivity.class));
 
             }
         });
@@ -63,8 +63,8 @@ public class HospitalRegister extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Hospitals");
 
-        buttonHospReg = (Button)findViewById(R.id.btnHospReg);
-        buttonHospReg.setOnClickListener(new View.OnClickListener() {
+        btn_HospReg = (Button)findViewById(R.id.btnHospReg);
+        btn_HospReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (validate()) {
@@ -72,7 +72,7 @@ public class HospitalRegister extends AppCompatActivity {
                     String hospital_Email = hospEmailReg.getText().toString().trim();
                     String hospital_Password = hospPassReg.getText().toString().trim();
 
-                    progressDialog.setMessage("Register Hospital details");
+                    progressDialog.setMessage("Register Hospitals details");
                     progressDialog.show();
                     //create new user into FirebaseDatabase
                     firebaseAuth.createUserWithEmailAndPassword(hospital_Email, hospital_Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -92,7 +92,7 @@ public class HospitalRegister extends AppCompatActivity {
 
                             else{
                                 progressDialog.dismiss();
-                                Toast.makeText(HospitalRegister.this, "Registration Failed, this email address was already used to other account",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(HospitalRegistration.this, "Registration Failed, this email address was already used to other account",Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -112,17 +112,17 @@ public class HospitalRegister extends AppCompatActivity {
         hosp_ConfPassReg = hospConfPassReg.getText().toString();
 
         if (hosp_UniqueCode.isEmpty()) {
-            hospUniqueCode.setError("Enter Hospital Unique code");
+            hospUniqueCode.setError("Enter Hospitals Unique code");
             hospUniqueCode.requestFocus();
         }
 
         else if (hosp_Name.isEmpty()) {
-            hospName.setError("Enter Hospital Name");
+            hospName.setError("Enter Hospitals Name");
             hospName.requestFocus();
         }
 
         else if (hosp_EmailReg.isEmpty()) {
-            hospEmailReg.setError("Enter Hospital Email Address");
+            hospEmailReg.setError("Enter Hospitals Email Address");
             hospEmailReg.requestFocus();
         }
 
@@ -133,7 +133,7 @@ public class HospitalRegister extends AppCompatActivity {
         }
 
         else if (hosp_PassReg.isEmpty()) {
-            hospPassReg.setError("Enter Hospital password");
+            hospPassReg.setError("Enter Hospitals password");
             hospPassReg.requestFocus();
         }
         else {
@@ -166,15 +166,15 @@ public class HospitalRegister extends AppCompatActivity {
                     if(task.isSuccessful()){
                         sendHospitalData();
                         progressDialog.dismiss();
-                        Toast.makeText(HospitalRegister.this, "Successful Registered, Email verification was sent", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HospitalRegistration.this, "Successful Registered, Email verification was sent", Toast.LENGTH_SHORT).show();
                         firebaseAuth.signOut();
                         finish();
-                        startActivity(new Intent(HospitalRegister.this, LogIn.class));
+                        startActivity(new Intent(HospitalRegistration.this, LogIn.class));
                     }
 
                     else{
                         progressDialog.dismiss();
-                        Toast.makeText(HospitalRegister.this, "Verification email has not been sent", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HospitalRegistration.this, "Verification email has not been sent", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -183,11 +183,11 @@ public class HospitalRegister extends AppCompatActivity {
 
     //send user date to the FirebaseDatabase
     private void sendHospitalData(){
-        //add Hospital data to Firebase Database
+        //add Hospitals data to Firebase Database
         FirebaseUser hosp = firebaseAuth.getCurrentUser();
         assert hosp != null;
         String hospID = hosp.getUid();
-        Hospital hospital = new Hospital(hosp_UniqueCode, hosp_Name, hosp_EmailReg);
-        databaseReference.child(hospID).setValue(hospital);
+        Hospitals hospitals = new Hospitals(hosp_UniqueCode, hosp_Name, hosp_EmailReg);
+        databaseReference.child(hospID).setValue(hospitals);
     }
 }

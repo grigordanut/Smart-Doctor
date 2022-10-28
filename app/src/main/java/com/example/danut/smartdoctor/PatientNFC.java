@@ -38,6 +38,6 @@ public class PatientNFC extends AppCompatActivity {
 
         getIntent().hasExtra("HOSPNAME");
         patient_HosptName = getIntent().getExtras().getString("HOSPNAME");
-        textViewPatHospName.setText("Hospital : "+patient_HosptName);
+        textViewPatHospName.setText("Hospitals : "+patient_HosptName);
     }
 }

@@ -31,7 +31,7 @@ public class MedicalRecordAdapter extends RecyclerView.Adapter<MedicalRecordAdap
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(medRecContext).inflate(layout.med_record_info, parent, false);
+        View v = LayoutInflater.from(medRecContext).inflate(layout.image_med_record, parent, false);
         return new ImageViewHolder(v);
     }
 

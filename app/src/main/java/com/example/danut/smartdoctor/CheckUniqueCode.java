@@ -32,8 +32,8 @@ public class CheckUniqueCode extends AppCompatActivity {
 
                 else{
                     if(editText_CheckCode.charAt(0) =='h'||editText_CheckCode.charAt(0)=='H'){
-                        Toast.makeText(CheckUniqueCode.this, "This is a correct code for Hospital",Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(CheckUniqueCode.this, HospitalRegister.class));
+                        Toast.makeText(CheckUniqueCode.this, "This is a correct code for Hospitals",Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(CheckUniqueCode.this, HospitalRegistration.class));
                     }
 
                     else if(editText_CheckCode.charAt(0) =='d'||editText_CheckCode.charAt(0)=='D'){

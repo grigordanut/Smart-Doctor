@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgrandier"
+    android:background="@drawable/bg_pages"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="0dp">
 
@@ -39,7 +39,7 @@
                 android:id="@+id/etEmailLogDoctor"
                 android:layout_width="300dp"
                 android:layout_height="45dp"
-                android:background="@drawable/bgrinput"
+                android:background="@drawable/bg_edit_text"
                 android:textSize="20sp"
                 android:ems="10"
                 android:paddingLeft="5dp"
@@ -61,7 +61,7 @@
                 android:id="@+id/etPassLogDoctor"
                 android:layout_width="300dp"
                 android:layout_height="45dp"
-                android:background="@drawable/bgrinput"
+                android:background="@drawable/bg_edit_text"
                 android:textSize="20sp"
                 android:ems="10"
                 android:paddingLeft="5dp"
@@ -89,7 +89,7 @@
             android:layout_alignLeft="@id/passwordLogDoctorWrapper"
             android:layout_marginLeft="0dp"
             android:layout_marginTop="22dp"
-            android:background="@drawable/btnfading"
+            android:background="@drawable/btn_fading_left"
             android:text="Log In"
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="#FFFF"
@@ -103,7 +103,7 @@
             android:layout_alignRight="@id/passwordLogDoctorWrapper"
             android:layout_marginTop="20dp"
             android:text="Cancel"
-            android:background="@drawable/btnfading"
+            android:background="@drawable/btn_fading_left"
             android:textColor="@android:color/white"
 
             android:textAppearance="?android:textAppearanceMedium"
@@ -111,7 +111,7 @@
              />
 
         <TextView
-            android:background="@drawable/btnfading"
+            android:background="@drawable/btn_fading_left"
             android:id="@+id/tvForgotPasswordUser"
             android:layout_width="300dp"
             android:layout_height="40dp"
@@ -125,7 +125,7 @@
             android:textSize="24sp" />
 
         <TextView
-            android:background="@drawable/btnbluelight"
+            android:background="@drawable/btn_bluelight"
             android:id="@+id/tvNewUser"
             android:layout_width="300dp"
             android:layout_height="40dp"

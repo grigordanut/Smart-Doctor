@@ -219,6 +219,7 @@ class NFCActivity : Activity() {
                         val pat_newCode = h.getValue(Patient::class.java)
                         if (pat_newCode != null) {
                             if (saveCode.equals(pat_newCode.getPatCard_Code())){
+
                                 pat_newCode.setPatientKey(h.key)
                                 val intent = Intent(this@NFCActivity, PatientNFC::class.java)
                                 intent.putExtra("FIRSTNAME", pat_newCode.getPatFirst_Name())
@@ -226,8 +227,6 @@ class NFCActivity : Activity() {
                                 intent.putExtra("DOCTORNAME", pat_newCode.getPatDoc_ID())
                                 intent.putExtra("HOSPNAME", pat_newCode.getPatHosp_ID())
                                 startActivity(intent)
-
-
 
                             }
                             else {
@@ -237,7 +236,6 @@ class NFCActivity : Activity() {
                         }
                     }
                 }
-
             }
         })
     }
