@@ -159,7 +159,7 @@ public class DoctorRegister extends AppCompatActivity {
         }
 
         else if (doc_PassReg.isEmpty()) {
-            docPassReg.setError("Enter Hospital password");
+            docPassReg.setError("Enter Hospitals password");
             docPassReg.requestFocus();
         }
         else if (doc_PassReg.length()>0 && doc_PassReg.length()<6) {

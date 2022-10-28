@@ -47,7 +47,7 @@ public class DoctorsList extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Doctors");
         doctorList = new ArrayList<>();
-        arrayAdapter = new ArrayAdapter<String>(this, R.layout.doctor_info,R.id.tvDoctorInfo,doctorList);
+        arrayAdapter = new ArrayAdapter<String>(this, R.layout.image_doctor,R.id.tvDoctorInfo,doctorList);
 
         doctorDBEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @Override

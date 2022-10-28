@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgrandier"
+    android:background="@drawable/bg_pages"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="0dp">
 
@@ -30,7 +30,7 @@
             android:id="@+id/etNewDocUCode"
             android:layout_width="300dp"
             android:layout_height="40dp"
-            android:background="@drawable/bgrinput"
+            android:background="@drawable/bg_edit_text"
             android:layout_below="@id/textViewUserPage"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
@@ -44,7 +44,7 @@
             android:id="@+id/etNewDocFName"
             android:layout_width="300dp"
             android:layout_height="40dp"
-            android:background="@drawable/bgrinput"
+            android:background="@drawable/bg_edit_text"
             android:layout_below="@id/etNewDocUCode"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
@@ -58,7 +58,7 @@
             android:id="@+id/etNewDocLName"
             android:layout_width="300dp"
             android:layout_height="40dp"
-            android:background="@drawable/bgrinput"
+            android:background="@drawable/bg_edit_text"
             android:layout_below="@id/etNewDocFName"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
@@ -72,7 +72,7 @@
             android:id="@+id/etNewDocFNumber"
             android:layout_width="300dp"
             android:layout_height="40dp"
-            android:background="@drawable/bgrinput"
+            android:background="@drawable/bg_edit_text"
             android:layout_below="@id/etNewDocLName"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
@@ -86,7 +86,7 @@
             android:id="@+id/etNewDocEmail"
             android:layout_width="300dp"
             android:layout_height="40dp"
-            android:background="@drawable/bgrinput"
+            android:background="@drawable/bg_edit_text"
             android:layout_below="@id/etNewDocFNumber"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
@@ -100,7 +100,7 @@
             android:id="@+id/etNewDocHospID"
             android:layout_width="300dp"
             android:layout_height="40dp"
-            android:background="@drawable/bgrinput"
+            android:background="@drawable/bg_edit_text"
             android:layout_below="@id/etNewDocEmail"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
@@ -121,7 +121,7 @@
             android:textSize="22sp"
             android:textColor="@android:color/white"
             android:textAppearance="?android:textAppearanceMedium"
-            android:background="@drawable/btnfading"/>
+            android:background="@drawable/btn_fading_left"/>
 
 
     </RelativeLayout>

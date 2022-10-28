@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgrandier"
+    android:background="@drawable/bg_pages"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="0dp">
 
@@ -20,7 +20,7 @@
             android:layout_height="50sp"
             android:layout_marginTop="10dp"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/bgrinput"
+            android:background="@drawable/bg_edit_text"
             android:textColor="#000000"
             android:textSize="28sp"
             android:textAlignment="center"
@@ -33,7 +33,7 @@
             android:layout_marginTop="25dp"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/tvWelcomeDoctor"
-            android:background="@drawable/bgdbutton"
+            android:background="@drawable/btn_blue"
             android:text="Add Patients"
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="#FFFF"
@@ -47,7 +47,7 @@
             android:layout_marginTop="25dp"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/btnDocAddPat"
-            android:background="@drawable/bgdbutton"
+            android:background="@drawable/btn_blue"
             android:text="Patients List"
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="#FFFF"
@@ -63,7 +63,7 @@
             android:layout_below="@+id/btnDocPatList"
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="#FFFF"
-            android:background="@drawable/bgdbutton"
+            android:background="@drawable/btn_blue"
             android:text="Add Medical Record" />
 
         <Button
@@ -75,7 +75,7 @@
             android:layout_below="@+id/btnDocAddMedRec"
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="#FFFF"
-            android:background="@drawable/bgdbutton"
+            android:background="@drawable/btn_blue"
             android:text="Medical Records List" />
 
     </RelativeLayout>

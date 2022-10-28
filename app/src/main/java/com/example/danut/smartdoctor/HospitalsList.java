@@ -26,28 +26,28 @@ public class HospitalsList extends AppCompatActivity {
     private ArrayAdapter<String> arrayAdapter;
     private ListView hospListView;
 
-    Hospital hosp;
+    Hospitals hosp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hospitals_list);
 
-        hosp = new Hospital();
+        hosp = new Hospitals();
 
         hospListView = (ListView)findViewById(R.id.listViewHospitals);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Hospitals");
         hospitalList = new ArrayList<>();
-        arrayAdapter = new ArrayAdapter<String>(this,R.layout.hospital_info,R.id.tvHospitalInfo,hospitalList);
+        arrayAdapter = new ArrayAdapter<String>(this,R.layout.image_hospital,R.id.tvHospitalInfo,hospitalList);
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 hospitalList.clear();
                 for (DataSnapshot dsHosp: dataSnapshot.getChildren()){
-                    Hospital hosp = dsHosp.getValue(Hospital.class);
-                    hospitalList.add(hosp.hosp_Name+" Hospital");
+                    Hospitals hosp = dsHosp.getValue(Hospitals.class);
+                    hospitalList.add(hosp.hosp_Name+" Hospitals");
                 }
                 hospListView.setAdapter(arrayAdapter);
             }

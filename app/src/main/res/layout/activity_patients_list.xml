@@ -3,7 +3,7 @@
 xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
-android:background="@drawable/backgrandier"
+android:background="@drawable/bg_pages"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 tools:context="com.example.danut.smartdoctor.PatientsList">
@@ -44,7 +44,7 @@ tools:context="com.example.danut.smartdoctor.PatientsList">
 
 <Button
     android:id="@+id/btnNewPatient"
-    android:background="@drawable/bgdbutton"
+    android:background="@drawable/btn_blue"
     android:layout_width="150dp"
     android:layout_height="50dp"
     android:layout_marginTop="5dp"
@@ -55,7 +55,7 @@ tools:context="com.example.danut.smartdoctor.PatientsList">
 
 <Button
     android:id="@+id/btnBackDoctor"
-    android:background="@drawable/bgdbutton"
+    android:background="@drawable/btn_blue"
     android:layout_width="150dp"
     android:layout_height="50dp"
     android:layout_marginTop="5dp"
