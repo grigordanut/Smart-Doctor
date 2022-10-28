@@ -29,7 +29,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LogIn" />
+        <activity android:name=".Login" />
         <activity android:name=".LoginBy" />
         <activity android:name=".DoctorPage" />
         <activity android:name=".ResetPassword" />

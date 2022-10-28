@@ -1,10 +1,12 @@
 package com.example.danut.smartdoctor;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -13,181 +15,212 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 public class HospitalRegistration extends AppCompatActivity {
 
-    //Declare variables
-    private EditText hospUniqueCode, hospName, hospEmailReg, hospPassReg, hospConfPassReg;
-    private Button btn_HospReg, buttonHospCancelReg;
-    private String hosp_UniqueCode, hosp_Name, hosp_EmailReg, hosp_PassReg, hosp_ConfPassReg;
+    private FirebaseAuth firebaseAuth;
+
+    private DatabaseReference dbRefHospUpload;
+    private DatabaseReference dbRefHospCheck;
+
+    private EditText hospUniqueCode, hospNameReg, hospEmailReg, hospPassReg, hospConfPassReg;
+
+    private String hosp_UniqueCodeReg, hosp_NameReg, hosp_EmailReg, hosp_PassReg, hosp_ConfPassReg;
 
     private ProgressDialog progressDialog;
-
-    private FirebaseAuth firebaseAuth;
-    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hospital_registration);
 
-        buttonHospCancelReg = (Button)findViewById(R.id.btnHospLogReg);
-        buttonHospCancelReg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //clear input fields
-                hospUniqueCode.setText("");
-                hospName.setText("");
-                hospEmailReg.setText("");
-                hospPassReg.setText("");
-                hospConfPassReg.setText("");
-                finish();
-                startActivity(new Intent(HospitalRegistration.this, MainActivity.class));
-
-            }
-        });
-
-        hospUniqueCode = (EditText)findViewById(R.id.etHospUniqueCodeReg);
-        hospName = (EditText)findViewById(R.id.etHospNameReg);
-        hospEmailReg = (EditText)findViewById(R.id.etHospEmailReg);
-        hospPassReg = (EditText)findViewById(R.id.etHospPassReg);
-        hospConfPassReg = (EditText)findViewById(R.id.etHospConfPassReg);
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Hospital Registration");
 
         progressDialog = new ProgressDialog(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Hospitals");
 
-        btn_HospReg = (Button)findViewById(R.id.btnHospReg);
-        btn_HospReg.setOnClickListener(new View.OnClickListener() {
+        //Create Hospitals table into database
+        dbRefHospUpload = FirebaseDatabase.getInstance().getReference("Hospitals");
+
+        //Checks if the Hospital name already exists
+        dbRefHospCheck = FirebaseDatabase.getInstance().getReference("Hospitals");
+
+        hospUniqueCode = findViewById(R.id.etHospUniqueCodeReg);
+        hospNameReg = findViewById(R.id.etHospNameReg);
+        hospEmailReg = findViewById(R.id.etHospEmailReg);
+        hospPassReg = findViewById(R.id.etHospPassReg);
+        hospConfPassReg = findViewById(R.id.etHospConfPassReg);
+
+        Button btn_hospLogReg = findViewById(R.id.btnHospLogReg);
+        btn_hospLogReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (validate()) {
-                    //upload data to the database
-                    String hospital_Email = hospEmailReg.getText().toString().trim();
-                    String hospital_Password = hospPassReg.getText().toString().trim();
+                startActivity(new Intent(HospitalRegistration.this, Login.class));
+            }
+        });
 
-                    progressDialog.setMessage("Register Hospitals details");
-                    progressDialog.show();
-                    //create new user into FirebaseDatabase
-                    firebaseAuth.createUserWithEmailAndPassword(hospital_Email, hospital_Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful()){
-
-                                sendEmailVerification();
-
-                                //clear input fields
-                                hospUniqueCode.setText("");
-                                hospName.setText("");
-                                hospEmailReg.setText("");
-                                hospPassReg.setText("");
-                                hospConfPassReg.setText("");
-                            }
-
-                            else{
-                                progressDialog.dismiss();
-                                Toast.makeText(HospitalRegistration.this, "Registration Failed, this email address was already used to other account",Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-                }
+        Button btn_hospReg = findViewById(R.id.btnHospReg);
+        btn_hospReg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkHospitalName();
             }
         });
     }
 
-    //validate data in the input fields
-    private Boolean validate() {
-        boolean result = false;
+    private void checkHospitalName() {
 
-        hosp_UniqueCode = hospUniqueCode.getText().toString();
-        hosp_Name = hospName.getText().toString();
-        hosp_EmailReg = hospEmailReg.getText().toString();
-        hosp_PassReg = hospPassReg.getText().toString();
-        hosp_ConfPassReg = hospConfPassReg.getText().toString();
+        final String hosp_NameCheck = Objects.requireNonNull(hospNameReg.getText()).toString().trim();
 
-        if (hosp_UniqueCode.isEmpty()) {
-            hospUniqueCode.setError("Enter Hospitals Unique code");
-            hospUniqueCode.requestFocus();
-        }
+        dbRefHospCheck.orderByChild("hosp_Name").equalTo(hosp_NameCheck).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-        else if (hosp_Name.isEmpty()) {
-            hospName.setError("Enter Hospitals Name");
-            hospName.requestFocus();
-        }
-
-        else if (hosp_EmailReg.isEmpty()) {
-            hospEmailReg.setError("Enter Hospitals Email Address");
-            hospEmailReg.requestFocus();
-        }
-
-        else if(!Patterns.EMAIL_ADDRESS.matcher(hosp_EmailReg).matches()){
-            Toast.makeText(this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
-            hospEmailReg.setError("Enter a valid Email Address");
-            hospEmailReg.requestFocus();
-        }
-
-        else if (hosp_PassReg.isEmpty()) {
-            hospPassReg.setError("Enter Hospitals password");
-            hospPassReg.requestFocus();
-        }
-        else {
-            hosp_PassReg.length();
-            if (hosp_PassReg.length()<6) {
-                hospPassReg.setError("The password is too short, enter minimum 6 character long");
-                Toast.makeText(this, "The password is too short, enter minimum 6 character long", Toast.LENGTH_SHORT).show();
+                if (dataSnapshot.exists()) {
+                    alertHospitalExists();
+                } else {
+                    registerHospital();
+                }
             }
 
-            else if (!hosp_PassReg.equals(hosp_ConfPassReg)) {
-                Toast.makeText(this, "Confirm Password does not match Password", Toast.LENGTH_SHORT).show();
-                hospConfPassReg.setError("Enter same Password");
-                hospConfPassReg.requestFocus();
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(HospitalRegistration.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
-
-            else {
-                result = true;
-            }
-        }
-        return result;
+        });
     }
 
-    //send email to user to verify if the email is real
-    private void sendEmailVerification(){
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        if(firebaseUser!=null){
-            firebaseUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+    private void registerHospital() {
+
+        if (validateHospitalData()) {
+
+            progressDialog.setMessage("Registering Hospital details");
+            progressDialog.show();
+
+            //Create new Hospital user into database
+            firebaseAuth.createUserWithEmailAndPassword(hosp_EmailReg, hosp_PassReg).addOnCompleteListener(HospitalRegistration.this, new OnCompleteListener<AuthResult>() {
                 @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if(task.isSuccessful()){
-                        sendHospitalData();
-                        progressDialog.dismiss();
-                        Toast.makeText(HospitalRegistration.this, "Successful Registered, Email verification was sent", Toast.LENGTH_SHORT).show();
-                        firebaseAuth.signOut();
-                        finish();
-                        startActivity(new Intent(HospitalRegistration.this, LogIn.class));
+                public void onComplete(@NonNull Task<AuthResult> task) {
+
+                    if (task.isSuccessful()) {
+
+                        uploadHospitalData();
+
+                    } else {
+                        try {
+                            throw Objects.requireNonNull(task.getException());
+                        } catch (Exception e) {
+                            Toast.makeText(HospitalRegistration.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                     }
 
-                    else{
-                        progressDialog.dismiss();
-                        Toast.makeText(HospitalRegistration.this, "Verification email has not been sent", Toast.LENGTH_SHORT).show();
-                    }
+                    progressDialog.dismiss();
                 }
             });
         }
     }
 
-    //send user date to the FirebaseDatabase
-    private void sendHospitalData(){
-        //add Hospitals data to Firebase Database
-        FirebaseUser hosp = firebaseAuth.getCurrentUser();
-        assert hosp != null;
-        String hospID = hosp.getUid();
-        Hospitals hospitals = new Hospitals(hosp_UniqueCode, hosp_Name, hosp_EmailReg);
-        databaseReference.child(hospID).setValue(hospitals);
+    private void uploadHospitalData() {
+
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+
+        if (firebaseUser != null) {
+
+            String hosp_Id = firebaseUser.getUid();
+            Hospitals hosp_Data = new Hospitals(hosp_UniqueCodeReg, hosp_NameReg, hosp_EmailReg);
+
+            dbRefHospUpload.child(hosp_Id).setValue(hosp_Data).addOnCompleteListener(HospitalRegistration.this, new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+
+                    if (task.isSuccessful()) {
+
+                        firebaseUser.sendEmailVerification();
+
+                        Toast.makeText(HospitalRegistration.this, "Hospital successfully registered.\nVerification email has been sent!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(HospitalRegistration.this, Login.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+
+                    } else {
+                        try {
+                            throw Objects.requireNonNull(task.getException());
+                        } catch (Exception e) {
+                            Toast.makeText(HospitalRegistration.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    progressDialog.dismiss();
+                }
+            });
+        }
+    }
+
+    private boolean validateHospitalData() {
+
+        boolean result = false;
+
+        hosp_UniqueCodeReg = Objects.requireNonNull(hospUniqueCode.getText()).toString().trim();
+        hosp_NameReg = Objects.requireNonNull(hospNameReg.getText()).toString().trim();
+        hosp_EmailReg = Objects.requireNonNull(hospEmailReg.getText()).toString().trim();
+        hosp_PassReg = Objects.requireNonNull(hospPassReg.getText()).toString().trim();
+        hosp_ConfPassReg = Objects.requireNonNull(hospConfPassReg.getText()).toString().trim();
+
+        if (TextUtils.isEmpty(hosp_UniqueCodeReg)) {
+            hospUniqueCode.setError("Enter Hospital's Unique Code");
+            hospUniqueCode.requestFocus();
+        } else if (TextUtils.isEmpty(hosp_NameReg)) {
+            hospNameReg.setError("Enter Hospital's Name");
+            hospNameReg.requestFocus();
+        } else if (TextUtils.isEmpty(hosp_EmailReg)) {
+            hospEmailReg.setError("Enter Hospital's Email Address");
+            hospEmailReg.requestFocus();
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(hosp_EmailReg).matches()) {
+            hospEmailReg.setError("Enter a valid Email Address");
+            hospEmailReg.requestFocus();
+        } else if (TextUtils.isEmpty(hosp_PassReg)) {
+            hospPassReg.setError("Enter Password");
+            hospPassReg.requestFocus();
+        } else if (hosp_PassReg.length() < 6) {
+            hospPassReg.setError("Password too short, enter minimum 6 character long");
+            hospPassReg.requestFocus();
+        } else if (TextUtils.isEmpty(hosp_ConfPassReg)) {
+            hospConfPassReg.setError("Enter Confirm Password");
+            hospConfPassReg.requestFocus();
+        } else if (!hosp_ConfPassReg.equals(hosp_PassReg)) {
+            hospConfPassReg.setError("The Confirm Password does not match Password");
+            hospConfPassReg.requestFocus();
+        } else {
+            result = true;
+        }
+        return result;
+    }
+
+    private void alertHospitalExists() {
+
+        final String hosp_NameCheckAlert = Objects.requireNonNull(hospNameReg.getText()).toString().trim();
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder
+                .setTitle("Hospital Registration")
+                .setMessage("The Hospital: " + hosp_NameCheckAlert + " already exists!")
+                .setCancelable(false)
+                .setPositiveButton("Ok", (dialog, id) -> dialog.dismiss());
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }

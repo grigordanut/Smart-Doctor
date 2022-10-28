@@ -1,27 +1,30 @@
 package com.example.danut.smartdoctor;
 
+import com.google.firebase.database.Exclude;
+
 public class Hospitals {
 
-    public String hospUnique_Code;
+    public String hosp_UniqueCode;
     public String hosp_Name;
-    public String hospEmail_Address;
+    public String hosp_EmailAddress;
+    public String hosp_Key;
 
     public Hospitals(){
 
     }
 
-    public Hospitals(String hospUnique_Code, String hosp_Name, String hospEmail_Address) {
-        this.hospUnique_Code = hospUnique_Code;
+    public Hospitals(String hosp_UniqueCode, String hosp_Name, String hosp_EmailAddress) {
+        this.hosp_UniqueCode = hosp_UniqueCode;
         this.hosp_Name = hosp_Name;
-        this.hospEmail_Address = hospEmail_Address;
+        this.hosp_EmailAddress = hosp_EmailAddress;
     }
 
-    public String getHospUnique_Code() {
-        return hospUnique_Code;
+    public String getHosp_UniqueCode() {
+        return hosp_UniqueCode;
     }
 
-    public void setHospUnique_Code(String hospUnique_Code) {
-        this.hospUnique_Code = hospUnique_Code;
+    public void setHosp_UniqueCode(String hosp_UniqueCode) {
+        this.hosp_UniqueCode = hosp_UniqueCode;
     }
 
     public String getHosp_Name() {
@@ -32,11 +35,21 @@ public class Hospitals {
         this.hosp_Name = hosp_Name;
     }
 
-    public String getHospEmail_Address() {
-        return hospEmail_Address;
+    public String getHosp_EmailAddress() {
+        return hosp_EmailAddress;
     }
 
-    public void setHospEmail_Address(String hospEmail_Address) {
-        this.hospEmail_Address = hospEmail_Address;
+    public void setHosp_EmailAddress(String hosp_EmailAddress) {
+        this.hosp_EmailAddress = hosp_EmailAddress;
+    }
+
+    @Exclude
+    public String getHosp_Key() {
+        return hosp_Key;
+    }
+
+    @Exclude
+    public void setHosp_Key(String hosp_Key) {
+        this.hosp_Key = hosp_Key;
     }
 }

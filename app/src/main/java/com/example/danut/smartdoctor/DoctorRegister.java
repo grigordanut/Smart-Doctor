@@ -192,7 +192,7 @@ public class DoctorRegister extends AppCompatActivity {
                         Toast.makeText(DoctorRegister.this, "Successful Registered, Email verification was sent", Toast.LENGTH_SHORT).show();
                         firebaseAuth.signOut();
                         finish();
-                        startActivity(new Intent(DoctorRegister.this, LogIn.class));
+                        startActivity(new Intent(DoctorRegister.this, Login.class));
                     }
 
                     else{

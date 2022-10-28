@@ -200,7 +200,7 @@ public class AddPatient extends AppCompatActivity {
                         firebaseAuth.signOut();
                         finish();
                         Patient patient = new Patient(pat_CardCode, pat_UniqueCode, pat_FirstName, pat_LastName, pat_EmailReg, hospitalID, doctorID);
-                        Intent patMedRec = new Intent (AddPatient.this, LogIn.class);
+                        Intent patMedRec = new Intent (AddPatient.this, Login.class);
                         patMedRec.putExtra("PATID", patient.getPatFirst_Name()+" "+patient.getPatLast_Name()+" "+patient.patUnique_Code);
                         startActivity(patMedRec);
                     }

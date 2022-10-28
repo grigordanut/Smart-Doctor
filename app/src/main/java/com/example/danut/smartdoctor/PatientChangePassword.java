@@ -47,7 +47,7 @@ public class PatientChangePassword extends AppCompatActivity {
                             if(task.isSuccessful()){
                                 Toast.makeText(PatientChangePassword.this, "The password has been changed", Toast.LENGTH_SHORT).show();
                                 finish();
-                                startActivity(new Intent(PatientChangePassword.this,LogIn.class));
+                                startActivity(new Intent(PatientChangePassword.this, Login.class));
                             }
 
                             else{

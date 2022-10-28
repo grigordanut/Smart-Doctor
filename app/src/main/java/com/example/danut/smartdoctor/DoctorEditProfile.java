@@ -103,7 +103,7 @@ public class DoctorEditProfile extends AppCompatActivity {
                 firebaseAuth.signOut();
                 finish();
                 Toast.makeText(DoctorEditProfile.this, "The Doctor's details has been changed successfully", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(DoctorEditProfile.this,LogIn.class));
+                startActivity(new Intent(DoctorEditProfile.this, Login.class));
             }
         });
     }

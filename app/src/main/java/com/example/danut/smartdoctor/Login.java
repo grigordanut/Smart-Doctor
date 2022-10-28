@@ -24,7 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class LogIn extends AppCompatActivity {
+public class Login extends AppCompatActivity {
 
     //declare variables
     private EditText emailLogIn, passwordLogIn;
@@ -59,7 +59,7 @@ public class LogIn extends AppCompatActivity {
         /*
         if (user != null) {
             finish();
-            startActivity(new Intent(LogIn.this, DoctorPage.class));
+            startActivity(new Intent(Login.this, DoctorPage.class));
         }*/
 
         //Action TextView Forgotten Password
@@ -67,7 +67,7 @@ public class LogIn extends AppCompatActivity {
         textViewForgotPassUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent fPassword = new Intent(LogIn.this, ResetPassword.class);
+                Intent fPassword = new Intent(Login.this, ResetPassword.class);
                 startActivity(fPassword);
             }
         });
@@ -87,12 +87,12 @@ public class LogIn extends AppCompatActivity {
         textViewNewUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent sign = new Intent(LogIn.this, CheckUniqueCode.class);
+                Intent sign = new Intent(Login.this, CheckUniqueCode.class);
                 startActivity(sign);
             }
         });
 
-        //Action button LogIn
+        //Action button Login
         buttonLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -141,7 +141,7 @@ public class LogIn extends AppCompatActivity {
                     }
 
                     else {
-                        Toast.makeText(LogIn.this, "Log In failed, this email is not Registered", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Login.this, "Log In failed, this email is not Registered", Toast.LENGTH_SHORT).show();
                         counter--;
                         progressDialog.dismiss();
                         textViewInfoLog.setText("No of attempts remaining: " + counter);
@@ -186,8 +186,8 @@ public class LogIn extends AppCompatActivity {
                     Hospitals hos = users.getValue(Hospitals.class);
                     if(emailLog_User.equals(hos.getHospEmail_Address())){
                         //hos.setHospitalKey(users.getKey());
-                        Toast.makeText(LogIn.this, "Log In successful Hospitals", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(LogIn.this, HospitalPage.class));
+                        Toast.makeText(Login.this, "Log In successful Hospitals", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Login.this, HospitalPage.class));
                         progressDialog.dismiss();
                         finish();
                     }
@@ -196,7 +196,7 @@ public class LogIn extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(LogIn.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Login.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -209,8 +209,8 @@ public class LogIn extends AppCompatActivity {
                     Doctor doc = users.getValue(Doctor.class);
                     if(emailLog_User.equals(doc.getDocEmail_Address())){
                         doc.setDoctorKey(users.getKey());
-                        Toast.makeText(LogIn.this, "Log In successful Doctor", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(LogIn.this, DoctorPage.class));
+                        Toast.makeText(Login.this, "Log In successful Doctor", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Login.this, DoctorPage.class));
                         progressDialog.dismiss();
                         finish();
                     }
@@ -219,7 +219,7 @@ public class LogIn extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(LogIn.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Login.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -232,8 +232,8 @@ public class LogIn extends AppCompatActivity {
                     Patient pat = users.getValue(Patient.class);
                     if(emailLog_User.equals(pat.getPatEmail_Address())){
                         pat.setPatientKey(users.getKey());
-                        Toast.makeText(LogIn.this, "Log In successful Patient", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(LogIn.this, PatientPage.class));
+                        Toast.makeText(Login.this, "Log In successful Patient", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Login.this, PatientPage.class));
                         progressDialog.dismiss();
                         finish();
                     }
@@ -242,7 +242,7 @@ public class LogIn extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(LogIn.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Login.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
             }
         });
     }
