@@ -3,13 +3,35 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/drawable-v24/btn_fading.xml" value="0.1495" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/drawable/backgrandier.xml" value="0.1495" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/drawable/bg_edit_text.xml" value="0.1495" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/drawable/bgdbutton.xml" value="0.1495" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/drawable/bgrinput.xml" value="0.1495" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/drawable/btn_bluelight.xml" value="0.1495" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/drawable/btn_fading_left.xml" value="0.1495" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/drawable/btn_fading_right.xml" value="0.1495" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/drawable/btnfading.xml" value="0.1495" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/drawable/round_corners.xml" value="0.1495" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/drawable/round_left.xml" value="0.1495" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/drawable/round_right.xml" value="0.1495" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/drawable/round_text.xml" value="0.1495" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/drawable/round_text_log.xml" value="0.1495" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/activity_add_medical_record.xml" value="0.21851851851851853" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/activity_add_patient.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/activity_check_unique_code.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/activity_doctor_page.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/activity_hospital_list_add_doctor.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/activity_hospital_register.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/activity_hospital_registration.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/activity_nfc.xml" value="0.24615384615384617" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/activity_patient_nfc.xml" value="0.24615384615384617" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/activity_patient_page.xml" value="0.24615384615384617" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/content_main.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/doctor_info.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/image_hospital.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctor/app/src/main/res/layout/image_patient.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctorOriginal/app/src/main/res/layout/activity_add_medical_record.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctorOriginal/app/src/main/res/layout/activity_add_patient.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/SmartDoctorOriginal/app/src/main/res/layout/activity_check_unique_code.xml" value="0.25" />

@@ -21,7 +21,6 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             android:exported="true">
             <intent-filter>
@@ -40,7 +39,7 @@
         <activity android:name=".CheckUniqueCode" />
         <activity android:name=".HospitalPage" />
         <activity android:name=".FingerPrintScan" />
-        <activity android:name=".HospitalRegister" />
+        <activity android:name=".HospitalRegistration" />
         <activity android:name=".DoctorRegister" />
         <activity android:name=".DoctorsList" />
         <activity android:name=".HospitalsList" />
@@ -55,7 +54,7 @@
         <activity android:name=".DoctorEditProfile" />
         <activity android:name=".MedicalRecordPatient" />
         <activity android:name=".PatientChangePassword" />
-        <activity android:name=".PatientNFC"></activity>
+        <activity android:name=".PatientNFC" />
     </application>
 
 </manifest>
