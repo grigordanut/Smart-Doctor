@@ -23,7 +23,7 @@ public class AuthSuccScr extends AppCompatActivity {
             }
         });
 
-        buttonHospital = (Button)findViewById(R.id.btnScanFinger);
+        buttonHospital = (Button)findViewById(R.id.btnFingerPrint);
         buttonHospital.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

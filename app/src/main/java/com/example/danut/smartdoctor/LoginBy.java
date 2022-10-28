@@ -8,24 +8,22 @@ import android.widget.Button;
 
 public class LoginBy extends AppCompatActivity {
 
-    private Button buttonEnterDetails, buttonFingerPrint;
-
-    @Override
+       @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_by);
 
         //log in by using log in details
-        buttonEnterDetails = (Button)findViewById(R.id.btnEnterDetails);
-        buttonEnterDetails.setOnClickListener(new View.OnClickListener() {
+        Button btn_EnterDetails = findViewById(R.id.btnEnterDetails);
+           btn_EnterDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoginBy.this, Login.class));
             }
         });
 
-        buttonFingerPrint = (Button)findViewById(R.id.btnScanFinger);
-        buttonFingerPrint.setOnClickListener(new View.OnClickListener() {
+        Button btn_FingerPrint = (Button)findViewById(R.id.btnFingerPrint);
+        btn_FingerPrint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoginBy.this, FingerPrintScan.class));
