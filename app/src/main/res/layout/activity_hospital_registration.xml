@@ -93,7 +93,8 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="20dp"
-            android:textColorHint="#000000">
+            android:textColorHint="#000000"
+            app:passwordToggleEnabled="true">
 
             <EditText
                 android:id="@+id/etHospPassReg"
@@ -113,7 +114,8 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="20dp"
-            android:textColorHint="#000000">
+            android:textColorHint="#000000"
+            app:passwordToggleEnabled="true">
 
             <EditText
                 android:id="@+id/etHospConfPassReg"

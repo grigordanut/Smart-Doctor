@@ -15,8 +15,11 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,226 +27,228 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 public class Login extends AppCompatActivity {
 
     //declare variables
-    private EditText emailLogIn, passwordLogIn;
-    private TextView textViewInfoLog, textViewForgotPassUser, textViewNewUser;
-    private Button buttonSignUp, buttonLogIn, buttonCancelLogIn;
-    private int counter = 5;
     private FirebaseAuth firebaseAuth;
-    private ProgressDialog progressDialog;
-    private String uniqueCode_LogIn, emailLog_User,passwordLog_User;
 
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseRefHosp;
+    private DatabaseReference databaseRefDoc;
+    private DatabaseReference databaseRefPat;
+
+    private EditText emailLogUser, passLogUser;
+    private String email_LogUser, pass_LogUser;
+
+    private TextView tVCounterUser;
+
+    private int counter = 5;
+
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
-        //Initialize variables
-        emailLogIn= (EditText) findViewById(R.id.etEmailLogDoctor);
-        passwordLogIn = (EditText) findViewById(R.id.etPassLogDoctor);
-        textViewInfoLog = (TextView) findViewById(R.id.tvInfoUser);
-        textViewNewUser = (TextView)findViewById(R.id.tvNewUser);
-        buttonLogIn = (Button) findViewById(R.id.btnLogInUser);
-        buttonCancelLogIn = (Button)findViewById(R.id.btnCancelLogUser);
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Log in User");
 
-        textViewInfoLog.setText("No of attempts remaining: " + counter);
-
-        firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
 
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        /*
-        if (user != null) {
-            finish();
-            startActivity(new Intent(Login.this, DoctorPage.class));
-        }*/
+        firebaseAuth = FirebaseAuth.getInstance();
 
-        //Action TextView Forgotten Password
-        textViewForgotPassUser = (TextView)findViewById(R.id.tvForgotPasswordUser);
-        textViewForgotPassUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent fPassword = new Intent(Login.this, ResetPassword.class);
-                startActivity(fPassword);
-            }
-        });
+        databaseRefHosp = FirebaseDatabase.getInstance().getReference("Hospitals");
+
+        databaseRefDoc = FirebaseDatabase.getInstance().getReference("Doctors");
+
+        databaseRefPat = FirebaseDatabase.getInstance().getReference("Patients");
+
+        //Initialize variables
+        emailLogUser = findViewById(R.id.etEmailLogUser);
+        passLogUser = findViewById(R.id.etPassLogUser);
+
+        tVCounterUser = findViewById(R.id.tvCounterUser);
 
         //Action button log in user
-        buttonCancelLogIn = (Button) findViewById(R.id.btnCancelLogUser);
-        buttonCancelLogIn.setOnClickListener(new View.OnClickListener() {
+        Button btn_RegNewUser = findViewById(R.id.btnRegNewUser);
+        btn_RegNewUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                emailLogIn.setText("");
-                passwordLogIn.setText("");
+                startActivity(new Intent(Login.this, CheckUniqueCode.class));
             }
         });
 
-        //Action TextView new user
-        textViewNewUser = (TextView) findViewById(R.id.tvNewUser);
-        textViewNewUser.setOnClickListener(new View.OnClickListener() {
+        //Action TextView Forgotten Password
+        TextView tVForgotPassUser = findViewById(R.id.tvForgotPassUser);
+        tVForgotPassUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent sign = new Intent(Login.this, CheckUniqueCode.class);
-                startActivity(sign);
+                Intent intent = new Intent(Login.this, ResetPassword.class);
+                startActivity(intent);
             }
         });
 
-        //Action button Login
-        buttonLogIn.setOnClickListener(new View.OnClickListener() {
+        //Action button LogIn
+        Button btn_LogUser = findViewById(R.id.btnLogUser);
+        btn_LogUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                validate();
+
+                if (validateLogInData()) {
+
+                    progressDialog.setMessage("Log in user");
+                    progressDialog.show();
+
+                    firebaseAuth.signInWithEmailAndPassword(email_LogUser, pass_LogUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+
+                            if (task.isSuccessful()) {
+                                checkEmailVerification();
+
+                            } else {
+                                try {
+                                    throw Objects.requireNonNull(task.getException());
+                                } catch (FirebaseAuthInvalidUserException e) {
+                                    emailLogUser.setError("This email is not registered.");
+                                    emailLogUser.requestFocus();
+                                } catch (FirebaseAuthInvalidCredentialsException e) {
+                                    passLogUser.setError("Invalid Password");
+                                    passLogUser.requestFocus();
+                                } catch (Exception e) {
+                                    Toast.makeText(Login.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+
+                                counter --;
+                                tVCounterUser.setText("Attempts remaining: " + counter);
+
+                                if (counter == 0) {
+                                    tVCounterUser.setText("No more attempts remaining, please press Forgot Password");
+                                    btn_LogUser.setEnabled(false);
+                                    btn_LogUser.setBackgroundColor(Color.parseColor("#cc3333"));
+                                    btn_LogUser.setText("Stop");
+                                }
+                            }
+
+                            progressDialog.dismiss();
+                        }
+                    });
+                }
             }
         });
     }
 
     //validate input data into the editText
-    public void validate() {
-        emailLog_User = emailLogIn.getText().toString();
-        passwordLog_User = passwordLogIn.getText().toString();
+    private Boolean validateLogInData() {
 
-        if (emailLog_User.isEmpty()) {
-            emailLogIn.setError("Enter your Email Address");
-            Toast.makeText(this, "Please enter your Email Address", Toast.LENGTH_SHORT).show();
-            emailLogIn.requestFocus();
+        boolean result = false;
+
+        email_LogUser = Objects.requireNonNull(emailLogUser.getText()).toString().trim();
+        pass_LogUser = Objects.requireNonNull(passLogUser.getText()).toString().trim();
+
+        if (email_LogUser.isEmpty()) {
+            emailLogUser.setError("Enter your Email Address");
+            emailLogUser.requestFocus();
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email_LogUser).matches()) {
+            emailLogUser.setError("Enter a valid Email Address");
+            emailLogUser.requestFocus();
+        } else if (pass_LogUser.isEmpty()) {
+            passLogUser.setError("Enter your Password");
+            passLogUser.requestFocus();
+        } else {
+            result = true;
         }
-
-        else if(!Patterns.EMAIL_ADDRESS.matcher(emailLog_User).matches()){
-            emailLogIn.setError("Enter a valid Email Address");
-            Toast.makeText(this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
-            emailLogIn.requestFocus();
-        }
-
-        else if (passwordLog_User.isEmpty()){
-            passwordLogIn.setError("Enter your Password");
-            Toast.makeText(this, "Please enter your Password",Toast.LENGTH_SHORT).show();
-            passwordLogIn.requestFocus();
-        }
-
-        //log in a new user
-        else {
-            progressDialog.setMessage("Welcome to Smart Doctor");
-            progressDialog.show();
-            firebaseAuth.signInWithEmailAndPassword(emailLog_User, passwordLog_User).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-
-                    if (task.isSuccessful()) {
-
-                        checkEmailVerification();
-                        //clear data
-                        emailLogIn.setText("");
-                        passwordLogIn.setText("");
-                    }
-
-                    else {
-                        Toast.makeText(Login.this, "Log In failed, this email is not Registered", Toast.LENGTH_SHORT).show();
-                        counter--;
-                        progressDialog.dismiss();
-                        textViewInfoLog.setText("No of attempts remaining: " + counter);
-
-                        if (counter == 0) {
-                            textViewInfoLog.setText("No more attempts remaining, please press Forgoten Password");
-                            buttonLogIn.setEnabled(false);
-                            buttonLogIn.setBackgroundColor(Color.parseColor("#cc3333"));
-                            buttonLogIn.setText("Stop");
-                        }
-                    }
-                }
-            });
-        }
+        return result;
     }
 
     //check if the email has been verified
-    private void checkEmailVerification(){
-        FirebaseUser firebaseUser = firebaseAuth.getInstance().getCurrentUser();
-        Boolean emailFlag = firebaseUser.isEmailVerified();
+    private void checkEmailVerification() {
 
-        if(emailFlag){
-            //progressDialog.dismiss();
-            checkUserAccount();
-        }
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
-        else{
+        if (firebaseUser != null) {
+
+            if (firebaseUser.isEmailVerified()) {
+                checkUserAccount();
+
+            } else {
+                Toast.makeText(this, "Please verify your Email first", Toast.LENGTH_SHORT).show();
+            }
+
             progressDialog.dismiss();
-            Toast.makeText(this, "Please verify your Email first", Toast.LENGTH_SHORT).show();
-            firebaseAuth.signOut();
         }
     }
 
     private void checkUserAccount() {
 
-        //check if the user Hospitals try to log in
-        databaseReference = FirebaseDatabase.getInstance().getReference("Hospitals");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot users: dataSnapshot.getChildren()){
-                    Hospitals hos = users.getValue(Hospitals.class);
-                    if(emailLog_User.equals(hos.getHospEmail_Address())){
-                        //hos.setHospitalKey(users.getKey());
-                        Toast.makeText(Login.this, "Log In successful Hospitals", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Login.this, HospitalPage.class));
-                        progressDialog.dismiss();
-                        finish();
+        //Check if the user Hospital try to log in
+        final String hosp_emailCheck = Objects.requireNonNull(emailLogUser.getText()).toString().trim();
+
+        databaseRefHosp.orderByChild("hosp_Email").equalTo(hosp_emailCheck)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        if (dataSnapshot.exists()) {
+
+                            progressDialog.dismiss();
+                            Toast.makeText(Login.this, "Hospital successfully Log in!", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(Login.this, HospitalPage.class));
+                            finish();
+                        }
                     }
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(Login.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        //check if the user Doctor try to log in
-        databaseReference = FirebaseDatabase.getInstance().getReference("Doctors");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot users: dataSnapshot.getChildren()){
-                    Doctor doc = users.getValue(Doctor.class);
-                    if(emailLog_User.equals(doc.getDocEmail_Address())){
-                        doc.setDoctorKey(users.getKey());
-                        Toast.makeText(Login.this, "Log In successful Doctor", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Login.this, DoctorPage.class));
-                        progressDialog.dismiss();
-                        finish();
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(Login.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                }
-            }
+                });
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(Login.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        //Check if the user Doctor try to log in
+        final String doc_emailCheck = Objects.requireNonNull(emailLogUser.getText()).toString().trim();
 
-        //check if the user patient try to log in
-        databaseReference = FirebaseDatabase.getInstance().getReference("Patients");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot users: dataSnapshot.getChildren()){
-                    Patient pat = users.getValue(Patient.class);
-                    if(emailLog_User.equals(pat.getPatEmail_Address())){
-                        pat.setPatientKey(users.getKey());
-                        Toast.makeText(Login.this, "Log In successful Patient", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Login.this, PatientPage.class));
-                        progressDialog.dismiss();
-                        finish();
+        databaseRefDoc.orderByChild("docEmail_Address").equalTo(doc_emailCheck)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        if (dataSnapshot.exists()) {
+
+                            progressDialog.dismiss();
+                            Toast.makeText(Login.this, "Doctor successfully Log in!", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(Login.this, DoctorPage.class));
+                            finish();
+                        }
                     }
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(Login.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(Login.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        //Check if the user Patient try to log in
+        final String pat_emailCheck = Objects.requireNonNull(emailLogUser.getText()).toString().trim();
+
+        databaseRefPat.orderByChild("patEmail_Address").equalTo(pat_emailCheck)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        if (dataSnapshot.exists()) {
+
+                            progressDialog.dismiss();
+                            Toast.makeText(Login.this, "Patient successfully Log in!", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(Login.this, PatientPage.class));
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(Login.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }

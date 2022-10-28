@@ -59,7 +59,8 @@
             android:text="Unique Code"
             android:textAllCaps="true"
             android:textColor="#000000"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:textStyle="bold"/>
 
         <EditText
             android:id="@+id/etCheckUniqueCode"

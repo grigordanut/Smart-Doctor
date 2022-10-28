@@ -44,8 +44,6 @@ public class AddMedicalRecord extends AppCompatActivity {
         textViewMedRec = (TextView)findViewById(R.id.tvMedRec);
         textViewMedRec.setText("Add Med Record to "+patientID);
 
-        textViewGenderSelected = (TextView)findViewById(R.id.tVGenderSelected);
-
         radioButtonMale = (RadioButton)findViewById(R.id.radioMale);
         radioButtonFemale = (RadioButton)findViewById(R.id.radioFemale);
         radioGroup = (RadioGroup)findViewById(R.id.radioGroupGender);

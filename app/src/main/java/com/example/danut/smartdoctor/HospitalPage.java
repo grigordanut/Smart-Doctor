@@ -50,7 +50,7 @@ public class HospitalPage extends AppCompatActivity {
 
                     final Hospitals userHosp = dsHosp.getValue(Hospitals.class);
 
-                    if (user_Hosp.getEmail().equalsIgnoreCase(userHosp.hospEmail_Address)) {
+                    if (user_Hosp.getEmail().equalsIgnoreCase(userHosp.hosp_EmailAddress)) {
                         textViewWelcomeHospital.setText("Welcome to "+userHosp.getHosp_Name()+" Hospitals");
 
                         buttonHospAddDoc = (Button)findViewById(R.id.btnHospAddDoc);
