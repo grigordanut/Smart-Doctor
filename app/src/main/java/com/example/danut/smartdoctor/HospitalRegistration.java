@@ -34,7 +34,7 @@ public class HospitalRegister extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hospital_register);
+        setContentView(R.layout.activity_hospital_registration);
 
         buttonHospCancelReg = (Button)findViewById(R.id.btnHospCancelReg);
         buttonHospCancelReg.setOnClickListener(new View.OnClickListener() {
