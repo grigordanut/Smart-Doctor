@@ -46,7 +46,7 @@ public class PatientsList extends AppCompatActivity {
         doctorID = getIntent().getExtras().getString("DOCID");
 
         textViewDocPatList = (TextView) findViewById(R.id.tvDocPatList);
-        textViewDocPatList.setText("Doctor "+doctorID);
+        textViewDocPatList.setText("Doctors "+doctorID);
 
         getIntent().hasExtra("HOSPID");
         hospitalID = getIntent().getExtras().getString("HOSPID");

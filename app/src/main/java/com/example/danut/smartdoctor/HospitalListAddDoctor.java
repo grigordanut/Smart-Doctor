@@ -1,9 +1,14 @@
 package com.example.danut.smartdoctor;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,49 +17,164 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class HospitalListAddDoctor extends AppCompatActivity {
 
     //Declare variables
-    private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference databaseReference;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
+
+    //Retrieve data from Hospitals database
+    private DatabaseReference dbReferenceLoadHosp;
+    private ValueEventListener eventListenerHosp;
+
+    private DatabaseReference dbReferenceHosp;
+
+
     private ArrayList<String> hospListAddDoc;
     private ArrayAdapter<String> arrayAdapter;
     private ListView hospListViewAddDoc;
 
-    private TextView textViewHospListAddDoc;
+    private TextView tVHospListAddDoc;
+
+    Hospitals hosp_Data;
+
+    private String hospital_Name;
+    private String hospital_Key;
+
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hospital_list_add_doctor);
 
-        textViewHospListAddDoc = (TextView)findViewById(R.id.tvHospListAddDoc);
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Hospitals list add Doctor");
 
-        hospListViewAddDoc = (ListView)findViewById(R.id.listViewHosListAddDoc);
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Hospitals");
+        progressDialog = new ProgressDialog(this);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+
+        //retrieve data from database into text views
+        dbReferenceHosp = FirebaseDatabase.getInstance().getReference("Hospitals");
+
+        dbReferenceLoadHosp = FirebaseDatabase.getInstance().getReference("Hospitals");
+
+        tVHospListAddDoc = findViewById(R.id.tvHospListAddDoc);
+
+        hospListViewAddDoc = findViewById(R.id.listViewHosListAddDoc);
+
         hospListAddDoc = new ArrayList<>();
-        arrayAdapter = new ArrayAdapter<String>(this,R.layout.image_hospital,R.id.tvHospitalInfo,hospListAddDoc);
-        databaseReference .addValueEventListener(new ValueEventListener() {
+
+        arrayAdapter = new ArrayAdapter<String>(this, R.layout.image_hospital, R.id.tvHospitalName, hospListAddDoc);
+        hospListViewAddDoc.setAdapter(arrayAdapter);
+
+        hospListViewAddDoc.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                hospital_Name = hospListAddDoc.get(position);
+
+                Query query = dbReferenceHosp.orderByChild("hosp_Name").equalTo(hospital_Name);
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                            postSnapshot.getKey();
+                            hospital_Key = postSnapshot.getKey();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(HospitalListAddDoctor.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(HospitalListAddDoctor.this);
+
+                alertDialogBuilder
+                        .setTitle("You selected: " + hospital_Name + " Hospital.")
+                        .setMessage("Press OK to select this Hospital.\nPress Cancel to delete selection.")
+                        .setCancelable(false)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent intent = new Intent(HospitalListAddDoctor.this, DoctorRegistration.class);
+                                intent.putExtra("HOSPName", hospital_Name);
+                                intent.putExtra("HOSPKey", hospital_Key);
+                                startActivity(intent);
+                            }
+                        })
+
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+
+                // show it
+                alertDialog.show();
+            }
+        });
+    }
+
+    public void onStart() {
+        super.onStart();
+       loadHospitalData();
+    }
+
+    public void loadHospitalData() {
+
+        progressDialog.show();
+        progressDialog.setTitle("The Hospitals list is displaying");
+
+        eventListenerHosp = dbReferenceLoadHosp.addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                hospListAddDoc.clear();
-                for (DataSnapshot dsHosp: dataSnapshot.getChildren()){
-                    Hospitals hospitals = dsHosp.getValue(Hospitals.class);
-                    assert hospitals != null;
-                    hospListAddDoc.add(hospitals.hosp_Name+" Hospital");
-                    //textViewHospListAddDoc.setText("Select your Hospital");
+
+                if (dataSnapshot.exists()){
+                    hospListAddDoc.clear();
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        hosp_Data = postSnapshot.getValue(Hospitals.class);
+                        assert hosp_Data != null;
+                        hospListAddDoc.add(hosp_Data.getHosp_Name());
+                        tVHospListAddDoc.setText("Select your Hospital");
+                        progressDialog.dismiss();
+                    }
                 }
-                hospListViewAddDoc.setAdapter(arrayAdapter);
+
+                else{
+                    tVHospListAddDoc.setText("No Hospital; Click to add Hospital");
+                    progressDialog.dismiss();
+                    tVHospListAddDoc.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(HospitalListAddDoctor.this, HospitalRegistration.class));
+                            progressDialog.dismiss();
+                        }
+                    });
+                }
+
+                arrayAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -62,34 +182,6 @@ public class HospitalListAddDoctor extends AppCompatActivity {
                 Toast.makeText(HospitalListAddDoctor.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
             }
         });
-
-        hospListViewAddDoc.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String hosp_Name = hospListAddDoc.get(position);
-                Intent intent = new Intent(HospitalListAddDoctor.this, DoctorRegister.class);
-                intent.putExtra("HOSPID", hosp_Name);
-                startActivity(intent);
-            }
-        });
-    }
-
-    @SuppressLint("SetTextI18n")
-    public void onStart(){
-        super.onStart();
-        if(hospListViewAddDoc==null || arrayAdapter.getCount()== 0){
-            textViewHospListAddDoc.setText("No Hospitals; Click to add Hospital");
-            textViewHospListAddDoc.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(HospitalListAddDoctor.this, HospitalRegistration.class));
-                }
-            });
-        }
-
-        else{
-            textViewHospListAddDoc.setText("Select your Hospital");
-        }
     }
 }
 

@@ -96,7 +96,7 @@ public class AddPatient extends AppCompatActivity {
                     String newPatient_Email = patEmailReg.getText().toString().trim();
                     String newPatient_Password = patPassReg.getText().toString().trim();
 
-                    progressDialog.setMessage("Register Doctor Details");
+                    progressDialog.setMessage("Register Doctors Details");
                     progressDialog.show();
 
                     //create new patient into FirebaseDatabase

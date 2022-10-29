@@ -205,10 +205,10 @@ public class Login extends AppCompatActivity {
                     }
                 });
 
-        //Check if the user Doctor try to log in
+        //Check if the user Doctors try to log in
         final String doc_emailCheck = Objects.requireNonNull(emailLogUser.getText()).toString().trim();
 
-        databaseRefDoc.orderByChild("docEmail_Address").equalTo(doc_emailCheck)
+        databaseRefDoc.orderByChild("doctor_Email").equalTo(doc_emailCheck)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -216,7 +216,7 @@ public class Login extends AppCompatActivity {
                         if (dataSnapshot.exists()) {
 
                             progressDialog.dismiss();
-                            Toast.makeText(Login.this, "Doctor successfully Log in!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Login.this, "Doctors successfully Log in!", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(Login.this, DoctorPage.class));
                             finish();
                         }

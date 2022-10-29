@@ -1,6 +1,9 @@
 package com.example.danut.smartdoctor;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,77 +22,89 @@ import com.google.firebase.database.ValueEventListener;
 public class HospitalPage extends AppCompatActivity {
 
     //Declare variables
-    private TextView textViewWelcomeHospital;
+    private TextView tVWelcomeHospital, tVHospitalKey;
 
     private Button buttonHospPatList, buttonHospDocList, buttonHospAddDoc;
 
+    //Access customer database
     private FirebaseAuth firebaseAuth;
-    private FirebaseDatabase firebaseDatabase;
+    private FirebaseUser firebaseUser;
+
     private DatabaseReference databaseReference;
+    private ValueEventListener eventListener;
+
+    Hospitals userHosp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hospital_page);
 
-        //initialise the variables
-        textViewWelcomeHospital = (TextView) findViewById(R.id.tvWelcomeHospital);
-
         firebaseAuth = FirebaseAuth.getInstance();
-        firebaseDatabase = FirebaseDatabase.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
 
-        //retrieve data from database into text views
+        //retrieve data from Hospitals database
         databaseReference = FirebaseDatabase.getInstance().getReference("Hospitals");
-        databaseReference.addValueEventListener(new ValueEventListener() {
+
+        //initialise the variables
+        tVWelcomeHospital = findViewById(R.id.tvWelcomeHospital);
+        tVHospitalKey = findViewById(R.id.tvHospitalKey);
+
+        eventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 //retrieve data from database
-                for (DataSnapshot dsHosp : dataSnapshot.getChildren()) {
-                    FirebaseUser user_Hosp = firebaseAuth.getCurrentUser();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
-                    final Hospitals userHosp = dsHosp.getValue(Hospitals.class);
+                    userHosp = postSnapshot.getValue(Hospitals.class);
 
-                    if (user_Hosp.getEmail().equalsIgnoreCase(userHosp.hosp_EmailAddress)) {
-                        textViewWelcomeHospital.setText("Welcome to "+userHosp.getHosp_Name()+" Hospitals");
-
-                        buttonHospAddDoc = (Button)findViewById(R.id.btnHospAddDoc);
-                        buttonHospAddDoc.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent = new Intent(HospitalPage.this, DoctorRegister.class);
-                                intent.putExtra("HOSPID",userHosp.getHosp_Name()+" Hospitals");
-                                startActivity(intent);
-                            }
-                        });
-
-                        buttonHospDocList = (Button)findViewById(R.id.btnHospDocList);
-                        buttonHospDocList.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent = new Intent(HospitalPage.this, DoctorsList.class);
-                                intent.putExtra("HOSPID",userHosp.getHosp_Name()+" Hospitals");
-                                startActivity(intent);
-                            }
-                        });
-
-                        //Action button patients list
-                        buttonHospPatList = (Button)findViewById(R.id.btnHospPatList);
-                        buttonHospPatList.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent = new Intent(HospitalPage.this,PatientsListHospital.class);
-                                intent.putExtra("HOSPKey",userHosp.getHosp_Name()+" Hospitals");
-                                startActivity(intent);
-                            }
-                        });
+                    assert userHosp != null;
+                    assert firebaseUser != null;
+                    if (firebaseUser.getUid().equals(postSnapshot.getKey())) {
+                        tVWelcomeHospital.setText("Welcome to "+userHosp.getHosp_Name() +" Hospital");
+                        tVHospitalKey.setText(firebaseUser.getUid());
                     }
                 }
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(HospitalPage.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        buttonHospAddDoc = findViewById(R.id.btnHospAddDoc);
+        buttonHospAddDoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                assert firebaseUser != null;
+                Intent addEvent = new Intent(HospitalPage.this, DoctorRegistration.class);
+                addEvent.putExtra("HOSPName", userHosp.getHosp_Name());
+                addEvent.putExtra("HOSPKey", firebaseUser.getUid());
+                startActivity(addEvent);
+            }
+        });
+
+        buttonHospDocList = (Button)findViewById(R.id.btnHospDocList);
+        buttonHospDocList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HospitalPage.this, DoctorsList.class);
+                intent.putExtra("HOSPID",userHosp.getHosp_Name()+" Hospitals");
+                startActivity(intent);
+            }
+        });
+
+        buttonHospPatList = (Button)findViewById(R.id.btnHospPatList);
+        buttonHospPatList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HospitalPage.this,PatientsListHospital.class);
+                intent.putExtra("HOSPKey",userHosp.getHosp_Name()+" Hospitals");
+                startActivity(intent);
             }
         });
     }

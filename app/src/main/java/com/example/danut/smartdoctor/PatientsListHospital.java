@@ -55,7 +55,7 @@ public class PatientsListHospital extends AppCompatActivity {
                     Patient patHosp = dsPatHosp.getValue(Patient.class);
                     if(patHosp!=null){
                         if(patHosp.getPatHosp_ID().equals(hospitalID)) {
-                            patientListHosp.add("First Name: "+patHosp.patFirst_Name+"\nLast Name: "+patHosp.patLast_Name+"\nUnique Code: "+patHosp.patUnique_Code+"\nDoctor: "+patHosp.patDoc_ID);
+                            patientListHosp.add("First Name: "+patHosp.patFirst_Name+"\nLast Name: "+patHosp.patLast_Name+"\nUnique Code: "+patHosp.patUnique_Code+"\nDoctors: "+patHosp.patDoc_ID);
                         }
                     }
                     else{

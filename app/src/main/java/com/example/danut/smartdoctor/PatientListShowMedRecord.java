@@ -43,7 +43,7 @@ public class PatientListShowMedRecord extends AppCompatActivity {
         doctorID = getIntent().getExtras().getString("DOCID");
 
         textViewDocShowRec = (TextView)findViewById(R.id.tvDocShowMedRec);
-        textViewDocShowRec.setText("Doctor "+doctorID);
+        textViewDocShowRec.setText("Doctors "+doctorID);
 
         pat = new Patient();
         patListViewShowRec = (ListView) findViewById(R.id.listViewPatShowRec);

@@ -63,7 +63,7 @@ public class HospitalRegistration extends AppCompatActivity {
         hospPassReg = findViewById(R.id.etHospPassReg);
         hospConfPassReg = findViewById(R.id.etHospConfPassReg);
 
-        Button btn_hospLogReg = findViewById(R.id.btnHospLogReg);
+        Button btn_hospLogReg = findViewById(R.id.btnHospLog);
         btn_hospLogReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

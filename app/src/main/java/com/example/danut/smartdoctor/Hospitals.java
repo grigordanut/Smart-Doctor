@@ -6,17 +6,17 @@ public class Hospitals {
 
     public String hosp_UniqueCode;
     public String hosp_Name;
-    public String hosp_EmailAddress;
+    public String hosp_Email;
     public String hosp_Key;
 
     public Hospitals(){
 
     }
 
-    public Hospitals(String hosp_UniqueCode, String hosp_Name, String hosp_EmailAddress) {
+    public Hospitals(String hosp_UniqueCode, String hosp_Name, String hosp_Email) {
         this.hosp_UniqueCode = hosp_UniqueCode;
         this.hosp_Name = hosp_Name;
-        this.hosp_EmailAddress = hosp_EmailAddress;
+        this.hosp_Email = hosp_Email;
     }
 
     public String getHosp_UniqueCode() {
@@ -35,12 +35,12 @@ public class Hospitals {
         this.hosp_Name = hosp_Name;
     }
 
-    public String getHosp_EmailAddress() {
-        return hosp_EmailAddress;
+    public String getHosp_Email() {
+        return hosp_Email;
     }
 
-    public void setHosp_EmailAddress(String hosp_EmailAddress) {
-        this.hosp_EmailAddress = hosp_EmailAddress;
+    public void setHosp_Email(String hosp_Email) {
+        this.hosp_Email = hosp_Email;
     }
 
     @Exclude

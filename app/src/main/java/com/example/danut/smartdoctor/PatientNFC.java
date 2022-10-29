@@ -34,7 +34,7 @@ public class PatientNFC extends AppCompatActivity {
 
         getIntent().hasExtra("DOCTORNAME");
         patient_DocName = getIntent().getExtras().getString("DOCTORNAME");
-        textViewPatDocName.setText("Doctor Name: "+patient_DocName);
+        textViewPatDocName.setText("Doctors Name: "+patient_DocName);
 
         getIntent().hasExtra("HOSPNAME");
         patient_HosptName = getIntent().getExtras().getString("HOSPNAME");

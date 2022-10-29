@@ -39,7 +39,7 @@ public class HospitalsList extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Hospitals");
         hospitalList = new ArrayList<>();
-        arrayAdapter = new ArrayAdapter<String>(this,R.layout.image_hospital,R.id.tvHospitalInfo,hospitalList);
+        arrayAdapter = new ArrayAdapter<String>(this,R.layout.image_hospital,R.id.tvHospitalName,hospitalList);
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override

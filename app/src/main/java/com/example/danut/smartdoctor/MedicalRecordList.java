@@ -54,7 +54,7 @@ public class MedicalRecordList extends AppCompatActivity implements MedicalRecor
         doctorID = getIntent().getExtras().getString("DOCID");
 
         textViewDocMedRecList = (TextView)findViewById(R.id.tvDocMedRecordList);
-        textViewDocMedRecList.setText("Doctor "+doctorID);
+        textViewDocMedRecList.setText("Doctors "+doctorID);
 
         medRecList = new ArrayList<MedicalRecord>();
 

@@ -27,7 +27,7 @@ public class DoctorsList extends AppCompatActivity {
     private ListView doctorListView;
 
     private TextView textViewHospDocList;
-    Doctor doc;
+    Doctors doc;
 
     String hospitalID = "";
 
@@ -36,40 +36,40 @@ public class DoctorsList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctors_list);
 
-        getIntent().hasExtra("HOSPID");
-        hospitalID = getIntent().getExtras().getString("HOSPID");
-
-        doc = new Doctor();
-
-        textViewHospDocList = (TextView)findViewById(R.id.tvHospDocList);
-        doctorListView = (ListView)findViewById(R.id.listViewDoctors);
-
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Doctors");
-        doctorList = new ArrayList<>();
-        arrayAdapter = new ArrayAdapter<String>(this, R.layout.image_doctor,R.id.tvDoctorInfo,doctorList);
-
-        doctorDBEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                doctorList.clear();
-                for (DataSnapshot dsDoc: dataSnapshot.getChildren()){
-                    Doctor doc = dsDoc.getValue(Doctor.class);
-                    if (doc != null){
-                        if(doc.getDocHosp_ID().equals(hospitalID)){
-                            doc.setDoctorKey(dsDoc.getKey());
-                            textViewHospDocList.setText("Doctor's List "+hospitalID);
-                            doctorList.add(doc.docFirst_Name+" "+doc.docLast_Name);
-                        }
-                    }
-                }
-                doctorListView.setAdapter(arrayAdapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+//        getIntent().hasExtra("HOSPID");
+//        hospitalID = getIntent().getExtras().getString("HOSPID");
+//
+//        doc = new Doctors();
+//
+//        textViewHospDocList = (TextView)findViewById(R.id.tvHospDocList);
+//        doctorListView = (ListView)findViewById(R.id.listViewDoctors);
+//
+//        firebaseDatabase = FirebaseDatabase.getInstance();
+//        databaseReference = firebaseDatabase.getReference("Doctors");
+//        doctorList = new ArrayList<>();
+//        arrayAdapter = new ArrayAdapter<String>(this, R.layout.image_doctor,R.id.tvDoctorInfo,doctorList);
+//
+//        doctorDBEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                doctorList.clear();
+//                for (DataSnapshot dsDoc: dataSnapshot.getChildren()){
+//                    Doctors doc = dsDoc.getValue(Doctors.class);
+//                    if (doc != null){
+//                        if(doc.getDocHosp_ID().equals(hospitalID)){
+//                            doc.setDoctorKey(dsDoc.getKey());
+//                            textViewHospDocList.setText("Doctors's List "+hospitalID);
+//                            doctorList.add(doc.docFirst_Name+" "+doc.docLast_Name);
+//                        }
+//                    }
+//                }
+//                doctorListView.setAdapter(arrayAdapter);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
     }
 }

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_pages"
-    tools:context=".HospitalRegistration">
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,13 +14,13 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvHospReg"
+            android:id="@+id/tvDoctorRegName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="20dp"
-            android:text="Enter Hospital details."
+            android:text="Enter Doctor details."
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="22sp" />
@@ -33,7 +34,7 @@
             android:textColorHint="#000000">
 
             <EditText
-                android:id="@+id/etHospUniqueCodeReg"
+                android:id="@+id/etDocUniqueCode"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/bg_edit_text"
@@ -42,7 +43,7 @@
                 android:inputType="text|textCapWords"
                 android:padding="10dp"
                 android:textSize="22sp"
-                tools:ignore="Autofill,RtlSymmetry" />
+                tools:ignore="Autofill" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -54,12 +55,12 @@
             android:textColorHint="#000000">
 
             <EditText
-                android:id="@+id/etHospNameReg"
+                android:id="@+id/etDocFirstName"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/bg_edit_text"
                 android:ems="10"
-                android:hint="Hospital Name"
+                android:hint="First Name"
                 android:inputType="textPersonName|textCapWords"
                 android:padding="10dp"
                 android:textSize="22sp"
@@ -75,7 +76,49 @@
             android:textColorHint="#000000">
 
             <EditText
-                android:id="@+id/etHospEmailReg"
+                android:id="@+id/etDocLastName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_edit_text"
+                android:ems="10"
+                android:hint="Last Name"
+                android:inputType="textPersonName|textCapWords"
+                android:padding="10dp"
+                android:textSize="22sp"
+                tools:ignore="Autofill" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            android:textColorHint="#000000">
+
+            <EditText
+                android:id="@+id/etDocPhoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_edit_text"
+                android:ems="10"
+                android:hint="Phone Number"
+                android:inputType="phone"
+                android:padding="10dp"
+                android:textSize="22sp"
+                tools:ignore="Autofill" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            android:textColorHint="#000000">
+
+            <EditText
+                android:id="@+id/etDocEmailReg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/bg_edit_text"
@@ -97,7 +140,7 @@
             app:passwordToggleEnabled="true">
 
             <EditText
-                android:id="@+id/etHospPassReg"
+                android:id="@+id/etDocPassReg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/bg_edit_text"
@@ -105,7 +148,7 @@
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:padding="10dp"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 tools:ignore="Autofill" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -119,7 +162,7 @@
             app:passwordToggleEnabled="true">
 
             <EditText
-                android:id="@+id/etHospConfPassReg"
+                android:id="@+id/etDocConfPassReg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/bg_edit_text"
@@ -132,7 +175,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/btnHospReg"
+            android:id="@+id/btnDocReg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
@@ -145,7 +188,7 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/btnHospLog"
+            android:id="@+id/btnDocLog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"

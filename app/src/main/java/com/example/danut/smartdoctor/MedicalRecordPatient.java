@@ -35,7 +35,7 @@ public class MedicalRecordPatient extends AppCompatActivity {
         doctorID = getIntent().getExtras().getString("DOCID");
 
         welcomePatMedRec = (TextView)findViewById(R.id.tvWelcomePatMedRec);
-        welcomePatMedRec.setText("Doctor "+doctorID);
+        welcomePatMedRec.setText("Doctors "+doctorID);
 
         medRecGender = (TextView)findViewById(R.id.tvMedRecGender);
         medRecDateBirth = (TextView)findViewById(R.id.tvMedRecDateBirth);
