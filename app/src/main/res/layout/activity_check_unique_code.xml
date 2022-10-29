@@ -13,12 +13,12 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textViewCheckCode"
+            android:id="@+id/tvCheckCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
             android:layout_marginTop="15dp"
+            android:layout_marginEnd="20dp"
             android:text="Please check the Unique Code"
             android:textAlignment="center"
             android:textColor="@android:color/black"
@@ -30,9 +30,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
             android:layout_marginTop="10dp"
-            android:text="Enter H.. or h.. for Hospital"
+            android:layout_marginEnd="20dp"
+            android:text="Enter H.. or h.. for Hospitals"
             android:textColor="@android:color/black"
             android:textSize="24sp" />
 
@@ -41,9 +41,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
             android:layout_marginTop="10dp"
-            android:text="Enter D.. or d.. for Doctor"
+            android:layout_marginEnd="20dp"
+            android:text="Enter D.. or d.. for Doctors"
             android:textColor="@android:color/black"
             android:textSize="24sp" />
 
@@ -52,42 +52,49 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
             android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
             android:padding="5dp"
-            android:textAlignment="center"
             android:text="Unique Code"
+            android:textAlignment="center"
             android:textAllCaps="true"
             android:textColor="#000000"
             android:textSize="24sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/etCheckUniqueCode"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/bg_edit_text"
-            android:hint="Enter your Unique Code"
-            android:inputType="textPersonName"
-            android:padding="10dp"
-            android:textSize="22sp" />
+            android:textColorHint="#000000">
+
+            <EditText
+                android:id="@+id/etCheckUniqueCode"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_edit_text"
+                android:hint="Enter your Unique Code"
+                android:inputType="text"
+                android:padding="10dp"
+                android:textSize="22sp"
+                tools:ignore="Autofill" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btnCheckCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
-            android:layout_marginEnd="60dp"
             android:layout_marginTop="20dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/btn_blue"
             android:text="Check Code"
             android:textColor="#ffffff"
-            android:layout_marginBottom="20dp"
             android:textSize="24sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
     </LinearLayout>
 

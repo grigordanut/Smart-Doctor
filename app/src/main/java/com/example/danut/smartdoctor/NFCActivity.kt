@@ -216,24 +216,24 @@ class NFCActivity : Activity() {
                     for(h in p0.children){
 
                         val saveCode = etCheckTest.text.toString()
-                        val pat_newCode = h.getValue(Patient::class.java)
-                        if (pat_newCode != null) {
-                            if (saveCode.equals(pat_newCode.getPatCard_Code())){
-
-                                pat_newCode.setPatientKey(h.key)
-                                val intent = Intent(this@NFCActivity, PatientNFC::class.java)
-                                intent.putExtra("FIRSTNAME", pat_newCode.getPatFirst_Name())
-                                intent.putExtra("LASTNAME", pat_newCode.getPatLast_Name())
-                                intent.putExtra("DOCTORNAME", pat_newCode.getPatDoc_ID())
-                                intent.putExtra("HOSPNAME", pat_newCode.getPatHosp_ID())
-                                startActivity(intent)
-
-                            }
-                            else {
-                                Toast.makeText(this@NFCActivity, "User Not Found", Toast.LENGTH_SHORT).show()
-                            }
-
-                        }
+                        val pat_newCode = h.getValue(Patients::class.java)
+//                        if (pat_newCode != null) {
+//                            if (saveCode.equals(pat_newCode.getPatCard_Code())){
+//
+//                                pat_newCode.setPatientKey(h.key)
+//                                val intent = Intent(this@NFCActivity, PatientNFC::class.java)
+//                                intent.putExtra("FIRSTNAME", pat_newCode.getPatFirst_Name())
+//                                intent.putExtra("LASTNAME", pat_newCode.getPatLast_Name())
+//                                intent.putExtra("DOCTORNAME", pat_newCode.getPatDoc_ID())
+//                                intent.putExtra("HOSPNAME", pat_newCode.getPatHosp_ID())
+//                                startActivity(intent)
+//
+//                            }
+//                            else {
+//                                Toast.makeText(this@NFCActivity, "User Not Found", Toast.LENGTH_SHORT).show()
+//                            }
+//
+//                        }
                     }
                 }
             }

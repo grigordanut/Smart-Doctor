@@ -10,6 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button buttonLogIn,buttonSignUp, buttonNFC;
@@ -19,8 +21,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Objects.requireNonNull(getSupportActionBar()).setTitle("DOCTOR: main page");
 
         buttonLogIn = (Button)findViewById(R.id.btnLogInMain);
         buttonLogIn.setOnClickListener(new View.OnClickListener() {

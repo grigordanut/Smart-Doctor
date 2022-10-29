@@ -48,7 +48,7 @@ public class MedicalRecordList extends AppCompatActivity implements MedicalRecor
 
         //Set textViews
         textViewPatMedRecList = (TextView) findViewById(R.id.tvPatMedRecordList);
-        textViewPatMedRecList.setText("Patient "+patientID);
+        textViewPatMedRecList.setText("Patients "+patientID);
 
         getIntent().hasExtra("DOCID");
         doctorID = getIntent().getExtras().getString("DOCID");

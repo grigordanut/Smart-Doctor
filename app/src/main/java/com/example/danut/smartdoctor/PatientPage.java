@@ -43,41 +43,42 @@ public class PatientPage extends AppCompatActivity {
 
         //retrieve data from database into text views
         databaseReference = FirebaseDatabase.getInstance().getReference("Patients");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
 
-                //retrieve data from database
-                for (DataSnapshot dsPat : dataSnapshot.getChildren()) {
-                    FirebaseUser user_Pat = firebaseAuth.getCurrentUser();
-
-                    final Patient pat = dsPat.getValue(Patient.class);
-
-                    if (user_Pat.getEmail().equalsIgnoreCase(pat.patEmail_Address)){
-                        textViewWelcomePatient.setText("Welcome "+pat.getPatFirst_Name()+" "+pat.getPatLast_Name());
-
-                        buttonSeeMedRecord = (Button)findViewById(R.id.btnSeeMedRecord);
-                        buttonSeeMedRecord.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent rec_Pat = new Intent(PatientPage.this, MedicalRecordPatient.class);
-                                rec_Pat.putExtra("PATID", pat.getPatFirst_Name()+" "+pat.getPatLast_Name()+" "+pat.getPatUnique_Code());
-                                rec_Pat.putExtra("DOCID", pat.getPatDoc_ID());
-                                startActivity(rec_Pat);
-                            }
-                        });
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(PatientPage.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
-            }
-        });
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                //retrieve data from database
+//                for (DataSnapshot dsPat : dataSnapshot.getChildren()) {
+//                    FirebaseUser user_Pat = firebaseAuth.getCurrentUser();
+//
+//                    final Patients pat = dsPat.getValue(Patients.class);
+//
+//                    if (user_Pat.getEmail().equalsIgnoreCase(pat.patEmail_Address)){
+//                        textViewWelcomePatient.setText("Welcome "+pat.getPatFirst_Name()+" "+pat.getPatLast_Name());
+//
+//                        buttonSeeMedRecord = (Button)findViewById(R.id.btnSeeMedRecord);
+//                        buttonSeeMedRecord.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                Intent rec_Pat = new Intent(PatientPage.this, MedicalRecordPatient.class);
+//                                rec_Pat.putExtra("PATID", pat.getPatFirst_Name()+" "+pat.getPatLast_Name()+" "+pat.getPatUnique_Code());
+//                                rec_Pat.putExtra("DOCID", pat.getPatDoc_ID());
+//                                startActivity(rec_Pat);
+//                            }
+//                        });
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                Toast.makeText(PatientPage.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
-    //Patient log out
+    //Patients log out
     private void logOutPatient(){
         firebaseAuth.signOut();
         finish();

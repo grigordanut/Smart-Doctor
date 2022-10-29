@@ -30,7 +30,7 @@ public class PatientListShowMedRecord extends AppCompatActivity {
     private ListView patListViewShowRec;
 
     private TextView textViewDocShowRec;
-    Patient pat;
+    Patients pat;
 
     String doctorID = "";
 
@@ -45,48 +45,46 @@ public class PatientListShowMedRecord extends AppCompatActivity {
         textViewDocShowRec = (TextView)findViewById(R.id.tvDocShowMedRec);
         textViewDocShowRec.setText("Doctors "+doctorID);
 
-        pat = new Patient();
+        pat = new Patients();
         patListViewShowRec = (ListView) findViewById(R.id.listViewPatShowRec);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Patients");
         patListShowRec = new ArrayList<>();
-        arrayAdapter = new ArrayAdapter<String>(this,R.layout.image_patient,R.id.tvPatientInfo,patListShowRec);
+        arrayAdapter = new ArrayAdapter<String>(this,R.layout.image_patient,R.id.tvPatientList,patListShowRec);
 
-        patientDBEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot dsPatAddRec : dataSnapshot.getChildren()){
-                    final Patient patAddRec = dsPatAddRec.getValue(Patient.class);
-                    if(patAddRec!=null){
-                        if(patAddRec.getPatDoc_ID().equals(doctorID)) {
-                            patListShowRec.add(patAddRec.patFirst_Name+" "+patAddRec.patLast_Name+" "+patAddRec.patUnique_Code);
-
-                            patListViewShowRec.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    String pat_Name = patListShowRec.get(position);
-                                    Intent intentPat = new Intent(PatientListShowMedRecord.this, MedicalRecordList.class);
-                                    intentPat.putExtra("PATID", pat_Name);
-                                    intentPat.putExtra("DOCID", patAddRec.getPatDoc_ID());
-                                    startActivity(intentPat);
-                                }
-                            });
-                        }
-                    }
-                    else{
-                        patListShowRec.add("No patients");
-                    }
-                }
-                patListViewShowRec.setAdapter(arrayAdapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
+//        patientDBEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for (DataSnapshot dsPatAddRec : dataSnapshot.getChildren()){
+//                    final Patients patAddRec = dsPatAddRec.getValue(Patients.class);
+//                    if(patAddRec!=null){
+//                        if(patAddRec.getPatDoc_ID().equals(doctorID)) {
+//                            patListShowRec.add(patAddRec.patFirst_Name+" "+patAddRec.patLast_Name+" "+patAddRec.patUnique_Code);
+//
+//                            patListViewShowRec.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                                @Override
+//                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                                    String pat_Name = patListShowRec.get(position);
+//                                    Intent intentPat = new Intent(PatientListShowMedRecord.this, MedicalRecordList.class);
+//                                    intentPat.putExtra("PATID", pat_Name);
+//                                    intentPat.putExtra("DOCID", patAddRec.getPatDoc_ID());
+//                                    startActivity(intentPat);
+//                                }
+//                            });
+//                        }
+//                    }
+//                    else{
+//                        patListShowRec.add("No patients");
+//                    }
+//                }
+//                patListViewShowRec.setAdapter(arrayAdapter);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
     }
 }

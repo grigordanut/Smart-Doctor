@@ -62,7 +62,7 @@ public class HospitalsList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String hospital_Name = hospitalList.get(position);
-                Intent intent = new Intent(HospitalsList.this, DoctorsList.class);
+                Intent intent = new Intent(HospitalsList.this, DoctorsListHospital.class);
                 intent.putExtra("HOSPID", hospital_Name);
                 startActivity(intent);
             }

@@ -35,14 +35,14 @@
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/btnHospAddDoc"
+        android:id="@+id/btnHospDocList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/btn_blue"
-        android:text="Add Doctors"
+        android:text="Doctors List"
         android:textColor="#ffffff"
         android:textSize="22sp"
         android:textStyle="bold" />
@@ -56,20 +56,6 @@
         android:layout_marginEnd="20dp"
         android:background="@drawable/btn_blue"
         android:text="Patients List"
-        android:textColor="#ffffff"
-        android:textSize="22sp"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/btnHospDocList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/btn_blue"
-        android:text="Doctors List"
-        android:textAppearance="?android:textAppearanceMedium"
         android:textColor="#ffffff"
         android:textSize="22sp"
         android:textStyle="bold" />

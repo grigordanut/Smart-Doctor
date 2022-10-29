@@ -41,9 +41,9 @@
         <activity android:name=".FingerPrintScan" />
         <activity android:name=".HospitalRegistration" />
         <activity android:name=".DoctorRegistration" />
-        <activity android:name=".DoctorsList" />
+        <activity android:name=".DoctorsListHospital" />
         <activity android:name=".HospitalsList" />
-        <activity android:name=".HospitalListAddDoctor" />
+        <activity android:name=".HospitalsListAddDoctor" />
         <activity android:name=".NFCActivity" />
         <activity android:name=".PatientPage" />
         <activity android:name=".MedicalRecordList" />

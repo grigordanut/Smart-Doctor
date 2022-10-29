@@ -74,6 +74,4 @@ public class MedicalRecord {
         this.recordKey = recordKey;
     }
 
-    public class NONE{
-    }
 }

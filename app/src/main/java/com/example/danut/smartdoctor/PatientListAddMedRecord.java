@@ -30,7 +30,7 @@ public class PatientListAddMedRecord extends AppCompatActivity {
     private ListView patListViewAddRec;
 
     private TextView textViewDoctor;
-    Patient pat;
+    Patients pat;
 
     String doctorID = "";
 
@@ -45,45 +45,45 @@ public class PatientListAddMedRecord extends AppCompatActivity {
         textViewDoctor = (TextView)findViewById(R.id.tvDoctor);
         textViewDoctor.setText("Doctors "+doctorID);
 
-        pat = new Patient();
+        pat = new Patients();
         patListViewAddRec = (ListView) findViewById(R.id.listViewPatAddRec);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Patients");
         patListAddRec = new ArrayList<>();
-        arrayAdapter = new ArrayAdapter<String>(this,R.layout.image_patient,R.id.tvPatientInfo,patListAddRec);
+        arrayAdapter = new ArrayAdapter<String>(this,R.layout.image_patient,R.id.tvPatientList,patListAddRec);
 
-        patientDBEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot dsPatAddRec : dataSnapshot.getChildren()){
-                    Patient patAddRec = dsPatAddRec.getValue(Patient.class);
-                    if(patAddRec!=null){
-                        if(patAddRec.getPatDoc_ID().equals(doctorID)) {
-                            patListAddRec.add(patAddRec.patFirst_Name+" "+patAddRec.patLast_Name+" "+patAddRec.patUnique_Code);
-                        }
-                    }
-                    else{
-                        patListAddRec.add("No patients");
-                    }
-                }
-                patListViewAddRec.setAdapter(arrayAdapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        patListViewAddRec.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String patient_Name = patListAddRec.get(position);
-                Intent intent = new Intent(PatientListAddMedRecord.this, AddMedicalRecord.class);
-                intent.putExtra("PATID", patient_Name);
-                startActivity(intent);
-            }
-        });
+//        patientDBEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for (DataSnapshot dsPatAddRec : dataSnapshot.getChildren()){
+//                    Patients patAddRec = dsPatAddRec.getValue(Patients.class);
+//                    if(patAddRec!=null){
+//                        if(patAddRec.getPatDoc_ID().equals(doctorID)) {
+//                            patListAddRec.add(patAddRec.patFirst_Name+" "+patAddRec.patLast_Name+" "+patAddRec.patUnique_Code);
+//                        }
+//                    }
+//                    else{
+//                        patListAddRec.add("No patients");
+//                    }
+//                }
+//                patListViewAddRec.setAdapter(arrayAdapter);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+//
+//        patListViewAddRec.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String patient_Name = patListAddRec.get(position);
+//                Intent intent = new Intent(PatientListAddMedRecord.this, AddMedicalRecord.class);
+//                intent.putExtra("PATID", patient_Name);
+//                startActivity(intent);
+//            }
+//        });
     }
 }

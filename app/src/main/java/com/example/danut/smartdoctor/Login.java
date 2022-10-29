@@ -228,7 +228,7 @@ public class Login extends AppCompatActivity {
                     }
                 });
 
-        //Check if the user Patient try to log in
+        //Check if the user Patients try to log in
         final String pat_emailCheck = Objects.requireNonNull(emailLogUser.getText()).toString().trim();
 
         databaseRefPat.orderByChild("patEmail_Address").equalTo(pat_emailCheck)
@@ -239,7 +239,7 @@ public class Login extends AppCompatActivity {
                         if (dataSnapshot.exists()) {
 
                             progressDialog.dismiss();
-                            Toast.makeText(Login.this, "Patient successfully Log in!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Login.this, "Patients successfully Log in!", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(Login.this, PatientPage.class));
                             finish();
                         }

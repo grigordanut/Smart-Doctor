@@ -17,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class PatientsList extends AppCompatActivity {
 
@@ -30,10 +31,12 @@ public class PatientsList extends AppCompatActivity {
     private ListView patientListView;
 
     private TextView textViewDocPatList, textViewHospPatList;
-    Patient pat;
 
-    String doctorID = "";
-    String hospitalID ="";
+    private String patHosp_Name;
+    private String patHosp_Key;
+
+    private String patDoctor_Name;
+    private String patDoctor_Key;
 
     private Button buttonNewPatient, buttonBackDoctor;
 
@@ -42,37 +45,42 @@ public class PatientsList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patients_list);
 
-        getIntent().hasExtra("DOCID");
-        doctorID = getIntent().getExtras().getString("DOCID");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Patients' list");
 
-        textViewDocPatList = (TextView) findViewById(R.id.tvDocPatList);
-        textViewDocPatList.setText("Doctors "+doctorID);
+        textViewHospPatList = findViewById(R.id.tvHospPatList);
+        textViewDocPatList = findViewById(R.id.tvDocPatList);
 
-        getIntent().hasExtra("HOSPID");
-        hospitalID = getIntent().getExtras().getString("HOSPID");
+        getIntent().hasExtra("HOSPName");
+        patHosp_Name = getIntent().getExtras().getString("HOSPName");
 
-        textViewHospPatList = (TextView)findViewById(R.id.tvHospPatList);
-        textViewHospPatList.setText(hospitalID);
+        getIntent().hasExtra("HOSPKey");
+        patHosp_Key = getIntent().getExtras().getString("HOSPKey");
+        textViewHospPatList.setText(patHosp_Name + " Hospital");
 
-        pat = new Patient();
-        patientListView = (ListView) findViewById(R.id.listViewPatients);
+        getIntent().hasExtra("DOCName");
+        patDoctor_Name = getIntent().getExtras().getString("DOCName");
+
+        getIntent().hasExtra("DOCKey");
+        patDoctor_Key = getIntent().getExtras().getString("DOCKey");
+        textViewDocPatList.setText("Doctor: "+patDoctor_Name);
+
+        patientListView = findViewById(R.id.listViewPatients);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Patients");
         patientList = new ArrayList<>();
-        arrayAdapter = new ArrayAdapter<String>(this , R.layout.image_patient,R.id.tvPatientInfo,patientList);
+        arrayAdapter = new ArrayAdapter<String>(this , R.layout.image_patient,R.id.tvPatientList,patientList);
 
         patientDBEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 patientList.clear();
-                for (DataSnapshot dsPat : dataSnapshot.getChildren()){
-                    Patient pat = dsPat.getValue(Patient.class);
-                    if (pat!=null){
-                        if (pat.getPatDoc_ID().equals(doctorID)){
-                            patientList.add(pat.patFirst_Name+" "+pat.patLast_Name+"  "+pat.patUnique_Code);
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                    Patients pat_Data = postSnapshot.getValue(Patients.class);
+                    assert pat_Data != null;
+                        if (pat_Data.getPatient_DocKey().equals(patDoctor_Key)){
+                            patientList.add(pat_Data.getPatient_FirstName()+" "+pat_Data.getPatient_LastName()+"  "+pat_Data.getPatient_UniqueCode());
                         }
-                    }
 
                     else {
                         patientList.add(" No patients");
@@ -87,19 +95,19 @@ public class PatientsList extends AppCompatActivity {
             }
         });
 
-        //Action button new Patient
-        buttonNewPatient = (Button) findViewById(R.id.btnNewPatient);
-        buttonNewPatient.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent newPat = new Intent(PatientsList.this, AddPatient.class);
-                newPat.putExtra("DOCID",doctorID);
-                newPat.putExtra("HOSPID",hospitalID);
-                startActivity(newPat);
-            }
-        });
+//        //Action button new Patients
+//        buttonNewPatient = (Button) findViewById(R.id.btnNewPatient);
+//        buttonNewPatient.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent newPat = new Intent(PatientsList.this, AddPatient.class);
+//                newPat.putExtra("DOCID",doctorID);
+//                newPat.putExtra("HOSPID",hospitalID);
+//                startActivity(newPat);
+//            }
+//        });
 
-        buttonBackDoctor = (Button)findViewById(R.id.btnBackDoctor);
+        buttonBackDoctor = findViewById(R.id.btnBackDoctor);
         buttonBackDoctor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

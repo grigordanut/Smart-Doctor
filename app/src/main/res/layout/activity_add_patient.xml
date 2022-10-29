@@ -1,228 +1,255 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="0dp">
+    android:background="@drawable/image_doctor_page"
+    tools:context=".AddPatient">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="35dp">
+        android:orientation="vertical">
 
-        <ImageView
+        <TextView
+            android:id="@+id/tvHospNamePatReg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true"
-            android:scaleType="centerCrop"
-            android:background="@drawable/doctorpage3"/>
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:text="Hospital's Name"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tvPatientReg"
-            android:layout_width="380dp"
-            android:layout_height="30dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
-            android:text="Patient's Name"
+            android:id="@+id/tvHospKeyPatReg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:text="Hospital's Name"
             android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:textSize="22sp"/>
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tvPatientRegHosp"
-            android:layout_width="380dp"
-            android:layout_height="30dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
-            android:layout_below="@id/tvPatientReg"
-            android:text="Hospital Name"
+            android:id="@+id/tvDocNamePatReg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:text="Doctor's Name"
             android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:textSize="22sp"/>
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvDocKeyPatReg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:text="Doctor's Name"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/PatCardCodeWrapper"
-            android:layout_width="300dp"
-            android:layout_height="60dp"
-            android:layout_centerHorizontal="true"
-            android:textColorHint="#000000"
-            android:layout_below="@id/tvPatientRegHosp"
-            android:layout_marginTop="5dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            android:textColorHint="#000000">
 
             <EditText
                 android:id="@+id/etPatCardCode"
-                android:layout_width="300dp"
-                android:layout_height="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="@drawable/bg_edit_text"
-                android:textSize="20sp"
                 android:ems="10"
-                android:paddingLeft="5dp"
                 android:hint="Enter Card Code"
                 android:inputType="number"
-                android:textColorHint="#000000"/>
+                android:padding="10dp"
+                android:textSize="22sp"
+                tools:ignore="Autofill" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/PatUniqueCodeWrapper"
-            android:layout_width="300dp"
-            android:layout_height="60dp"
-            android:layout_centerHorizontal="true"
-            android:textColorHint="#000000"
-            android:layout_below="@id/PatCardCodeWrapper"
-            android:layout_marginTop="5dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            android:textColorHint="#000000">
 
             <EditText
                 android:id="@+id/etPatUniqueCode"
-                android:layout_width="300dp"
-                android:layout_height="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="@drawable/bg_edit_text"
-                android:textSize="20sp"
                 android:ems="10"
-                android:paddingLeft="5dp"
                 android:hint="Enter Unique Code"
-                android:inputType="textPersonName"
-                android:textColorHint="#000000"/>
+                android:inputType="text|textCapWords"
+                android:padding="10dp"
+                android:textSize="22sp"
+                tools:ignore="Autofill" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/PatientFirstNameWrapper"
-            android:layout_width="300dp"
-            android:layout_height="60dp"
-            android:layout_centerHorizontal="true"
-            android:textColorHint="#000000"
-            android:layout_below="@id/PatUniqueCodeWrapper"
-            android:layout_marginTop="5dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            android:textColorHint="#000000">
 
             <EditText
                 android:id="@+id/etPatFirstName"
-                android:layout_width="300dp"
-                android:layout_height="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="@drawable/bg_edit_text"
-                android:textSize="20sp"
                 android:ems="10"
-                android:paddingLeft="5dp"
                 android:hint="Enter First Name"
                 android:inputType="textPersonName"
-                android:textColorHint="#000000"/>
+                android:padding="10dp"
+                android:textSize="22sp"
+                tools:ignore="Autofill" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/PatientLastNameWrapper"
-            android:layout_width="300dp"
-            android:layout_height="60dp"
-            android:layout_centerHorizontal="true"
-            android:textColorHint="#000000"
-            android:layout_below="@id/PatientFirstNameWrapper"
-            android:layout_marginTop="5dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            android:textColorHint="#000000">
 
             <EditText
                 android:id="@+id/etPatLastName"
-                android:layout_width="300dp"
-                android:layout_height="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="@drawable/bg_edit_text"
-                android:textSize="20sp"
                 android:ems="10"
-                android:paddingLeft="5dp"
                 android:hint="Enter Last Name"
                 android:inputType="textPersonName"
-                android:textColorHint="#000000"/>
+                android:padding="10dp"
+                android:textSize="22sp"
+                tools:ignore="Autofill" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/PatientEmailWrapper"
-            android:layout_width="300dp"
-            android:layout_height="60dp"
-            android:layout_centerHorizontal="true"
-            android:textColorHint="#000000"
-            android:layout_below="@id/PatientLastNameWrapper"
-            android:layout_marginTop="5dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            android:textColorHint="#000000">
 
             <EditText
                 android:id="@+id/etPatEmailReg"
-                android:layout_width="300dp"
-                android:layout_height="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="@drawable/bg_edit_text"
-                android:textSize="20sp"
                 android:ems="10"
-                android:paddingLeft="5dp"
                 android:hint="Enter Email Address"
                 android:inputType="textEmailAddress"
-                android:textColorHint="#000000"/>
+                android:padding="10dp"
+                android:textSize="22sp"
+                tools:ignore="Autofill" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/PatientPassWrapper"
-            android:layout_width="300dp"
-            android:layout_height="60dp"
-            android:layout_centerHorizontal="true"
-            android:textColorHint="#000000"
-            android:layout_below="@id/PatientEmailWrapper"
-            android:layout_marginTop="5dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            android:textColorHint="#000000">
 
             <EditText
                 android:id="@+id/etPatPassReg"
-                android:layout_width="300dp"
-                android:layout_height="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="@drawable/bg_edit_text"
                 android:ems="10"
-                android:paddingLeft="5dp"
                 android:hint="Enter Password"
                 android:inputType="textPassword"
-                android:textSize="20sp"
-                android:textColorHint="#000000"/>
+                android:padding="10dp"
+                android:textSize="22sp"
+                tools:ignore="Autofill" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/PatientConfPassWrapper"
-            android:layout_width="300dp"
-            android:layout_height="60dp"
-            android:layout_centerHorizontal="true"
-            android:textColorHint="#000000"
-            android:layout_below="@id/PatientPassWrapper"
-            android:layout_marginTop="5dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            android:textColorHint="#000000">
 
             <EditText
                 android:id="@+id/etPatConfPassReg"
-                android:layout_width="300dp"
-                android:layout_height="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="@drawable/bg_edit_text"
                 android:ems="10"
-                android:paddingLeft="5dp"
                 android:hint="Confirm Password"
                 android:inputType="textPassword"
-                android:textSize="20sp"
-                android:textColorHint="#000000"/>
+                android:padding="10dp"
+                android:textSize="22sp"
+                tools:ignore="Autofill" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/btnAddPatient"
-            android:layout_width="140dp"
-            android:layout_height="50dp"
-            android:layout_below="@id/PatientConfPassWrapper"
-            android:layout_alignLeft="@id/PatientConfPassWrapper"
-            android:layout_marginTop="15dp"
-            android:text="SAVE"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:background="@drawable/btn_blue"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btnBackDoctor"
-            android:layout_width="140dp"
-            android:layout_height="50dp"
-            android:layout_below="@id/PatientConfPassWrapper"
-            android:layout_alignRight="@id/PatientConfPassWrapper"
-            android:layout_marginTop="15dp"
-            android:text="BACK"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:background="@drawable/btn_blue"/>
+            <Button
+                android:id="@+id/btnAddPatient"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_blue"
+                android:text="SAVE"
+                android:textSize="22sp"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                tools:ignore="ButtonStyle"
+                android:layout_marginBottom="20dp"/>
 
-    </RelativeLayout>
+            <Button
+                android:id="@+id/btnBackDoctor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_blue"
+                android:text="BACK"
+                android:textSize="22sp"
+                android:textColor="#ffffff"
+                android:layout_marginBottom="20dp"
+                android:textStyle="bold"
+                tools:ignore="ButtonStyle" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 </ScrollView>

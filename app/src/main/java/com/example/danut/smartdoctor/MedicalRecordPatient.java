@@ -34,14 +34,14 @@ public class MedicalRecordPatient extends AppCompatActivity {
         getIntent().hasExtra("DOCID");
         doctorID = getIntent().getExtras().getString("DOCID");
 
-        welcomePatMedRec = (TextView)findViewById(R.id.tvWelcomePatMedRec);
+        welcomePatMedRec = findViewById(R.id.tvWelcomePatMedRec);
         welcomePatMedRec.setText("Doctors "+doctorID);
 
-        medRecGender = (TextView)findViewById(R.id.tvMedRecGender);
-        medRecDateBirth = (TextView)findViewById(R.id.tvMedRecDateBirth);
-        medRecPPsNo = (TextView)findViewById(R.id.tvMedRecPPsNo);
-        medRecAddress = (TextView)findViewById(R.id.tvMedRecAddress);
-        medRecPatName = (TextView)findViewById(R.id.tvMedRecPatName);
+        medRecGender = findViewById(R.id.tvMedRecGender);
+        medRecDateBirth = findViewById(R.id.tvMedRecDateBirth);
+        medRecPPsNo = findViewById(R.id.tvMedRecPPsNo);
+        medRecAddress = findViewById(R.id.tvMedRecAddress);
+        medRecPatName = findViewById(R.id.tvMedRecPatName);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseRefMedRecord = FirebaseDatabase.getInstance().getReference("Record");
@@ -52,7 +52,7 @@ public class MedicalRecordPatient extends AppCompatActivity {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
                     MedicalRecord med_Rec = postSnapshot.getValue(MedicalRecord.class);
                     if(med_Rec != null) {
-                        if( med_Rec.getRecordPat_ID().equals(patientID)) {
+                        if(med_Rec.getRecordPat_ID().equals(patientID)) {
                             med_Rec.setRecordKey(postSnapshot.getKey());
                             medRecGender.setText(med_Rec.medRecord_Gender);
                             medRecDateBirth.setText(med_Rec.medRecord_DateBirth);

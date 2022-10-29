@@ -39,11 +39,11 @@ public class MedicalRecordAdapter extends RecyclerView.Adapter<MedicalRecordAdap
     @Override
     public void onBindViewHolder(ImageViewHolder holder, int position) {
         MedicalRecord uploadCurrent = medRecList.get(position);
-        holder.textViewPatGender.setText("Patient Gender: "+uploadCurrent.getMedRecord_Gender());
+        holder.textViewPatGender.setText("Patients Gender: "+uploadCurrent.getMedRecord_Gender());
         holder.textViewPatDateBirth.setText("Date Birth: "+uploadCurrent.getMedRecord_DateBirth());
         holder.textViewPPSNo.setText("PPSNo: "+uploadCurrent.getMedRecord_PPS());
         holder.textViewAddress.setText("Address: "+uploadCurrent.getMedRecord_Address());
-        holder.textViewPatName.setText("Patient Name: "+uploadCurrent.getRecordPat_ID());
+        holder.textViewPatName.setText("Patients Name: "+uploadCurrent.getRecordPat_ID());
     }
 
     //assign the values of textViews

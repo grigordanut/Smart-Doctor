@@ -35,7 +35,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
-            android:background="@drawable/smart_doctor_main"
+            android:background="@drawable/image_main_page"
             tools:ignore="ContentDescription" />
 
         <Button

@@ -36,7 +36,7 @@ public class DoctorRegistration extends AppCompatActivity {
 
     private String doc_UniqueCode, doc_FirstName, doc_LastName, doc_Phone, doc_EmailReg, doc_PassReg, doc_ConfPassReg;
 
-    private TextView tVEventUserName;
+    private TextView tVDoctorRegName, tVDoctorRegKey;
 
     private String hospital_Name;
     private String hospital_Key;
@@ -63,18 +63,20 @@ public class DoctorRegistration extends AppCompatActivity {
         docPassReg = findViewById(R.id.etDocPassReg);
         docConfPassReg = findViewById(R.id.etDocConfPassReg);
 
-        tVEventUserName = findViewById(R.id.tvDoctorRegName);
+        tVDoctorRegName = findViewById(R.id.tvDoctorRegName);
+        tVDoctorRegKey = findViewById(R.id.tvDoctorRegKey);
 
         Button btn_DocReg = findViewById(R.id.btnDocReg);
         Button btn_DocLog = findViewById(R.id.btnDocLog);
 
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            hospital_Name = bundle.getString("HOSPName");
-            hospital_Key = bundle.getString("HOSPKey");
-        }
+        getIntent().hasExtra("HOSPName");
+        hospital_Name = getIntent().getExtras().getString("HOSPName");
 
-        tVEventUserName.setText("Add Doctor to: " + hospital_Name + " Hospital.");
+        getIntent().hasExtra("HOSPKey");
+        hospital_Key = getIntent().getExtras().getString("HOSPKey");
+
+        tVDoctorRegName.setText("Add Doctor to: " + hospital_Name + " Hospital.");
+        tVDoctorRegKey.setText(hospital_Key);
 
         btn_DocLog.setOnClickListener(new View.OnClickListener() {
             @Override

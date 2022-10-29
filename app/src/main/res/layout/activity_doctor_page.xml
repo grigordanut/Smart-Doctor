@@ -1,82 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_pages"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="0dp">
+    tools:context=".HospitalRegistration">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="30dp">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvWelcomeDoctor"
-            android:layout_width="350dp"
-            android:layout_height="50sp"
-            android:layout_marginTop="10dp"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/bg_edit_text"
-            android:textColor="#000000"
-            android:textSize="28sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:text="Doctor Page"
             android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="22sp"
             android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnDocAddPat"
-            android:layout_width="220dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/tvWelcomeDoctor"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="20dp"
             android:background="@drawable/btn_blue"
             android:text="Add Patients"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="#FFFF"
-
-            />
+            android:textColor="#ffffff"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnDocPatList"
-            android:layout_width="220dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/btnDocAddPat"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="20dp"
             android:background="@drawable/btn_blue"
             android:text="Patients List"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="#FFFF"
-
-            />
+            android:textColor="#ffffff"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnDocAddMedRec"
-            android:layout_width="228dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/btnDocPatList"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="#FFFF"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="20dp"
             android:background="@drawable/btn_blue"
-            android:text="Add Medical Record" />
+            android:text="Add Medical Record"
+            android:textColor="#ffffff"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnDocMedRecList"
-            android:layout_width="228dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/btnDocAddMedRec"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="#FFFF"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="20dp"
             android:background="@drawable/btn_blue"
-            android:text="Medical Records List" />
+            android:text="Medical Records List"
+            android:textColor="#ffffff"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
-    </RelativeLayout>
+    </LinearLayout>
+
 </ScrollView>
