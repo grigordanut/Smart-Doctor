@@ -32,7 +32,7 @@ public class HospitalPage extends AppCompatActivity {
     private ValueEventListener eventListener;
 
     //Declare variables
-    private TextView tVWelcomeHospital, tVHospitalKey;
+    private TextView tVWelcomeHospital;
 
     private Button btn_HospDocList, btn_HospPatList;
 
@@ -51,7 +51,6 @@ public class HospitalPage extends AppCompatActivity {
 
         //initialise the variables
         tVWelcomeHospital = findViewById(R.id.tvWelcomeHospital);
-        tVHospitalKey = findViewById(R.id.tvHospitalKey);
 
         btn_HospDocList = findViewById(R.id.btnHospDocList);
         btn_HospPatList = findViewById(R.id.btnHospPatList);
@@ -70,13 +69,11 @@ public class HospitalPage extends AppCompatActivity {
                     assert firebaseUser != null;
                     if (firebaseUser.getUid().equals(postSnapshot.getKey())) {
                         tVWelcomeHospital.setText("Welcome to: " + user_Hosp.getHosp_Name() + " hospital");
-                        tVHospitalKey.setText(firebaseUser.getUid());
 
                         btn_HospDocList.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent intent = new Intent(HospitalPage.this, DoctorsListHospital.class);
-                                intent.putExtra("HOSPName", user_Hosp.getHosp_Name());
+                                Intent intent = new Intent(HospitalPage.this, HospitalDoctorsList.class);
                                 intent.putExtra("HOSPKey", firebaseUser.getUid());
                                 startActivity(intent);
                             }
@@ -85,8 +82,7 @@ public class HospitalPage extends AppCompatActivity {
                         btn_HospPatList.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent intent = new Intent(HospitalPage.this, PatientsListHospital.class);
-                                intent.putExtra("HOSPName", user_Hosp.getHosp_Name());
+                                Intent intent = new Intent(HospitalPage.this, HospitalPatientsList.class);
                                 intent.putExtra("HOSPKey", firebaseUser.getUid());
                                 startActivity(intent);
                             }

@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -20,10 +19,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class DoctorsListHospital extends AppCompatActivity {
+public class HospitalDoctorsList extends AppCompatActivity {
 
     //Declare variables
-    private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private ValueEventListener doctorDBEventListener;
 
@@ -33,23 +31,19 @@ public class DoctorsListHospital extends AppCompatActivity {
 
     private TextView tVHospDocList;
 
-    private String hospital_Name = "";
     private String hospital_Key = "";
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doctors_list_hospital);
+        setContentView(R.layout.activity_hospital_doctors_list);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("HOSPITALS: main page");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("HOSPITAL: Doctors' list");
 
         tVHospDocList = findViewById(R.id.tvHospDocList);
 
         doctorListView = findViewById(R.id.listViewDoctors);
-
-        getIntent().hasExtra("HOSPName");
-        hospital_Name = getIntent().getExtras().getString("HOSPName");
 
         getIntent().hasExtra("HOSPKey");
         hospital_Key = getIntent().getExtras().getString("HOSPKey");
@@ -59,7 +53,6 @@ public class DoctorsListHospital extends AppCompatActivity {
 
         doctorList = new ArrayList<>();
         arrayAdapter = new ArrayAdapter<String>(this, R.layout.image_doctor, R.id.tvDoctorName, doctorList);
-
         doctorListView.setAdapter(arrayAdapter);
     }
 
@@ -78,24 +71,24 @@ public class DoctorsListHospital extends AppCompatActivity {
                 if (dataSnapshot.exists()) {
                     doctorList.clear();
                     for (DataSnapshot dsDoc : dataSnapshot.getChildren()) {
-                        Doctors doc = dsDoc.getValue(Doctors.class);
-                        assert doc != null;
-                        if (doc.getDoctor_HospKey().equals(hospital_Key)) {
-                            doctorList.add(doc.getDoctor_FirstName() + " " + doc.getDoctor_LastName());
-                            tVHospDocList.setText("Doctors' list: " + hospital_Name + " Hospital.");
+                        Doctors doc_Data = dsDoc.getValue(Doctors.class);
+                        assert doc_Data != null;
+                        if (doc_Data.getDoctor_HospKey().equals(hospital_Key)) {
+                            doctorList.add(doc_Data.getDoctor_FirstName() + " " + doc_Data.getDoctor_LastName());
+                            tVHospDocList.setText("Doctors' list: " + doc_Data.getDoctor_HospName() + " Hospital.");
                         } else {
-                            tVHospDocList.setText("No doctors: " + hospital_Name + " hospital.");
+                            tVHospDocList.setText("No Doctors have been added!!");
                         }
                     }
                     arrayAdapter.notifyDataSetChanged();
                 } else {
-                    tVHospDocList.setText("No doctors: " + hospital_Name + " hospital.");
+                    tVHospDocList.setText("No Doctors have been added!!");
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(DoctorsListHospital.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(HospitalDoctorsList.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
             }
         });
     }

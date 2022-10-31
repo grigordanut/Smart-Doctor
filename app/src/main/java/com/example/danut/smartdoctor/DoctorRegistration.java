@@ -36,7 +36,7 @@ public class DoctorRegistration extends AppCompatActivity {
 
     private String doc_UniqueCode, doc_FirstName, doc_LastName, doc_Phone, doc_EmailReg, doc_PassReg, doc_ConfPassReg;
 
-    private TextView tVDoctorRegName, tVDoctorRegKey;
+    private TextView tVDoctorRegName;
 
     private String hospital_Name;
     private String hospital_Key;
@@ -48,6 +48,8 @@ public class DoctorRegistration extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_registration);
+
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Doctor Registration");
 
         progressDialog = new ProgressDialog(this);
 
@@ -64,7 +66,6 @@ public class DoctorRegistration extends AppCompatActivity {
         docConfPassReg = findViewById(R.id.etDocConfPassReg);
 
         tVDoctorRegName = findViewById(R.id.tvDoctorRegName);
-        tVDoctorRegKey = findViewById(R.id.tvDoctorRegKey);
 
         Button btn_DocReg = findViewById(R.id.btnDocReg);
         Button btn_DocLog = findViewById(R.id.btnDocLog);
@@ -75,8 +76,7 @@ public class DoctorRegistration extends AppCompatActivity {
         getIntent().hasExtra("HOSPKey");
         hospital_Key = getIntent().getExtras().getString("HOSPKey");
 
-        tVDoctorRegName.setText("Add Doctor to: " + hospital_Name + " Hospital.");
-        tVDoctorRegKey.setText(hospital_Key);
+        tVDoctorRegName.setText("Add Doctor to: " + hospital_Name + " hospital.");
 
         btn_DocLog.setOnClickListener(new View.OnClickListener() {
             @Override

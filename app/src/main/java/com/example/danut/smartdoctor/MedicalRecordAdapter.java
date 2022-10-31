@@ -30,7 +30,7 @@ public class MedicalRecordAdapter extends RecyclerView.Adapter<MedicalRecordAdap
 
     @NonNull
     @Override
-    public ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(medRecContext).inflate(layout.image_med_record, parent, false);
         return new ImageViewHolder(v);
     }
@@ -39,11 +39,12 @@ public class MedicalRecordAdapter extends RecyclerView.Adapter<MedicalRecordAdap
     @Override
     public void onBindViewHolder(ImageViewHolder holder, int position) {
         MedicalRecord uploadCurrent = medRecList.get(position);
-        holder.textViewPatGender.setText("Patients Gender: "+uploadCurrent.getMedRecord_Gender());
-        holder.textViewPatDateBirth.setText("Date Birth: "+uploadCurrent.getMedRecord_DateBirth());
-        holder.textViewPPSNo.setText("PPSNo: "+uploadCurrent.getMedRecord_PPS());
-        holder.textViewAddress.setText("Address: "+uploadCurrent.getMedRecord_Address());
-        holder.textViewPatName.setText("Patients Name: "+uploadCurrent.getRecordPat_ID());
+        holder.tVShowPatName.setText(uploadCurrent.getMedRecord_PatName());
+        holder.tVShowPatGender.setText(uploadCurrent.getMedRecord_Gender());
+        holder.tVShowPatDateBirth.setText(uploadCurrent.getMedRecord_DateBirth());
+        holder.tVShowPatPPSNo.setText(uploadCurrent.getMedRecord_PPS());
+        holder.tVShowPatAddress.setText(uploadCurrent.getMedRecord_Address());
+
     }
 
     //assign the values of textViews
@@ -55,20 +56,19 @@ public class MedicalRecordAdapter extends RecyclerView.Adapter<MedicalRecordAdap
     public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
             View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener{
 
-        public TextView textViewPatGender;
-        public TextView textViewPatDateBirth;
-        public TextView textViewPPSNo;
-        public TextView textViewAddress;
-        public TextView textViewPatName;
-
+        public TextView tVShowPatName;
+        public TextView tVShowPatGender;
+        public TextView tVShowPatDateBirth;
+        public TextView tVShowPatPPSNo;
+        public TextView tVShowPatAddress;
 
         public ImageViewHolder(View itemView) {
             super(itemView);
-            textViewPatGender = itemView.findViewById(R.id.tvPatGender);
-            textViewPatDateBirth = itemView.findViewById(id.tvPatDateBirth);
-            textViewPPSNo = itemView.findViewById(R.id.tvPatPPSNo);
-            textViewAddress = itemView.findViewById(id.tvPatAddress);
-            textViewPatName = itemView.findViewById(R.id.tvPatName);
+            tVShowPatName = itemView.findViewById(R.id.tvShowPatName);
+            tVShowPatGender = itemView.findViewById(R.id.tvShowPatGender);
+            tVShowPatDateBirth = itemView.findViewById(id.tvShowPatDateBirth);
+            tVShowPatPPSNo = itemView.findViewById(R.id.tvShowPatPPSNo);
+            tVShowPatAddress = itemView.findViewById(id.tvShowPatAddress);
 
             itemView.setOnClickListener(this);
             itemView.setOnCreateContextMenuListener(this);
@@ -85,7 +85,6 @@ public class MedicalRecordAdapter extends RecyclerView.Adapter<MedicalRecordAdap
         }
 
         //create onItem click menu
-        @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
             menu.setHeaderTitle("Select an Action");

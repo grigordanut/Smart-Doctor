@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_pages"
     android:orientation="vertical"
-    tools:context=".MedicalRecordList">
+    tools:context=".DoctorMedicalRecordList">
 
     <TextView
         android:id="@+id/tvDocMedRecordList"
@@ -29,7 +29,6 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="20dp"
         android:text="Patient"
-        android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="22sp" />
 

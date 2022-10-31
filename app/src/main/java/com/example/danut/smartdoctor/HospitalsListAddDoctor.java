@@ -57,8 +57,7 @@ public class HospitalsListAddDoctor extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hospitals_list_add_doctor);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Hospitals list add Doctor");
-
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Hospitals' list add Doctor");
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();

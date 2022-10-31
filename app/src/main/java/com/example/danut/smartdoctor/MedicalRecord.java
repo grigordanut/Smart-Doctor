@@ -4,24 +4,25 @@ import com.google.firebase.database.Exclude;
 
 public class MedicalRecord {
 
-    public String medRecord_Gender;
-    public String medRecord_DateBirth;
-    public String medRecord_PPS;
-    public String medRecord_Address;
-    public String recordPat_ID;
-    public String recordKey;
-
+    private String medRecord_Gender;
+    private String medRecord_DateBirth;
+    private String medRecord_PPS;
+    private String medRecord_Address;
+    private String medRecord_PatName;
+    private String medRecord_PatKey;
+    private String medRecord_Key;
 
     public MedicalRecord(){
 
     }
 
-    public MedicalRecord(String medRecord_Gender, String medRecord_DateBirth, String medRecord_PPS, String medRecord_Address, String recordPat_ID) {
+    public MedicalRecord(String medRecord_Gender, String medRecord_DateBirth, String medRecord_PPS, String medRecord_Address, String medRecord_PatName, String medRecord_PatKey) {
         this.medRecord_Gender = medRecord_Gender;
         this.medRecord_DateBirth = medRecord_DateBirth;
         this.medRecord_PPS = medRecord_PPS;
         this.medRecord_Address = medRecord_Address;
-        this.recordPat_ID = recordPat_ID;
+        this.medRecord_PatName = medRecord_PatName;
+        this.medRecord_PatKey = medRecord_PatKey;
     }
 
     public String getMedRecord_Gender() {
@@ -56,22 +57,29 @@ public class MedicalRecord {
         this.medRecord_Address = medRecord_Address;
     }
 
-    public String getRecordPat_ID() {
-        return recordPat_ID;
+    public String getMedRecord_PatName() {
+        return medRecord_PatName;
     }
 
-    public void setRecordPat_ID(String recordPat_ID) {
-        this.recordPat_ID = recordPat_ID;
+    public void setMedRecord_PatName(String medRecord_PatName) {
+        this.medRecord_PatName = medRecord_PatName;
+    }
+
+    public String getMedRecord_PatKey() {
+        return medRecord_PatKey;
+    }
+
+    public void setMedRecord_PatKey(String medRecord_PatKey) {
+        this.medRecord_PatKey = medRecord_PatKey;
     }
 
     @Exclude
-    public String getRecordKey(){
-        return recordKey;
+    public String getMedRecord_Key() {
+        return medRecord_Key;
     }
 
     @Exclude
-    public void setRecordKey(String recordKey){
-        this.recordKey = recordKey;
+    public void setMedRecord_Key(String medRecord_Key) {
+        this.medRecord_Key = medRecord_Key;
     }
-
 }

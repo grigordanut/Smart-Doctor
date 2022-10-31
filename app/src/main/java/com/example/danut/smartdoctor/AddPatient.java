@@ -32,7 +32,7 @@ public class AddPatient extends AppCompatActivity {
     private DatabaseReference databaseReference;
 
     private EditText patCardCode, patUniqueCode, patFirstName, patLastName, patEmailReg, patPassReg, patConfPassReg;
-    private TextView tVHospNamePatReg, tVHospKeyPatReg, tVDocNamePatReg, tVDocKeyPatReg;
+    private TextView tVHospNamePatReg, tVDocNamePatReg;
 
     private String pat_CardCode, pat_UniqueCode, pat_FirstName, pat_LastName, pat_EmailReg, pat_PassReg, pat_ConfPassReg;
 
@@ -50,7 +50,7 @@ public class AddPatient extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_patient);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Patient Registration");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Add Patient");
 
         progressDialog = new ProgressDialog(this);
 
@@ -68,30 +68,33 @@ public class AddPatient extends AppCompatActivity {
         patConfPassReg = findViewById(R.id.etPatConfPassReg);
 
         tVHospNamePatReg = findViewById(R.id.tvHospNamePatReg);
-        tVHospKeyPatReg = findViewById(R.id.tvHospKeyPatReg);
-
         tVDocNamePatReg = findViewById(R.id.tvDocNamePatReg);
-        tVDocKeyPatReg = findViewById(R.id.tvDocKeyPatReg);
 
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
+        getIntent().hasExtra("HOSPName");
+        patHosp_Name = getIntent().getExtras().getString("HOSPName");
 
-            patHosp_Name = bundle.getString("HOSPName");
-            patHosp_Key = bundle.getString("HOSPKey");
+        getIntent().hasExtra("HOSPKey");
+        patHosp_Key = getIntent().getExtras().getString("HOSPKey");
 
-            patDoctor_Name = bundle.getString("DOCName");
-            patDoctor_Key = bundle.getString("DOCKey");
-        }
+        getIntent().hasExtra("DOCName");
+        patDoctor_Name = getIntent().getExtras().getString("DOCName");
+
+        getIntent().hasExtra("DOCKey");
+        patDoctor_Key = getIntent().getExtras().getString("DOCKey");
 
         tVHospNamePatReg.setText(patHosp_Name + " Hospital");
-        tVHospKeyPatReg.setText( patHosp_Key);
-
         tVDocNamePatReg.setText("Doctor: " + patDoctor_Name);
-        tVDocKeyPatReg.setText(patDoctor_Key);
 
+        Button btn_BackDoctor = findViewById(R.id.btnBackDoctor);
+        btn_BackDoctor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(AddPatient.this, DoctorPage.class));
+            }
+        });
 
-        Button buttonPatReg = findViewById(R.id.btnAddPatient);
-        buttonPatReg.setOnClickListener(new View.OnClickListener() {
+        Button btn_AddPatient = findViewById(R.id.btnAddPatient);
+        btn_AddPatient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 registerPatient();

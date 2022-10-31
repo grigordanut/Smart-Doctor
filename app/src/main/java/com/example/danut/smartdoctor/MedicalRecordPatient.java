@@ -44,30 +44,30 @@ public class MedicalRecordPatient extends AppCompatActivity {
         medRecPatName = findViewById(R.id.tvMedRecPatName);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseRefMedRecord = FirebaseDatabase.getInstance().getReference("Record");
+        databaseRefMedRecord = FirebaseDatabase.getInstance().getReference("Medical Record");
 
-        databaseRefMedRecord.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-                    MedicalRecord med_Rec = postSnapshot.getValue(MedicalRecord.class);
-                    if(med_Rec != null) {
-                        if(med_Rec.getRecordPat_ID().equals(patientID)) {
-                            med_Rec.setRecordKey(postSnapshot.getKey());
-                            medRecGender.setText(med_Rec.medRecord_Gender);
-                            medRecDateBirth.setText(med_Rec.medRecord_DateBirth);
-                            medRecPPsNo.setText(med_Rec.medRecord_PPS);
-                            medRecAddress.setText(med_Rec.medRecord_Address);
-                            medRecPatName.setText(med_Rec.recordPat_ID);
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(MedicalRecordPatient.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
-            }
-        });
+//        databaseRefMedRecord.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+//                    MedicalRecord med_Rec = postSnapshot.getValue(MedicalRecord.class);
+//                    if(med_Rec != null) {
+//                        if(med_Rec.getRecordPat_ID().equals(patientID)) {
+//                            med_Rec.setRecordKey(postSnapshot.getKey());
+//                            medRecGender.setText(med_Rec.medRecord_Gender);
+//                            medRecDateBirth.setText(med_Rec.medRecord_DateBirth);
+//                            medRecPPsNo.setText(med_Rec.medRecord_PPS);
+//                            medRecAddress.setText(med_Rec.medRecord_Address);
+//                            medRecPatName.setText(med_Rec.recordPat_ID);
+//                        }
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                Toast.makeText(MedicalRecordPatient.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 }

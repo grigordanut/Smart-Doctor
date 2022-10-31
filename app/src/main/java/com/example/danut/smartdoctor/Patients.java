@@ -4,7 +4,7 @@ import com.google.firebase.database.Exclude;
 
 public class Patients {
 
-    private String pat_CardCode;
+    private String patient_CardCode;
     private String patient_UniqueCode;
     private String patient_FirstName;
     private String patient_LastName;
@@ -20,8 +20,8 @@ public class Patients {
 
     }
 
-    public Patients(String pat_CardCode, String patient_UniqueCode, String patient_FirstName, String patient_LastName, String patient_Email, String patient_HospName, String patient_HospKey, String patient_DocName, String patient_DocKey) {
-        this.pat_CardCode = pat_CardCode;
+    public Patients(String patient_CardCode, String patient_UniqueCode, String patient_FirstName, String patient_LastName, String patient_Email, String patient_HospName, String patient_HospKey, String patient_DocName, String patient_DocKey) {
+        this.patient_CardCode = patient_CardCode;
         this.patient_UniqueCode = patient_UniqueCode;
         this.patient_FirstName = patient_FirstName;
         this.patient_LastName = patient_LastName;
@@ -32,12 +32,12 @@ public class Patients {
         this.patient_DocKey = patient_DocKey;
     }
 
-    public String getPat_CardCode() {
-        return pat_CardCode;
+    public String getPatient_CardCode() {
+        return patient_CardCode;
     }
 
-    public void setPat_CardCode(String pat_CardCode) {
-        this.pat_CardCode = pat_CardCode;
+    public void setPatient_CardCode(String patient_CardCode) {
+        this.patient_CardCode = patient_CardCode;
     }
 
     public String getPatient_UniqueCode() {

@@ -17,11 +17,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
-public class PatientsListHospital extends AppCompatActivity {
+public class HospitalPatientsList extends AppCompatActivity {
 
     //Declare variables
-    private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private ValueEventListener patientDBEventListener;
 
@@ -31,27 +31,24 @@ public class PatientsListHospital extends AppCompatActivity {
 
     private TextView tVPatListHosp;
 
-    String hospital_Name;
-    String hospital_Key;
+    private String hospital_Key;
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_patients_list_hospital);
+        setContentView(R.layout.activity_hospital_patients_list);
 
-        tVPatListHosp = (TextView) findViewById(R.id.tvPatListHosp);
+        Objects.requireNonNull(getSupportActionBar()).setTitle("HOSPITAL: Patients' list");
 
-        getIntent().hasExtra("HOSPName");
-        hospital_Name = getIntent().getExtras().getString("HOSPName");
+        tVPatListHosp = findViewById(R.id.tvPatListHosp);
 
         getIntent().hasExtra("HOSPKey");
         hospital_Key = getIntent().getExtras().getString("HOSPKey");
 
         patientListViewHosp = findViewById(R.id.listViewPatientsHosp);
 
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Patients");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Patients");
 
         patientListHosp = new ArrayList<>();
         arrayAdapter = new ArrayAdapter<String>(this, R.layout.image_patient, R.id.tvPatientList, patientListHosp);
@@ -72,25 +69,25 @@ public class PatientsListHospital extends AppCompatActivity {
 
                 if (dataSnapshot.exists()) {
                     patientListHosp.clear();
-                    for (DataSnapshot dsPatHosp : dataSnapshot.getChildren()) {
-                        Patients pat_Data = dsPatHosp.getValue(Patients.class);
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Patients pat_Data = postSnapshot.getValue(Patients.class);
                         assert pat_Data != null;
                         if (pat_Data.getPatient_HospKey().equals(hospital_Key)) {
-                            tVPatListHosp.setText("Patients' list: " + hospital_Name + " hospital");
+                            tVPatListHosp.setText("Patients' list: " + pat_Data.getPatient_HospName() + " hospital");
                             patientListHosp.add("First Name: " + pat_Data.getPatient_FirstName() + "\nLast Name: " + pat_Data.getPatient_LastName() + "\nUnique Code: " + pat_Data.getPatient_UniqueCode() + "\nDoctor: " + pat_Data.getPatient_DocName());
                         } else {
-                            tVPatListHosp.setText("No Patients: " + hospital_Name + " hospital");
+                            tVPatListHosp.setText("No Patients have been added!!");
                         }
                     }
                     arrayAdapter.notifyDataSetChanged();
                 } else {
-                    tVPatListHosp.setText("No Patients: " + hospital_Name + " hospital");
+                    tVPatListHosp.setText("No Patients have been added!!");
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(PatientsListHospital.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(HospitalPatientsList.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
             }
         });
     }

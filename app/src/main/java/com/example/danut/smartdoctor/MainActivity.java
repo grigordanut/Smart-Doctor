@@ -3,6 +3,7 @@ package com.example.danut.smartdoctor;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.view.View;
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("DOCTOR: main page");
+        //Objects.requireNonNull(getSupportActionBar()).setTitle("DOCTOR: main page");
 
         buttonLogIn = (Button)findViewById(R.id.btnLogInMain);
         buttonLogIn.setOnClickListener(new View.OnClickListener() {
@@ -56,13 +57,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //user log out
-    private void ContactUs(){
-        finish();
-        startActivity(new Intent(MainActivity.this, ContactUsForm.class));
+    private void HospitalsList(){
+        //finish();
+        startActivity(new Intent(MainActivity.this, HospitalsList.class));
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         // Inflate the menu_restaurant; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
@@ -79,10 +80,8 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-        switch (item.getItemId()) {
-            case R.id.contactUs:{
-                ContactUs();
-            }
+        if (item.getItemId() == R.id.contactUs) {
+            HospitalsList();
         }
         return super.onOptionsItemSelected(item);
     }

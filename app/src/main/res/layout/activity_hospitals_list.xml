@@ -14,7 +14,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:text="Hospital's List"
+        android:text="Hospitals' List"
         android:textSize="22sp"
         android:textColor="#000000"
         android:textStyle="bold"

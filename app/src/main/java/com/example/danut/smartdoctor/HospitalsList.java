@@ -1,13 +1,18 @@
 package com.example.danut.smartdoctor;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -16,55 +21,63 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class HospitalsList extends AppCompatActivity {
 
     //Declare variables
-    private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private ArrayList<String> hospitalList;
     private ArrayAdapter<String> arrayAdapter;
     private ListView hospListView;
 
-    Hospitals hosp;
+    private TextView tVHospList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hospitals_list);
 
-        hosp = new Hospitals();
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Hospitals' List");
 
-        hospListView = (ListView)findViewById(R.id.listViewHospitals);
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Hospitals");
+        tVHospList = findViewById(R.id.tvHospList);
+
+        hospListView = findViewById(R.id.listViewHospitals);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Hospitals");
+
         hospitalList = new ArrayList<>();
-        arrayAdapter = new ArrayAdapter<String>(this,R.layout.image_hospital,R.id.tvHospitalName,hospitalList);
+        arrayAdapter = new ArrayAdapter<String>(this, R.layout.image_hospital, R.id.tvHospitalName, hospitalList);
+        hospListView.setAdapter(arrayAdapter);
+    }
 
+    public void onStart() {
+        super.onStart();
+        loadHospitalsList();
+    }
+
+    public void loadHospitalsList() {
         databaseReference.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                hospitalList.clear();
-                for (DataSnapshot dsHosp: dataSnapshot.getChildren()){
-                    Hospitals hosp = dsHosp.getValue(Hospitals.class);
-                    hospitalList.add(hosp.hosp_Name+" Hospitals");
+
+                if (dataSnapshot.exists()) {
+                    hospitalList.clear();
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Hospitals hosp_Data = postSnapshot.getValue(Hospitals.class);
+                        assert hosp_Data != null;
+                        hospitalList.add(hosp_Data.getHosp_Name() + " Hospital");
+                    }
+                    arrayAdapter.notifyDataSetChanged();
+                } else {
+                    tVHospList.setText("No Hospital have been added!!");
                 }
-                hospListView.setAdapter(arrayAdapter);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        hospListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String hospital_Name = hospitalList.get(position);
-                Intent intent = new Intent(HospitalsList.this, DoctorsListHospital.class);
-                intent.putExtra("HOSPID", hospital_Name);
-                startActivity(intent);
+                Toast.makeText(HospitalsList.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
             }
         });
     }

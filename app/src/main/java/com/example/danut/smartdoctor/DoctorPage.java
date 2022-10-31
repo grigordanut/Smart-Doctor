@@ -36,9 +36,7 @@ public class DoctorPage extends AppCompatActivity {
     //Declare variables
     private TextView tVWelcomeDoctor;
 
-    private Button buttonDocPatList, buttonDocAddMedRec, buttonDocMedRecList;
-
-//    Doctors user_Doctor;
+    private Button btn_DocAddPat, btn_DocPatList, btn_DocAddMedRec, btn_DocMedRecList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +54,10 @@ public class DoctorPage extends AppCompatActivity {
         //initialise the variables
         tVWelcomeDoctor = findViewById(R.id.tvWelcomeDoctor);
 
-        Button btn_DocAddPat = findViewById(R.id.btnDocAddPat);
+        btn_DocAddPat = findViewById(R.id.btnDocAddPat);
+        btn_DocPatList = findViewById(R.id.btnDocPatList);
+        btn_DocAddMedRec = findViewById(R.id.btnDocAddMedRec);
+        btn_DocMedRecList = (Button) findViewById(R.id.btnDocMedRecList);
 
         eventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
@@ -67,8 +68,10 @@ public class DoctorPage extends AppCompatActivity {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
                     Doctors user_Doctor = postSnapshot.getValue(Doctors.class);
-
                     assert user_Doctor != null;
+
+                    user_Doctor.setDoctor_Key(postSnapshot.getKey());
+
                     assert firebaseUser != null;
 
                     if (firebaseUser.getUid().equalsIgnoreCase(postSnapshot.getKey())) {
@@ -81,50 +84,52 @@ public class DoctorPage extends AppCompatActivity {
 
                                 assert firebaseUser != null;
 
-                                Intent intent_AddPat = new Intent(DoctorPage.this, AddPatient.class);
+                                Intent add_Pat = new Intent(DoctorPage.this, AddPatient.class);
 
-                                intent_AddPat.putExtra("HOSPName", user_Doctor.getDoctor_HospName());
-                                intent_AddPat.putExtra("HOSPKey", user_Doctor.getDoctor_HospKey());
-                                intent_AddPat.putExtra("DOCName", user_Doctor.getDoctor_FirstName() + " " + user_Doctor.getDoctor_LastName());
-                                intent_AddPat.putExtra("DOCKey", firebaseUser.getUid());
+                                add_Pat.putExtra("HOSPName", user_Doctor.getDoctor_HospName());
+                                add_Pat.putExtra("HOSPKey", user_Doctor.getDoctor_HospKey());
+                                add_Pat.putExtra("DOCName", user_Doctor.getDoctor_FirstName() + " " + user_Doctor.getDoctor_LastName());
+                                add_Pat.putExtra("DOCKey", firebaseUser.getUid());
 
-                                startActivity(intent_AddPat);
+                                startActivity(add_Pat);
                             }
                         });
 
-                        buttonDocPatList = (Button) findViewById(R.id.btnDocPatList);
-                        buttonDocPatList.setOnClickListener(new View.OnClickListener() {
+
+                        btn_DocPatList.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent patList = new Intent(DoctorPage.this, PatientsList.class);
-                                patList.putExtra("HOSPName", user_Doctor.getDoctor_HospName());
-                                patList.putExtra("HOSPKey", user_Doctor.getDoctor_HospKey());
-                                patList.putExtra("DOCName", user_Doctor.getDoctor_FirstName() + " " + user_Doctor.getDoctor_LastName());
-                                patList.putExtra("DOCKey", firebaseUser.getUid());
+                                Intent pat_List = new Intent(DoctorPage.this, DoctorPatientsList.class);
+                                //pat_List.putExtra("HOSPName", user_Doctor.getDoctor_HospName());
+                                //pat_List.putExtra("HOSPKey", user_Doctor.getDoctor_HospKey());
+                                //pat_List.putExtra("DOCName", user_Doctor.getDoctor_FirstName() + " " + user_Doctor.getDoctor_LastName());
+                                pat_List.putExtra("DOCKey", firebaseUser.getUid());
 
-                                startActivity(patList);
+                                startActivity(pat_List);
                             }
                         });
 
-//                        buttonDocAddMedRec = (Button) findViewById(R.id.btnDocAddMedRec);
-//                        buttonDocAddMedRec.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                                Intent addRec = new Intent(DoctorPage.this, PatientListAddMedRecord.class);
-//                                addRec.putExtra("DOCID", doc.getDocFirst_Name() + " " + doc.getDocLast_Name());
-//                                startActivity(addRec);
-//                            }
-//                        });
-//
-//                        buttonDocMedRecList = (Button) findViewById(R.id.btnDocMedRecList);
-//                        buttonDocMedRecList.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                                Intent pat_List = new Intent(DoctorPage.this, PatientListShowMedRecord.class);
-//                                pat_List.putExtra("DOCID", doc.getDocFirst_Name() + " " + doc.getDocLast_Name());
-//                                startActivity(pat_List);
-//                            }
-//                        });
+
+                        btn_DocAddMedRec.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent add_Rec = new Intent(DoctorPage.this, PatientsListAddMedRecord.class);
+                                add_Rec.putExtra("DOCName", user_Doctor.getDoctor_FirstName() + " " + user_Doctor.getDoctor_LastName());
+                                add_Rec.putExtra("DOCKey", firebaseUser.getUid());
+                                startActivity(add_Rec);
+                            }
+                        });
+
+
+                        btn_DocMedRecList.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent rec_List = new Intent(DoctorPage.this, PatientsListShowMedRecord.class);
+                                rec_List.putExtra("DOCName", user_Doctor.getDoctor_FirstName() + " " + user_Doctor.getDoctor_LastName());
+                                rec_List.putExtra("DOCKey", firebaseUser.getUid());
+                                startActivity(rec_List);
+                            }
+                        });
                     }
                 }
             }
@@ -134,8 +139,6 @@ public class DoctorPage extends AppCompatActivity {
                 Toast.makeText(DoctorPage.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 
     //user log out
