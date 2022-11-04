@@ -50,6 +50,8 @@ public class DoctorMedicalRecordList extends AppCompatActivity implements Medica
         textViewDocMedRecList = (TextView) findViewById(R.id.tvDocMedRecordList);
         textViewPatMedRecList = (TextView) findViewById(R.id.tvPatMedRecordList);
 
+        databaseRefMedRecord = FirebaseDatabase.getInstance().getReference().child("Medical Record");
+
         getIntent().hasExtra("DOCName");
         doctor_Name = getIntent().getExtras().getString("DOCName");
 
@@ -69,9 +71,12 @@ public class DoctorMedicalRecordList extends AppCompatActivity implements Medica
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        databaseRefMedRecord = FirebaseDatabase.getInstance().getReference().child("Medical Record");
+        medRecAdapter = new MedicalRecordAdapter(DoctorMedicalRecordList.this, medRecList);
+        recyclerView.setAdapter(medRecAdapter);
+        medRecAdapter.setOnItmClickListener(DoctorMedicalRecordList.this);
 
         medRecDBEventListener = databaseRefMedRecord.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 medRecList.clear();
@@ -84,9 +89,7 @@ public class DoctorMedicalRecordList extends AppCompatActivity implements Medica
                     }
                 }
 
-                medRecAdapter = new MedicalRecordAdapter(DoctorMedicalRecordList.this, medRecList);
-                recyclerView.setAdapter(medRecAdapter);
-                medRecAdapter.setOnItmClickListener(DoctorMedicalRecordList.this);
+                medRecAdapter.notifyDataSetChanged();
             }
 
             @Override

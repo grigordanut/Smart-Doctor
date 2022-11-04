@@ -100,9 +100,6 @@ public class DoctorPage extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 Intent pat_List = new Intent(DoctorPage.this, DoctorPatientsList.class);
-                                //pat_List.putExtra("HOSPName", user_Doctor.getDoctor_HospName());
-                                //pat_List.putExtra("HOSPKey", user_Doctor.getDoctor_HospKey());
-                                //pat_List.putExtra("DOCName", user_Doctor.getDoctor_FirstName() + " " + user_Doctor.getDoctor_LastName());
                                 pat_List.putExtra("DOCKey", firebaseUser.getUid());
 
                                 startActivity(pat_List);

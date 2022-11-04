@@ -44,6 +44,7 @@ public class HospitalDoctorsList extends AppCompatActivity {
         tVHospDocList = findViewById(R.id.tvHospDocList);
 
         doctorListView = findViewById(R.id.listViewDoctors);
+        tVHospDocList.setText("No Doctors have been added!!");
 
         getIntent().hasExtra("HOSPKey");
         hospital_Key = getIntent().getExtras().getString("HOSPKey");
@@ -76,8 +77,6 @@ public class HospitalDoctorsList extends AppCompatActivity {
                         if (doc_Data.getDoctor_HospKey().equals(hospital_Key)) {
                             doctorList.add(doc_Data.getDoctor_FirstName() + " " + doc_Data.getDoctor_LastName());
                             tVHospDocList.setText("Doctors' list: " + doc_Data.getDoctor_HospName() + " Hospital.");
-                        } else {
-                            tVHospDocList.setText("No Doctors have been added!!");
                         }
                     }
                     arrayAdapter.notifyDataSetChanged();
