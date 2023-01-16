@@ -1,34 +1,33 @@
 {
   "project_info": {
-    "project_number": "1080113805620",
-    "firebase_url": "https://smart-doctor-24fe5-default-rtdb.firebaseio.com",
-    "project_id": "smart-doctor-24fe5",
-    "storage_bucket": "smart-doctor-24fe5.appspot.com"
+    "project_number": "147175078895",
+    "project_id": "smart-doctor-c8a29",
+    "storage_bucket": "smart-doctor-c8a29.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1080113805620:android:0b7a77ef4b671e383bcd61",
+        "mobilesdk_app_id": "1:147175078895:android:66e5077b25ccd4cef8541a",
         "android_client_info": {
           "package_name": "com.example.danut.smartdoctor"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1080113805620-9n7rkp2jd7mncevlnh4q0i62esshmjv4.apps.googleusercontent.com",
+          "client_id": "147175078895-b2h53hr1jb8rtnglj199n0ovgr1p492j.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAhfWy6F7etMmu4fKUgzm6emU6fb3qMMmE"
+          "current_key": "AIzaSyCx6mUpWWgaHCmD_Vu7xW4O5nm8GkqETcE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1080113805620-9n7rkp2jd7mncevlnh4q0i62esshmjv4.apps.googleusercontent.com",
+              "client_id": "147175078895-b2h53hr1jb8rtnglj199n0ovgr1p492j.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

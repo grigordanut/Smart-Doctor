@@ -1,7 +1,11 @@
 package com.example.danut.smartdoctor;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +24,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class PatientPage extends AppCompatActivity {
 
-
     //Declare variables
     private TextView textViewWelcomePatient;
 
@@ -36,7 +39,7 @@ public class PatientPage extends AppCompatActivity {
         setContentView(R.layout.activity_patient_page);
 
         //initialise the variables
-        textViewWelcomePatient = (TextView) findViewById(R.id.tvWelcomePatient);
+        textViewWelcomePatient = findViewById(R.id.tvWelcomePatient);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -91,11 +94,12 @@ public class PatientPage extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.menu_patient, menu);
         return true;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

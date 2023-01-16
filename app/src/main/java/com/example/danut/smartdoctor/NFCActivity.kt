@@ -1,5 +1,6 @@
 package com.example.danut.smartdoctor
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.PendingIntent
 import android.content.Intent
@@ -17,12 +18,11 @@ import com.example.danut.smartdoctor.parser.NdefMessageParser
 import android.nfc.NdefMessage
 import android.nfc.NdefRecord
 import android.os.Parcelable
-import android.util.Log;
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_nfc.*
-
 
 class NFCActivity : Activity() {
 
@@ -38,6 +38,7 @@ class NFCActivity : Activity() {
 
     lateinit var  btn_Check: Button
 
+    @SuppressLint("UnspecifiedImmutableFlag")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nfc)
@@ -56,9 +57,11 @@ class NFCActivity : Activity() {
             return
         }
 
-        pendingIntent = PendingIntent.getActivity(this, 0,
+        pendingIntent = PendingIntent.getActivity(
+            this, 0,
             Intent(this, this.javaClass)
-            .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0)
+                .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0
+        )
     }
 
     override fun onResume() {
@@ -66,7 +69,7 @@ class NFCActivity : Activity() {
 
         val nfcAdapterRefCopy = nfcAdapter
         if (nfcAdapterRefCopy != null) {
-            if (!nfcAdapterRefCopy.isEnabled())
+            if (!nfcAdapterRefCopy.isEnabled)
                 showNFCSettings()
 
             nfcAdapterRefCopy.enableForegroundDispatch(this, pendingIntent, null, null)
@@ -90,7 +93,7 @@ class NFCActivity : Activity() {
 
     private fun dumpTagData(tag: Tag): String {
         val sb = StringBuilder()
-        val id = tag.getId()
+        val id = tag.id
         sb.append("ID (hex): ").append(Utils.toHex(id)).append('\n')
         sb.append("ID (reversed hex): ").append(Utils.toReversedHex(id)).append('\n')
         sb.append("ID (dec): ").append(Utils.toDec(id)).append('\n')
@@ -105,14 +108,14 @@ class NFCActivity : Activity() {
 
         val prefix = "android.nfc.tech."
         sb.append("Technologies: ")
-        for (tech in tag.getTechList()) {
+        for (tech in tag.techList) {
             sb.append(tech.substring(prefix.length))
             sb.append(", ")
         }
 
         sb.delete(sb.length - 2, sb.length)
 
-        for (tech in tag.getTechList()) {
+        for (tech in tag.techList) {
             if (tech == MifareClassic::class.java.name) {
                 sb.append('\n')
                 var type = "Unknown"
@@ -169,18 +172,18 @@ class NFCActivity : Activity() {
             val rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES)
 
             if (rawMsgs != null) {
-                Log.i("NFC", "Size:" + rawMsgs.size);
-                val ndefMessages: Array<NdefMessage> = Array(rawMsgs.size, {i -> rawMsgs[i] as NdefMessage});
+                Log.i("NFC", "Size:" + rawMsgs.size)
+                val ndefMessages: Array<NdefMessage> =
+                    Array(rawMsgs.size, { i -> rawMsgs[i] as NdefMessage })
                 displayNfcMessages(ndefMessages)
             } else {
                 val empty = ByteArray(0)
                 val id = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID)
                 val tag = intent.getParcelableExtra<Parcelable>(NfcAdapter.EXTRA_TAG) as Tag
                 val payload = dumpTagData(tag).toByteArray()
-                //val payload1 = dumpTagData(tag).toFloat()
                 val record = NdefRecord(NdefRecord.TNF_UNKNOWN, empty, id, payload)
                 val emptyMsg = NdefMessage(arrayOf(record))
-                val emptyNdefMessages: Array<NdefMessage> = arrayOf(emptyMsg);
+                val emptyNdefMessages: Array<NdefMessage> = arrayOf(emptyMsg)
                 displayNfcMessages(emptyNdefMessages)
             }
         }
@@ -200,7 +203,7 @@ class NFCActivity : Activity() {
             builder.append(str).append("\n")
         }
 
-        text?.setText(builder.toString())
+        this.text?.text = builder.toString()
     }
 
     private fun checkCodePatient(){
@@ -213,29 +216,32 @@ class NFCActivity : Activity() {
             }
             override fun onDataChange(p0: DataSnapshot) {
                 if(p0.exists()){
-                    for(h in p0.children){
+                    for (h in p0.children) {
 
                         val saveCode = etCheckTest.text.toString()
                         val pat_newCode = h.getValue(Patients::class.java)
-//                        if (pat_newCode != null) {
-//                            if (saveCode.equals(pat_newCode.getPatCard_Code())){
-//
-//                                pat_newCode.setPatientKey(h.key)
-//                                val intent = Intent(this@NFCActivity, PatientNFC::class.java)
-//                                intent.putExtra("FIRSTNAME", pat_newCode.getPatFirst_Name())
-//                                intent.putExtra("LASTNAME", pat_newCode.getPatLast_Name())
-//                                intent.putExtra("DOCTORNAME", pat_newCode.getPatDoc_ID())
-//                                intent.putExtra("HOSPNAME", pat_newCode.getPatHosp_ID())
-//                                startActivity(intent)
-//
-//                            }
+                        if (pat_newCode != null) {
+                            if (saveCode.equals(pat_newCode.patient_CardCode)) {
+
+                                pat_newCode.patient_Key
+                                val intent = Intent(this@NFCActivity, PatientNFC::class.java)
+                                intent.putExtra("FIRSTNAME", pat_newCode.patient_FirstName)
+                                intent.putExtra("LASTNAME", pat_newCode.patient_LastName)
+                                intent.putExtra("DOCTORNAME", pat_newCode.patient_DocKey)
+                                intent.putExtra("HOSPNAME", pat_newCode.patient_HospKey)
+                                startActivity(intent)
+
+                            }
 //                            else {
 //                                Toast.makeText(this@NFCActivity, "User Not Found", Toast.LENGTH_SHORT).show()
 //                            }
-//
-//                        }
+
+                        }
                     }
+                } else {
+                    Toast.makeText(this@NFCActivity, "User Not Found", Toast.LENGTH_SHORT).show()
                 }
+
             }
         })
     }

@@ -25,9 +25,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //Objects.requireNonNull(getSupportActionBar()).setTitle("DOCTOR: main page");
-
-        buttonLogIn = (Button)findViewById(R.id.btnLogInMain);
+        buttonLogIn = findViewById(R.id.btnLogInMain);
         buttonLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -36,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Action button SignUp
-        buttonSignUp = (Button) findViewById(R.id.btnRegisterMain);
+        buttonSignUp = findViewById(R.id.btnRegisterMain);
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Action button NFC TEST
-        buttonNFC = (Button) findViewById(R.id.btnNfc);
+        buttonNFC = findViewById(R.id.btnNfc);
         buttonNFC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

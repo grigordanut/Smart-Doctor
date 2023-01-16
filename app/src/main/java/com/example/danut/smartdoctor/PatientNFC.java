@@ -1,6 +1,8 @@
 package com.example.danut.smartdoctor;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,6 +16,7 @@ public class PatientNFC extends AppCompatActivity {
     private String patient_DocName = "";
     private String patient_HosptName = "";
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
