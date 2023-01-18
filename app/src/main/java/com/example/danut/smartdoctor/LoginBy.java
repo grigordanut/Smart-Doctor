@@ -25,7 +25,7 @@ public class LoginBy extends AppCompatActivity {
         });
 
         //log in by using Finger Print
-        Button btn_FingerPrint = (Button) findViewById(R.id.btnFingerPrint);
+        Button btn_FingerPrint = findViewById(R.id.btnFingerPrint);
         btn_FingerPrint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

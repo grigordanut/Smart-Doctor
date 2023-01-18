@@ -1,67 +1,56 @@
-<RelativeLayout
-
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_pages"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="0dp">
+    android:orientation="vertical">
 
-
-    <Button
-
-        android:id="@+id/btnCheckCode"
-        android:layout_width="140dp"
-        android:layout_height="50dp"
-        android:layout_alignBottom="@+id/activity_auth_succ_scr"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="218dp"
-        android:layout_marginRight="218dp"
-        android:layout_marginBottom="-1dp"
-        android:background="@drawable/btn_blue"
-        android:text="Doctor"
-        android:textSize="24sp"
+    <TextView
+        android:id="@+id/tvActivity_auth_succ"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="100dp"
+        android:padding="15dp"
+        android:text="Authentication successful."
+        android:textAlignment="center"
+        android:textSize="22sp"
         android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnCheckCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_blue"
+            android:text="Doctor"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/btnBackDoctor"
-            android:layout_width="140dp"
-            android:layout_height="50dp"
-            android:layout_alignBottom="@+id/activity_auth_succ_scr"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="13dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginRight="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="10dp"
             android:layout_marginBottom="0dp"
             android:background="@drawable/btn_blue"
             android:text="Hospital"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:ignore="ButtonStyle" />
 
-    <TextView xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/activity_auth_succ_scr"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="136dp"
-        android:layout_marginBottom="172dp"
-        android:gravity="center"
-        android:paddingLeft="16dp"
-        android:paddingTop="16dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="16dp"
-        android:text="Authentication successful."
-        android:textSize="20sp"
-        android:textStyle="bold"
-        tools:context="com.example.danut.smartdoctor.FingerPrintScan" />
-    </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

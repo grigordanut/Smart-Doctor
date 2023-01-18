@@ -20,7 +20,6 @@ public class FingerPrintScan extends AppCompatActivity implements FingerPrintAut
     private Button mGoToSettingsBtn;
     private FingerPrintAuthHelper mFingerPrintAuthHelper;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

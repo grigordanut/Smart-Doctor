@@ -1,10 +1,8 @@
-
 package com.example.danut.smartdoctor.record;
 
 import android.nfc.FormatException;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
-
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
@@ -13,19 +11,14 @@ import com.google.common.collect.Iterables;
 
 import com.example.danut.smartdoctor.parser.NdefMessageParser;
 
-
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
-
 public class SmartPoster implements ParsedNdefRecord {
-
 
     private final TextRecord mTitleRecord;
 
-
     private final UriRecord mUriRecord;
-
 
     private final RecommendedAction mAction;
 

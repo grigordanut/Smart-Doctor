@@ -2,19 +2,11 @@
 package com.example.danut.smartdoctor.record;
 
 import android.nfc.NdefRecord;
-
 import com.google.common.base.Preconditions;
-
-import com.example.danut.smartdoctor.model.History;
-
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
-
- //NFC Text Record
-
 public class TextRecord implements ParsedNdefRecord {
-
 
     private final String mLanguageCode;
 
@@ -32,7 +24,6 @@ public class TextRecord implements ParsedNdefRecord {
     public String getText() {
         return mText;
     }
-
 
     public String getLanguageCode() {
         return mLanguageCode;

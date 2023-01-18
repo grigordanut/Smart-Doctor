@@ -1,7 +1,9 @@
 package com.example.danut.smartdoctor;
 
 import android.content.Intent;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -10,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Objects;
+
 public class ContactUsForm extends AppCompatActivity {
 
     @Override
@@ -17,9 +21,11 @@ public class ContactUsForm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_us_form);
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Contact Us Form");
+
         //Declare variable
-        final EditText usrName   = findViewById(R.id.usrName);
-        final EditText usrEmail  = findViewById(R.id.usrEmail);
+        final EditText usrName = findViewById(R.id.usrName);
+        final EditText usrEmail = findViewById(R.id.usrEmail);
         final EditText usrObject = findViewById(R.id.usrObject);
         final EditText usrMessage = findViewById(R.id.usrMessage);
 

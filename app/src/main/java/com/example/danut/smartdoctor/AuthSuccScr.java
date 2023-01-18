@@ -8,14 +8,14 @@ import android.widget.Button;
 
 public class AuthSuccScr extends AppCompatActivity {
 
-    private Button buttonDoctor, buttonHospital,buttonContactUs;
+    private Button buttonDoctor, buttonHospital;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth_succ_scr);
 
-        buttonDoctor = (Button)findViewById(R.id.btnCheckCode);
+        buttonDoctor = findViewById(R.id.btnCheckCode);
         buttonDoctor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -23,7 +23,7 @@ public class AuthSuccScr extends AppCompatActivity {
             }
         });
 
-        buttonHospital = (Button)findViewById(R.id.btnFingerPrint);
+        buttonHospital = findViewById(R.id.btnBackDoctor);
         buttonHospital.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

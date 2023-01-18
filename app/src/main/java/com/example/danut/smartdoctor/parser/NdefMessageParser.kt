@@ -1,6 +1,4 @@
-
 package com.example.danut.smartdoctor.parser
-
 
 import android.nfc.NdefMessage
 import android.nfc.NdefRecord
@@ -10,9 +8,7 @@ import com.example.danut.smartdoctor.record.SmartPoster
 import com.example.danut.smartdoctor.record.TextRecord
 import com.example.danut.smartdoctor.record.UriRecord
 
-
 import java.util.ArrayList
-
 
 object NdefMessageParser {
 

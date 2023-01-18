@@ -5,16 +5,11 @@ import android.net.Uri
 import android.nfc.NdefRecord
 
 import com.google.common.base.Preconditions
-import com.google.common.collect.BiMap
 import com.google.common.collect.ImmutableBiMap
 import com.google.common.primitives.Bytes
 
-import com.example.danut.smartdoctor.model.History
-import com.example.danut.smartdoctor.utils.NFCReaderApp
-
 import java.nio.charset.Charset
 import java.util.Arrays
-
 
 class UriRecord(uri: Uri) : ParsedNdefRecord {
 
@@ -33,7 +28,6 @@ class UriRecord(uri: Uri) : ParsedNdefRecord {
         private val TAG = "UriRecord"
 
         val RECORD_TYPE = "UriRecord"
-
 
         private val URI_PREFIX_MAP = ImmutableBiMap.builder<Byte, String>()
                 .put(0x00.toByte(), "")
@@ -74,7 +68,6 @@ class UriRecord(uri: Uri) : ParsedNdefRecord {
                 .put(0x23.toByte(), "urn:nfc:")
                 .build()
 
-
         fun parse(record: NdefRecord): UriRecord {
             val tnf = record.tnf
             if (tnf == NdefRecord.TNF_WELL_KNOWN) {
@@ -113,7 +106,6 @@ class UriRecord(uri: Uri) : ParsedNdefRecord {
             } catch (e: IllegalArgumentException) {
                 return false
             }
-
         }
 
         private val EMPTY = ByteArray(0)

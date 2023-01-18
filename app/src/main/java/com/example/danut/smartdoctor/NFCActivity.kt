@@ -2,53 +2,89 @@ package com.example.danut.smartdoctor
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.PendingIntent
+import android.app.ProgressDialog
 import android.content.Intent
+import android.nfc.NdefMessage
+import android.nfc.NdefRecord
 import android.nfc.NfcAdapter
 import android.nfc.Tag
 import android.nfc.tech.MifareClassic
 import android.nfc.tech.MifareUltralight
 import android.os.Bundle
+import android.os.Parcelable
 import android.provider.Settings.ACTION_NFC_SETTINGS
+import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import com.example.danut.smartdoctor.utils.Utils
 import com.example.danut.smartdoctor.parser.NdefMessageParser
-import android.nfc.NdefMessage
-import android.nfc.NdefRecord
-import android.os.Parcelable
-import android.util.Log
-import android.widget.Button
-import android.widget.EditText
+import com.example.danut.smartdoctor.utils.Utils
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_nfc.*
 
 class NFCActivity : Activity() {
 
     private var nfcAdapter: NfcAdapter? = null
-    // launch application when a new Tag or Card will be scanned
     private var pendingIntent: PendingIntent? = null
-    // display the data read
-    private var text: TextView? = null
 
-    lateinit var ref: DatabaseReference
+    //Check if Patients table exists
+    lateinit var dbRefCheckPatTable: DatabaseReference
+
+    //Check if the patient has NFC id recorded
+    lateinit var dbRefNFCId: DatabaseReference
+    lateinit var eventListener: ValueEventListener
+
+    //display the data read
+    private var tVShowNFC: TextView? = null
+    private var tVSaveCode: TextView? = null
 
     lateinit var btn_Save: Button
+    lateinit var btn_Clear: Button
+    lateinit var btn_Check: Button
 
-    lateinit var  btn_Check: Button
+    private var save_Code: String? = null
 
-    @SuppressLint("UnspecifiedImmutableFlag")
+    private val progressDialog: ProgressDialog? = null
+
+    @SuppressLint("UnspecifiedImmutableFlag", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nfc)
 
-        btn_Check = findViewById(R.id.check)
-        btn_Check.setOnClickListener {
-            checkCodePatient()
+        tVShowNFC = findViewById<View>(R.id.tvShowNFC) as? TextView
+        tVSaveCode = findViewById<View>(R.id.tvSaveCode) as? TextView
+
+        tVShowNFC!!.text = "Hold the card in the back of your device"
+        tVSaveCode!!.text = "No patient NFC Id"
+
+        btn_Save = findViewById(R.id.btnSave)
+        btn_Clear = findViewById(R.id.btnClear)
+        btn_Check = findViewById(R.id.btnCheck)
+
+        tVSaveCode?.setOnClickListener {
+            alertNoNFCId()
         }
 
-        text = findViewById<View>(R.id.text) as? TextView
+        btn_Save.setOnClickListener {
+            alertNoNFCId()
+        }
+
+        btn_Clear.setOnClickListener {
+            alertNothingToClear()
+        }
+
+        btn_Check.setOnClickListener {
+            save_Code = tvSaveCode.text.toString()
+            if (save_Code == "No patient NFC Id" || save_Code == "Click SAVE to get the Patient Id") {
+                alertNoNFCFound()
+            } else {
+                checkPatientDatabase()
+            }
+        }
+
         nfcAdapter = NfcAdapter.getDefaultAdapter(this)
 
         if (nfcAdapter == null) {
@@ -62,6 +98,43 @@ class NFCActivity : Activity() {
             Intent(this, this.javaClass)
                 .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0
         )
+    }
+
+    private fun alertNoNFCId() {
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder
+            .setMessage("Hold the card in the back of your device to get a Patient NFC Id, and then press the button SAVE!")
+            .setCancelable(false)
+            .setPositiveButton(
+                "Ok"
+            ) { dialog, which -> dialog.dismiss() }
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
+    }
+
+    private fun alertNothingToClear() {
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder
+            .setMessage("There is nothing to clear!!")
+            .setCancelable(false)
+            .setPositiveButton(
+                "Ok"
+            ) { dialog, which -> dialog.dismiss() }
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
+    }
+
+    //for Button Chek
+    private fun alertNoNFCFound() {
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder
+            .setMessage("No Patient NFC id found.\nHold the card in the back of your device.\nPress the button SAVE and then press Check Id")
+            .setCancelable(false)
+            .setPositiveButton(
+                "Ok"
+            ) { dialog, which -> dialog.dismiss() }
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
     }
 
     override fun onResume() {
@@ -90,7 +163,7 @@ class NFCActivity : Activity() {
     //Tag data is converted to string to display
 
     //return the data from this tag in String format
-
+    @SuppressLint("SetTextI18n")
     private fun dumpTagData(tag: Tag): String {
         val sb = StringBuilder()
         val id = tag.id
@@ -99,11 +172,25 @@ class NFCActivity : Activity() {
         sb.append("ID (dec): ").append(Utils.toDec(id)).append('\n')
         sb.append("ID (reversed dec): ").append(Utils.toReversedDec(id)).append('\n')
 
-        btn_Save = findViewById(R.id.save)
-        btn_Save.setOnClickListener{
-            val saveCode = findViewById<EditText>(R.id.etCheckTest)
-            saveCode.append(Utils.toReversedDec(id).toString())
-            btn_Save.isClickable=false
+        tVSaveCode!!.isClickable = false
+        tVSaveCode!!.text = "Click SAVE to get the Patient Id"
+
+        btn_Save.setOnClickListener {
+            tVSaveCode!!.setText(Utils.toReversedDec(id).toString())
+            tVSaveCode!!.isClickable = false
+            btn_Save.isClickable = false
+        }
+
+        btn_Clear.setOnClickListener {
+            save_Code = tVSaveCode!!.text.toString().trim { it <= ' ' }
+            if (save_Code == "Click SAVE to get the Patient Id") {
+                alertNothingToClear()
+            } else {
+                tVSaveCode!!.text = "Click SAVE to get the Patient Id"
+                btn_Save.isClickable = true
+                Toast.makeText(this@NFCActivity, "The Button SAVE is clickable", Toast.LENGTH_SHORT)
+                    .show()
+            }
         }
 
         val prefix = "android.nfc.tech."
@@ -167,8 +254,9 @@ class NFCActivity : Activity() {
         val action = intent.action
 
         if (NfcAdapter.ACTION_TAG_DISCOVERED == action
-                || NfcAdapter.ACTION_TECH_DISCOVERED == action
-                || NfcAdapter.ACTION_NDEF_DISCOVERED == action) {
+            || NfcAdapter.ACTION_TECH_DISCOVERED == action
+            || NfcAdapter.ACTION_NDEF_DISCOVERED == action
+        ) {
             val rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES)
 
             if (rawMsgs != null) {
@@ -203,46 +291,85 @@ class NFCActivity : Activity() {
             builder.append(str).append("\n")
         }
 
-        this.text?.text = builder.toString()
+        this.tVShowNFC?.text = builder.toString()
     }
 
-    private fun checkCodePatient(){
+    private fun checkPatientDatabase() {
 
-        ref = FirebaseDatabase.getInstance().getReference("Patients")
+        progressDialog?.setMessage("The Patient is identified!!")
+        progressDialog?.show()
 
-        ref.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-            override fun onDataChange(p0: DataSnapshot) {
-                if(p0.exists()){
-                    for (h in p0.children) {
+        dbRefCheckPatTable = FirebaseDatabase.getInstance().reference.child("Patients")
 
-                        val saveCode = etCheckTest.text.toString()
-                        val pat_newCode = h.getValue(Patients::class.java)
-                        if (pat_newCode != null) {
-                            if (saveCode.equals(pat_newCode.patient_CardCode)) {
-
-                                pat_newCode.patient_Key
-                                val intent = Intent(this@NFCActivity, PatientNFC::class.java)
-                                intent.putExtra("FIRSTNAME", pat_newCode.patient_FirstName)
-                                intent.putExtra("LASTNAME", pat_newCode.patient_LastName)
-                                intent.putExtra("DOCTORNAME", pat_newCode.patient_DocKey)
-                                intent.putExtra("HOSPNAME", pat_newCode.patient_HospKey)
-                                startActivity(intent)
-
-                            }
-//                            else {
-//                                Toast.makeText(this@NFCActivity, "User Not Found", Toast.LENGTH_SHORT).show()
-//                            }
-
-                        }
-                    }
+        dbRefCheckPatTable.addValueEventListener(object : ValueEventListener {
+            @SuppressLint("SetTextI18n")
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    checkPatientNFCId()
                 } else {
-                    Toast.makeText(this@NFCActivity, "User Not Found", Toast.LENGTH_SHORT).show()
+                    alertNoPatientRegisteredFound()
                 }
+                progressDialog?.dismiss()
+            }
 
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@NFCActivity, error.message, Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    private fun checkPatientNFCId() {
+
+        dbRefNFCId = FirebaseDatabase.getInstance().reference.child("Patients")
+
+        eventListener = dbRefNFCId.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (postSnapshot in snapshot.children) {
+                    val pat_data = postSnapshot.getValue(Patients::class.java)
+                    val save_Code = tVSaveCode!!.text.toString().trim { it <= ' ' }
+                    if (pat_data != null) {
+                        if (save_Code == pat_data.patient_CardCode) {
+                            pat_data.patient_Key = postSnapshot.key
+                            val intent = Intent(this@NFCActivity, PatientNFC::class.java)
+                            intent.putExtra("FIRSTNAME", pat_data.patient_FirstName)
+                            intent.putExtra("LASTNAME", pat_data.patient_LastName)
+                            intent.putExtra("DOCTORNAME", pat_data.patient_DocName)
+                            intent.putExtra("HOSPNAME", pat_data.patient_HospName)
+                            startActivity(intent)
+                        } else {
+                            alertNoPatientFond()
+                        }
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@NFCActivity, error.message, Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun alertNoPatientRegisteredFound() {
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder
+            .setMessage("No Patients registered in the database were found.\nPlease register Patients and then check the NFC id!!")
+            .setCancelable(false)
+            .setPositiveButton(
+                "Ok"
+            ) { dialog, which -> dialog.dismiss() }
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
+    }
+
+    private fun alertNoPatientFond() {
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder
+            .setMessage("No Patient found to be registered with the NCF Id: $save_Code")
+            .setCancelable(false)
+            .setPositiveButton(
+                "Ok"
+            ) { dialog, which -> dialog.dismiss() }
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
     }
 }
