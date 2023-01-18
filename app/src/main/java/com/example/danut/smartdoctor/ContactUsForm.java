@@ -42,7 +42,6 @@ public class ContactUsForm extends AppCompatActivity {
                 if (TextUtils.isEmpty(name)){
                     usrName.setError("Please Enter Your Name");
                     usrName.requestFocus();
-                    return;
                 }
 
                 else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
@@ -54,13 +53,11 @@ public class ContactUsForm extends AppCompatActivity {
                 else if (TextUtils.isEmpty(subject)){
                     usrObject.setError("Enter Your Subject");
                     usrObject.requestFocus();
-                    return;
                 }
 
                 else if (TextUtils.isEmpty(message)){
                     usrMessage.setError("Enter Your Message");
                     usrMessage.requestFocus();
-                    return;
                 }
                 else {
                     Intent sendEmail = new Intent(android.content.Intent.ACTION_SEND);
