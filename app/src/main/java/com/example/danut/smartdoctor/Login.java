@@ -1,5 +1,6 @@
 package com.example.danut.smartdoctor;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -101,6 +102,7 @@ public class Login extends AppCompatActivity {
                     progressDialog.show();
 
                     firebaseAuth.signInWithEmailAndPassword(email_LogUser, pass_LogUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @SuppressLint("SetTextI18n")
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
 

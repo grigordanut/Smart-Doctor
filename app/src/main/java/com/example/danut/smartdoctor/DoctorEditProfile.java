@@ -35,12 +35,12 @@ public class DoctorEditProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_edit_profile);
 
-//        newDocUniqueCode = (EditText)findViewById(R.id.etNewDocUCode);
-//        newDocFirstName = (EditText)findViewById(R.id.etNewDocFName);
-//        newDocLastName = (EditText)findViewById(R.id.etNewDocLName);
-//        newDocPhone = (EditText)findViewById(R.id.etNewDocFNumber);
-//        newDocEmail = (EditText)findViewById(R.id.etNewDocEmail);
-//        newDocHospID = (EditText)findViewById(R.id.etNewDocHospID);
+        newDocUniqueCode = (EditText)findViewById(R.id.etNewDocUCode);
+        newDocFirstName = (EditText)findViewById(R.id.etNewDocFName);
+        newDocLastName = (EditText)findViewById(R.id.etNewDocLName);
+        newDocPhone = (EditText)findViewById(R.id.etNewDocFNumber);
+        newDocEmail = (EditText)findViewById(R.id.etNewDocEmail);
+        newDocHospID = (EditText)findViewById(R.id.etNewDocHospID);
 //
 //        progressDialog = new ProgressDialog(this);
 //
