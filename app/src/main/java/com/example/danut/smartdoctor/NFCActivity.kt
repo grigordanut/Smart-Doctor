@@ -81,7 +81,7 @@ class NFCActivity : Activity() {
             if (save_Code == "No patient NFC Id" || save_Code == "Click SAVE to get the Patient Id") {
                 alertNoNFCFound()
             } else {
-                checkPatientDatabase()
+                checkPatientNFCId()
             }
         }
 
@@ -294,41 +294,20 @@ class NFCActivity : Activity() {
         this.tVShowNFC?.text = builder.toString()
     }
 
-    private fun checkPatientDatabase() {
-
-        progressDialog?.setMessage("The Patient is identified!!")
-        progressDialog?.show()
-
-        dbRefCheckPatTable = FirebaseDatabase.getInstance().reference.child("Patients")
-
-        dbRefCheckPatTable.addValueEventListener(object : ValueEventListener {
-            @SuppressLint("SetTextI18n")
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    checkPatientNFCId()
-                } else {
-                    alertNoPatientRegisteredFound()
-                }
-                progressDialog?.dismiss()
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@NFCActivity, error.message, Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
-
     private fun checkPatientNFCId() {
+        progressDialog!!.setMessage("The Patient is identified!!")
+        progressDialog.show()
 
         dbRefNFCId = FirebaseDatabase.getInstance().reference.child("Patients")
 
         eventListener = dbRefNFCId.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                for (postSnapshot in snapshot.children) {
-                    val pat_data = postSnapshot.getValue(Patients::class.java)
-                    val save_Code = tVSaveCode!!.text.toString().trim { it <= ' ' }
-                    if (pat_data != null) {
-                        if (save_Code == pat_data.patient_CardCode) {
+                if (snapshot.exists()) {
+                    for (postSnapshot in snapshot.children) {
+                        val pat_data = postSnapshot.getValue(Patients::class.java)
+                        val save_Code = tVSaveCode!!.text.toString().trim { it <= ' ' }
+                        assert(pat_data != null)
+                        if (save_Code == pat_data?.patient_CardCode) {
                             pat_data.patient_Key = postSnapshot.key
                             val intent = Intent(this@NFCActivity, PatientNFC::class.java)
                             intent.putExtra("FIRSTNAME", pat_data.patient_FirstName)
@@ -336,11 +315,17 @@ class NFCActivity : Activity() {
                             intent.putExtra("DOCTORNAME", pat_data.patient_DocName)
                             intent.putExtra("HOSPNAME", pat_data.patient_HospName)
                             startActivity(intent)
-                        } else {
+                        }
+
+                        else {
                             alertNoPatientFond()
                         }
+                        progressDialog.dismiss()
                     }
+                } else {
+                    alertNoPatientRegisteredFound()
                 }
+                progressDialog.dismiss()
             }
 
             override fun onCancelled(error: DatabaseError) {

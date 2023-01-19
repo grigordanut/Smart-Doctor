@@ -57,6 +57,7 @@ public class HospitalsList extends AppCompatActivity {
     }
 
     public void loadHospitalsList() {
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
