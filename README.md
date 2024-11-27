@@ -1,3 +1,3 @@
 # Smart-Doctor
 Developed an Android application for Hospitals and Medical Surgery’s that allows to the users to register and log in as a doctor or patient. It allows the Hospital to see the doctors and patients and also allows each doctor to see the own patients and medical records. The hospitals have a possibility to scan and record the patient’s fingerprints which allows the Accident and Emergency Services to identify the patient by scanning the fingerprint in the case of the accident and the patient is unconscious. 
-Technology Used: Android, Java, JSON, XML, SQLite, NFC, and Smart Phone fingerprint scanner. 
+Technology Used: Android, Java, JSON, XML, Firebase Database, NFC, and Smart Phone fingerprint scanner. 
